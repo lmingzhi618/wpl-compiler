@@ -1,0 +1,52 @@
+token literal names:
+null
+':='
+'/'
+'='
+'>'
+'<'
+'-'
+'*'
+'~'
+'+'
+'~='
+'('
+')'
+';'
+'false'
+'true'
+null
+null
+null
+null
+null
+
+token symbolic names:
+null
+ASSIGN
+DIVIDE
+EQUAL
+GREATER
+LESS
+MINUS
+MULTIPLY
+NOT
+PLUS
+UNEQUAL
+LPAR
+RPAR
+SEMICOLON
+FALSE
+TRUE
+INTEGER
+VARIABLE
+WORD
+WS
+ANY
+
+rule names:
+text
+
+
+atn:
+[4, 1, 20, 6, 2, 0, 7, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 4, 0, 2, 1, 0, 0, 0, 2, 3, 5, 20, 0, 0, 3, 4, 5, 0, 0, 1, 4, 1, 1, 0, 0, 0, 0]

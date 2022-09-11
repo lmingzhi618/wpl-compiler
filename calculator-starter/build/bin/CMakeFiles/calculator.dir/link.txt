@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/calculator.dir/calculator.cpp.o lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o -o calculator  ../../antlr/lib/libantlr4-runtime.a 
