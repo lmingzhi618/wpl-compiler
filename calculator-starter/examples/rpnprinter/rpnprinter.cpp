@@ -11,7 +11,7 @@
 
 int main(int argc, const char **argv) {
     // Provide the input text in a stream
-    char *str = "6*(2+3);a := 42; 5 < 10 = ~false;";
+    char *str = "6*(2+3);a := 42; 5 < 10 = ~false; n ~= 5";
     antlr4::ANTLRInputStream input(str);
 
     // Create a lexer from the input

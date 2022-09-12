@@ -11,7 +11,7 @@ void parseArgs(int argc, const char* argv[]) {
 int main(int argc, const char* argv[]) {
     // parseArgs(argc, argv);
     //  Provide the input text in a stream
-    antlr4::ANTLRInputStream input("");
+    antlr4::ANTLRInputStream input("a :=4; a = 6 * (2+3);");
 
     // Create a lexer from the input
     CalculatorLexer lexer(&input);
@@ -23,6 +23,6 @@ int main(int argc, const char* argv[]) {
     CalculatorParser parser(&tokens);
 
     // Display the parse tree
-    // std::cout << "OUTPUT\n" << parser.text()->toStringTree() << std::endl;
+    std::cout << "OUTPUT\n" << parser.program()->toStringTree() << std::endl;
     return 0;
 }

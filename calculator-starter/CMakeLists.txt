@@ -6,6 +6,9 @@ project(expressions
   VERSION 0.1
   DESCRIPTION "Reference compiler to compile a simple expression language to LLVM IR"
 )
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 set(PROJECT_ROOT ${CMAKE_CURRENT_LIST_DIR})
 
 include(cmake/independent_settings.cmake) # Platform independent variables
@@ -21,7 +24,7 @@ install(
 )
 
 enable_testing()
-add_subdirectory(test)
 add_subdirectory(examples)
+add_subdirectory(test)
 
 # include(Install)

@@ -12,8 +12,9 @@ std::any RPNVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
 
 std::any RPNVisitor::visitAssignExpression(
     CalculatorParser::AssignExpressionContext *ctx) {
-    ctx->ex->accept(this);
-    std::cout << ctx->v->getText() << ":=";
+    ctx->ex->accept(this);          // ex: expression
+    std::cout << ctx->v->getText()  // v: VARIABLE
+              << ":=";
     return NULL;
 }
 

@@ -1,6 +1,8 @@
 # src listfile
 include (cmake/antlr.cmake)
 add_subdirectory(lexparse)
+add_subdirectory(symbol)
+
 
 add_executable(calculator calculator.cpp)
 
