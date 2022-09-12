@@ -14,7 +14,7 @@ program         :   (exprs+=expression ';')+ EOF ;
 
 booleanConstant :   TRUE | FALSE ;
 
-assignExpression:   <assoc=right> v=VARIABLE ':=' ex=expression;
+assignExpression:   <assoc=right> v=VARIABLE ':=' expression;
 
 expression      :
                 '(' ex=expression ')'                               # ParenExpr

@@ -16,8 +16,44 @@
 class  CalculatorBaseListener : public CalculatorListener {
 public:
 
-  virtual void enterText(CalculatorParser::TextContext * /*ctx*/) override { }
-  virtual void exitText(CalculatorParser::TextContext * /*ctx*/) override { }
+  virtual void enterProgram(CalculatorParser::ProgramContext * /*ctx*/) override { }
+  virtual void exitProgram(CalculatorParser::ProgramContext * /*ctx*/) override { }
+
+  virtual void enterBooleanConstant(CalculatorParser::BooleanConstantContext * /*ctx*/) override { }
+  virtual void exitBooleanConstant(CalculatorParser::BooleanConstantContext * /*ctx*/) override { }
+
+  virtual void enterAssignExpression(CalculatorParser::AssignExpressionContext * /*ctx*/) override { }
+  virtual void exitAssignExpression(CalculatorParser::AssignExpressionContext * /*ctx*/) override { }
+
+  virtual void enterAsgExpr(CalculatorParser::AsgExprContext * /*ctx*/) override { }
+  virtual void exitAsgExpr(CalculatorParser::AsgExprContext * /*ctx*/) override { }
+
+  virtual void enterIConstExpr(CalculatorParser::IConstExprContext * /*ctx*/) override { }
+  virtual void exitIConstExpr(CalculatorParser::IConstExprContext * /*ctx*/) override { }
+
+  virtual void enterBinaryArithExpr(CalculatorParser::BinaryArithExprContext * /*ctx*/) override { }
+  virtual void exitBinaryArithExpr(CalculatorParser::BinaryArithExprContext * /*ctx*/) override { }
+
+  virtual void enterEqExpr(CalculatorParser::EqExprContext * /*ctx*/) override { }
+  virtual void exitEqExpr(CalculatorParser::EqExprContext * /*ctx*/) override { }
+
+  virtual void enterUnaryNotExpr(CalculatorParser::UnaryNotExprContext * /*ctx*/) override { }
+  virtual void exitUnaryNotExpr(CalculatorParser::UnaryNotExprContext * /*ctx*/) override { }
+
+  virtual void enterVariableExpr(CalculatorParser::VariableExprContext * /*ctx*/) override { }
+  virtual void exitVariableExpr(CalculatorParser::VariableExprContext * /*ctx*/) override { }
+
+  virtual void enterParenExpr(CalculatorParser::ParenExprContext * /*ctx*/) override { }
+  virtual void exitParenExpr(CalculatorParser::ParenExprContext * /*ctx*/) override { }
+
+  virtual void enterBinaryRelExpr(CalculatorParser::BinaryRelExprContext * /*ctx*/) override { }
+  virtual void exitBinaryRelExpr(CalculatorParser::BinaryRelExprContext * /*ctx*/) override { }
+
+  virtual void enterUnaryMinusExpr(CalculatorParser::UnaryMinusExprContext * /*ctx*/) override { }
+  virtual void exitUnaryMinusExpr(CalculatorParser::UnaryMinusExprContext * /*ctx*/) override { }
+
+  virtual void enterBConstExpr(CalculatorParser::BConstExprContext * /*ctx*/) override { }
+  virtual void exitBConstExpr(CalculatorParser::BConstExprContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
