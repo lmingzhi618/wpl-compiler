@@ -53,11 +53,11 @@ void calculatorParserInitialize() {
     std::vector<std::string>{
       "", "ASSIGN", "DIVIDE", "EQUAL", "GREATER", "LESS", "MINUS", "MULTIPLY", 
       "NOT", "PLUS", "UNEQUAL", "LPAR", "RPAR", "SEMICOLON", "FALSE", "TRUE", 
-      "INTEGER", "VARIABLE", "WS"
+      "INTEGER", "VARIABLE", "WS", "WORD", "COMMENT1", "COMMENT2"
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,18,56,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,4,0,12,8,0,11,0,
+  	4,1,21,56,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,4,0,12,8,0,11,0,
   	12,0,13,1,0,1,0,1,1,1,1,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,
   	3,1,3,1,3,1,3,1,3,1,3,3,3,37,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
   	1,3,1,3,1,3,5,3,51,8,3,10,3,12,3,54,9,3,1,3,0,1,6,4,0,2,4,6,0,5,1,0,14,

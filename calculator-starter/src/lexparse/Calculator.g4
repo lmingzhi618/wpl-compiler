@@ -58,3 +58,6 @@ INTEGER     : [0-9]+ ;
 VARIABLE    : [a-zA-Z]+ ;
 
 WS          : [ \n\t\r]+ -> skip;
+WORD        : [a-zA-Z]+ ;
+COMMENT1     : '/*' .*? '*/' ;
+COMMENT2     : '//' .*? '\n' ;

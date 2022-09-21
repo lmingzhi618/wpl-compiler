@@ -15,7 +15,7 @@ public:
     ASSIGN = 1, DIVIDE = 2, EQUAL = 3, GREATER = 4, LESS = 5, MINUS = 6, 
     MULTIPLY = 7, NOT = 8, PLUS = 9, UNEQUAL = 10, LPAR = 11, RPAR = 12, 
     SEMICOLON = 13, FALSE = 14, TRUE = 15, INTEGER = 16, VARIABLE = 17, 
-    WS = 18
+    WS = 18, WORD = 19, COMMENT1 = 20, COMMENT2 = 21
   };
 
   explicit CalculatorLexer(antlr4::CharStream *input);

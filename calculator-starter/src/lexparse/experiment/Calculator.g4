@@ -14,7 +14,7 @@ program         :   (exprs+=expression ';')+ EOF ;
 
 booleanConstant :   TRUE | FALSE ;
 
-assignExpression:   <assoc=right> v=VARIABLE ':=' expression;
+assignExpression:   <assoc=right> v=VARIABLE ':=' ex=expression;
 
 expression      :
                 '(' ex=expression ')'                               # ParenExpr
@@ -58,3 +58,6 @@ INTEGER     : [0-9]+ ;
 VARIABLE    : [a-zA-Z]+ ;
 
 WS          : [ \n\t\r]+ -> skip;
+WORD        : [a-zA-Z]+ ;
+COMMENT1     : '/*' .*? '*/' ;
+COMMENT2     : '//' .*? '\n' ;
