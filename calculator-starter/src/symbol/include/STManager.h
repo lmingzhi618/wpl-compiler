@@ -11,6 +11,7 @@ class STManager {
 
     // Pass through methods
     Symbol* addSymbol(Symbol& s);
+    Symbol* addSymbol(std::string id, SymType t);
     // Symbol* addSymbol(std::string id, SymType t);
     Symbol* findSymbol(std::string id);
 

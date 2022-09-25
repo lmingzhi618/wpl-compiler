@@ -3,6 +3,7 @@
 include (Semantic)
 include (Symbol)
 include (ANTLR)
+include (Utility) 
 
 add_library(semantic_lib OBJECT 
     ${SEMANTIC_SOURCES}
@@ -17,6 +18,7 @@ include_directories(semantic_lib
     ${ANTLR_GENERATED_DIR}
     ${SYMBOL_INCLUDE}
     ${SEMANTIC_INCLUDE}
+    ${UTILITY_INCLUDE}
 )
 
 

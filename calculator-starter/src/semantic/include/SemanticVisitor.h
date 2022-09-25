@@ -1,4 +1,5 @@
 #pragma once
+#include "CalcErrorHandler.h"
 #include "CalculatorBaseVisitor.h"
 #include "PropertyManager.h"
 #include "STManager.h"
@@ -7,11 +8,13 @@
 class SemanticVisitor : CalculatorBaseVisitor {
    public:
     SemanticVisitor() {}
-    SemanticVisitor(STManager *stm, PropertyManager *pm) : stm(stm), pm(pm) {}
+    SemanticVisitor(STManager *stmgr, PropertyManager *pm)
+        : stmgr(stmgr), pm(pm) {}
     std::any visitProgram(CalculatorParser::ProgramContext *ctx);
     // std::any visitBooleanConstant(CalculatorParser::BooleanContextContext
-    // *ctx); std::any visitAssignExpression(
-    //     CalculatorParser::AssignExpressionContext *ctx);
+    // *ctx);
+    std::any visitAssignExpression(
+        CalculatorParser::AssignExpressionContext *ctx);
     // std::any visitParenExpr(CalculatorParser::ParenExprContext *ctx);
     // std::any visitUnaryEqExpr(CalculatorParser::UnaryEqExprContext *ctx);
     // std::any visitUnaryNotExpr(CalculatorParser::UnaryNotExprContext *ctx);
@@ -25,6 +28,7 @@ class SemanticVisitor : CalculatorBaseVisitor {
     std::string getErrors() { return ""; }
 
    private:
-    STManager *stm;
+    STManager *stmgr;
     PropertyManager *pm;
+    CalcErrorHandler errors;
 };

@@ -1,6 +1,6 @@
 # src listfile
 include (ANTLR)
-include (cmake/antlr.cmake)
+include (Utility)
 add_subdirectory(lexparse)
 add_subdirectory(symbol)
 add_subdirectory(semantic)
@@ -22,4 +22,4 @@ target_link_libraries(calculator ${ANTLR_RUNTIME_LIB})
 target_link_libraries(calculator parser_lib)
 target_link_libraries(calculator sym_lib)
 target_link_libraries(calculator semantic_lib)
-target_link_libraries(calculator utility_lib)
+target_link_libraries(utility_lib)
