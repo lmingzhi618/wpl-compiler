@@ -5,28 +5,31 @@
 #include "Symbol.h"
 
 Symbol *Scope::addSymbol(std::string id, SymType t) {
-    if (symbols.count(id)) {
-        return symbols[id];
-    }
     Symbol *s = new Symbol(id, t);
-    symbols.insert(std::pair(id, s));
-    return s;
+    if (symbols.find(id) != symbols.end()) {
+        return nullptr;
+    }
+    auto ret = (symbols.insert(std::pair(id, s))).first;
+    return ret->second;
 }
 
-Symbol &Scope::addSymbol(Symbol &symbol) {
-    if (symbols.count(symbol.identifier)) {
-        return *symbols[symbol.identifier];
-    }
-    symbols.insert(std::pair(symbol.identifier, &symbol));
-    return symbol;
-}
+// Symbol &Scope::addSymbol(Symbol &symbol) {
+//     if (symbols.count(symbol.identifier)) {
+//         return *symbols[symbol.identifier];
+//     }
+//     symbols.insert(std::pair(symbol.identifier, &symbol));
+//     return symbol;
+// }
 
 Symbol *Scope::findSymbol(std::string id) {
     Symbol *s;
-    if (symbols.count(id) == 0) {
-        return nullptr;
+    std::map<std::string, Symbol *>::const_iterator i = symbols.find(id);
+    if (i == symbols.end()) {
+        s = nullptr;
+    } else {
+        s = i->second;
     }
-    return symbols[id];
+    return s;
 }
 
 std::string Scope::toString() const {

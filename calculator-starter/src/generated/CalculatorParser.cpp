@@ -275,11 +275,12 @@ CalculatorParser::BooleanConstantContext* CalculatorParser::booleanConstant() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(17);
+    antlrcpp::downCast<BooleanConstantContext *>(_localctx)->val = _input->LT(1);
     _la = _input->LA(1);
     if (!(_la == CalculatorParser::FALSE
 
     || _la == CalculatorParser::TRUE)) {
-    _errHandler->recoverInline(this);
+      antlrcpp::downCast<BooleanConstantContext *>(_localctx)->val = _errHandler->recoverInline(this);
     }
     else {
       _errHandler->reportMatch(this);
@@ -782,7 +783,7 @@ CalculatorParser::ExpressionContext* CalculatorParser::expression(int precedence
       _ctx = _localctx;
       previousContext = _localctx;
       setState(34);
-      match(CalculatorParser::VARIABLE);
+      antlrcpp::downCast<VariableExprContext *>(_localctx)->v = match(CalculatorParser::VARIABLE);
       break;
     }
 
@@ -791,7 +792,7 @@ CalculatorParser::ExpressionContext* CalculatorParser::expression(int precedence
       _ctx = _localctx;
       previousContext = _localctx;
       setState(35);
-      match(CalculatorParser::INTEGER);
+      antlrcpp::downCast<IConstExprContext *>(_localctx)->i = match(CalculatorParser::INTEGER);
       break;
     }
 

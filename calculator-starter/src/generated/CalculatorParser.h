@@ -68,6 +68,7 @@ public:
 
   class  BooleanConstantContext : public antlr4::ParserRuleContext {
   public:
+    antlr4::Token *val = nullptr;
     BooleanConstantContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *TRUE();
@@ -129,6 +130,7 @@ public:
   public:
     IConstExprContext(ExpressionContext *ctx);
 
+    antlr4::Token *i = nullptr;
     antlr4::tree::TerminalNode *INTEGER();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -190,6 +192,7 @@ public:
   public:
     VariableExprContext(ExpressionContext *ctx);
 
+    antlr4::Token *v = nullptr;
     antlr4::tree::TerminalNode *VARIABLE();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

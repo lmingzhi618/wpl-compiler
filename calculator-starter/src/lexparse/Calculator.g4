@@ -12,7 +12,7 @@ grammar Calculator;
 
 program         :   (exprs+=expression ';')+ EOF ;
 
-booleanConstant :   TRUE | FALSE ;
+booleanConstant :   val=(TRUE | FALSE) ;
 
 assignExpression:   <assoc=right> v=VARIABLE ':=' ex=expression;
 
@@ -27,8 +27,8 @@ expression      :
                   left=expression op=('=' | '~=') right=expression  # EqExpr
                 | assignExpression                                  # AsgExpr
                 | booleanConstant                                   # BConstExpr
-                | VARIABLE                                          # VariableExpr
-                | INTEGER                                           # IConstExpr
+                | v=VARIABLE                                        # VariableExpr
+                | i=INTEGER                                         # IConstExpr
                 ;
 
 // Lexer rules

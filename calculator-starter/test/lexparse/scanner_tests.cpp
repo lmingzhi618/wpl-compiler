@@ -20,3 +20,13 @@ TEST_CASE("Scanner operator tests", "[front-end]") {
     CHECK(lexer.nextToken()->getType() == lexer.PLUS);
     CHECK(lexer.nextToken()->getType() == lexer.UNEQUAL);
 }
+
+TEST_CASE("Invalid lexemes", "[front-end]") {
+    antlr4::ANTLRInputStream input("{");
+    CalculatorLexer lexer(&input);
+    lexer.removeErrorListeners();
+    lexer.addErrorListener(new TestErrorListener());
+    // The next assertion works if we do not have our test error listener
+    // CHECK_FALSE(lexer.nextToken()->getType() != lexer.EOF);
+    CHECK_THROWS(lexer.nextToken());
+}
