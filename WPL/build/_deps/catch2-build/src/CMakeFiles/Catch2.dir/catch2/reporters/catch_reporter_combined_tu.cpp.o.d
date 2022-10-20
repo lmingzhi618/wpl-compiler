@@ -1,7 +1,7 @@
 _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_combined_tu.cpp.o: \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/reporters/catch_reporter_combined_tu.cpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/reporters/catch_reporter_combined_tu.cpp \
  /usr/include/stdc-predef.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/reporters/catch_reporter_helpers.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/reporters/catch_reporter_helpers.hpp \
  /usr/include/c++/11/iosfwd \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -131,8 +131,8 @@ _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_com
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_list.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_stringref.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_list.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_stringref.hpp \
  /usr/include/c++/11/cstddef /usr/include/c++/11/cassert \
  /usr/include/assert.h /usr/include/c++/11/set \
  /usr/include/c++/11/bits/stl_tree.h \
@@ -141,15 +141,15 @@ _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_com
  /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h \
  /usr/include/c++/11/bits/erase_if.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_config.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_noncopyable.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_config.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_noncopyable.hpp \
  /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
  /usr/include/c++/11/limits /usr/include/c++/11/ctime \
  /usr/include/c++/11/bits/parse_numbers.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_console_width.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_errno_guard.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_textflow.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_reusable_string_stream.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_console_width.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_errno_guard.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_textflow.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_reusable_string_stream.hpp \
  /usr/include/c++/11/ostream /usr/include/c++/11/ios \
  /usr/include/c++/11/exception /usr/include/c++/11/bits/exception_ptr.h \
  /usr/include/c++/11/bits/cxxabi_init_exception.h \
@@ -170,26 +170,26 @@ _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_com
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_string_manip.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_console_colour.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_unique_ptr.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_move_and_forward.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_tostring.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_string_manip.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_console_colour.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_unique_ptr.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_move_and_forward.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_tostring.hpp \
  /usr/include/string.h /usr/include/strings.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_compiler_capabilities.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_platform.hpp \
- /home/lmz/cs544/calculator-starter/build/generated-includes/catch2/catch_user_config.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_config_wchar.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_void_type.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_enum_values_registry.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_registry_hub.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_test_case_info.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_source_line_info.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_test_registry.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_testcase.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_unique_name.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_config_counter.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_preprocessor_remove_parens.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_compiler_capabilities.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_platform.hpp \
+ /home/lmz/cs544/WPL/build/generated-includes/catch2/catch_user_config.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_config_wchar.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_void_type.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_enum_values_registry.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_registry_hub.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_test_case_info.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_source_line_info.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_test_registry.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_testcase.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_unique_name.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_config_counter.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_preprocessor_remove_parens.hpp \
  /usr/include/c++/11/algorithm /usr/include/c++/11/utility \
  /usr/include/c++/11/bits/stl_relops.h \
  /usr/include/c++/11/bits/stl_algo.h \
@@ -219,17 +219,17 @@ _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_com
  /usr/include/c++/11/bits/quoted_string.h /usr/include/c++/11/sstream \
  /usr/include/c++/11/istream /usr/include/c++/11/bits/istream.tcc \
  /usr/include/c++/11/bits/sstream.tcc \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/reporters/catch_reporter_event_listener.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_reporter.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_section_info.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_totals.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_assertion_result.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_assertion_info.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_result_type.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_lazy_expr.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_message_info.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_capture.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/benchmark/catch_estimate.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/benchmark/catch_outlier_classification.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/reporters/catch_reporter_event_listener.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_reporter.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_section_info.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_totals.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_assertion_result.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_assertion_info.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_result_type.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_lazy_expr.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_message_info.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/interfaces/catch_interfaces_capture.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/benchmark/catch_estimate.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/benchmark/catch_outlier_classification.hpp \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_map.h \
  /usr/include/c++/11/bits/stl_multimap.h

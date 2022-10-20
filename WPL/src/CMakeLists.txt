@@ -21,18 +21,18 @@ add_subdirectory(codegen)
 add_subdirectory(runtime)
 
 
-add_executable(calculator calculator.cpp)
+add_executable(wpl wpl.cpp)
 
-add_dependencies(calculator
+add_dependencies(wpl
     parser_lib
     sym_lib
     semantic_lib
     utility_lib
     codegen_lib
-    calc_runtime
+    wpl_runtime
 )
 
-target_include_directories(calculator PUBLIC 
+target_include_directories(wpl PUBLIC 
     ${ANTLR_INCLUDE} ${ANTLR_GENERATED_DIR}
     ${SYMBOL_INCLUDE}
     ${SEMANTIC_INCLUDE}
@@ -42,7 +42,7 @@ target_include_directories(calculator PUBLIC
     ${LLVM_INCLUDE_DIR}
 )
 
-target_link_libraries(calculator 
+target_link_libraries(wpl 
     PRIVATE
     ${ANTLR_RUNTIME_LIB}
     parser_lib

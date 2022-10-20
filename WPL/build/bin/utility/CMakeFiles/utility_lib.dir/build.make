@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include bin/utility/CMakeFiles/utility_lib.dir/depend.make
@@ -69,21 +69,21 @@ include bin/utility/CMakeFiles/utility_lib.dir/progress.make
 # Include the compile flags for this target's objects.
 include bin/utility/CMakeFiles/utility_lib.dir/flags.make
 
-bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o: bin/utility/CMakeFiles/utility_lib.dir/flags.make
-bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o: ../src/utility/CalcErrorHandler.cpp
-bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o: bin/utility/CMakeFiles/utility_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o -MF CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o.d -o CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o -c /home/lmz/cs544/calculator-starter/src/utility/CalcErrorHandler.cpp
+bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o: bin/utility/CMakeFiles/utility_lib.dir/flags.make
+bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o: ../src/utility/ErrorHandler.cpp
+bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o: bin/utility/CMakeFiles/utility_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o -MF CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o.d -o CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o -c /home/lmz/cs544/WPL/src/utility/ErrorHandler.cpp
 
-bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/utility/CalcErrorHandler.cpp > CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.i
+bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/utility_lib.dir/ErrorHandler.cpp.i"
+	cd /home/lmz/cs544/WPL/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/utility/ErrorHandler.cpp > CMakeFiles/utility_lib.dir/ErrorHandler.cpp.i
 
-bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/utility/CalcErrorHandler.cpp -o CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.s
+bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/utility_lib.dir/ErrorHandler.cpp.s"
+	cd /home/lmz/cs544/WPL/build/bin/utility && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/utility/ErrorHandler.cpp -o CMakeFiles/utility_lib.dir/ErrorHandler.cpp.s
 
-utility_lib: bin/utility/CMakeFiles/utility_lib.dir/CalcErrorHandler.cpp.o
+utility_lib: bin/utility/CMakeFiles/utility_lib.dir/ErrorHandler.cpp.o
 utility_lib: bin/utility/CMakeFiles/utility_lib.dir/build.make
 .PHONY : utility_lib
 
@@ -92,10 +92,10 @@ bin/utility/CMakeFiles/utility_lib.dir/build: utility_lib
 .PHONY : bin/utility/CMakeFiles/utility_lib.dir/build
 
 bin/utility/CMakeFiles/utility_lib.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/utility && $(CMAKE_COMMAND) -P CMakeFiles/utility_lib.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/utility && $(CMAKE_COMMAND) -P CMakeFiles/utility_lib.dir/cmake_clean.cmake
 .PHONY : bin/utility/CMakeFiles/utility_lib.dir/clean
 
 bin/utility/CMakeFiles/utility_lib.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/utility /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/utility /home/lmz/cs544/calculator-starter/build/bin/utility/CMakeFiles/utility_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/utility /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/utility /home/lmz/cs544/WPL/build/bin/utility/CMakeFiles/utility_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/utility/CMakeFiles/utility_lib.dir/depend
 

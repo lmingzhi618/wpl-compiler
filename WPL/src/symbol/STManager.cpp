@@ -36,7 +36,7 @@ Scope& STManager::exitScope() {
  */
 // Symbol* STManager::addSymbol(Symbol& symbol) {
 //     // Check to see if it exists.
-//     std::string id = symbol.identifier;
+//     std::string id = symbol.id;
 //     if (currentScope->findSymbol(id) != nullptr) {
 //         return nullptr;
 //     }

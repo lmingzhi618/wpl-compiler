@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for ExperimentalMemCheck.
 
@@ -67,7 +67,7 @@ include test/CMakeFiles/ExperimentalMemCheck.dir/compiler_depend.make
 include test/CMakeFiles/ExperimentalMemCheck.dir/progress.make
 
 test/CMakeFiles/ExperimentalMemCheck:
-	cd /home/lmz/cs544/calculator-starter/build/test && /usr/bin/ctest -D ExperimentalMemCheck
+	cd /home/lmz/cs544/WPL/build/test && /usr/bin/ctest -D ExperimentalMemCheck
 
 ExperimentalMemCheck: test/CMakeFiles/ExperimentalMemCheck
 ExperimentalMemCheck: test/CMakeFiles/ExperimentalMemCheck.dir/build.make
@@ -78,10 +78,10 @@ test/CMakeFiles/ExperimentalMemCheck.dir/build: ExperimentalMemCheck
 .PHONY : test/CMakeFiles/ExperimentalMemCheck.dir/build
 
 test/CMakeFiles/ExperimentalMemCheck.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ExperimentalMemCheck.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ExperimentalMemCheck.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/ExperimentalMemCheck.dir/clean
 
 test/CMakeFiles/ExperimentalMemCheck.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/test /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/test /home/lmz/cs544/calculator-starter/build/test/CMakeFiles/ExperimentalMemCheck.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/test /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/test /home/lmz/cs544/WPL/build/test/CMakeFiles/ExperimentalMemCheck.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/ExperimentalMemCheck.dir/depend
 

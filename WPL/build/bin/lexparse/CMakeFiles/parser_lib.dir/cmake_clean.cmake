@@ -1,15 +1,15 @@
 file(REMOVE_RECURSE
   "("
   ")"
-  "../../../src/generated/CalculatorLexer.cpp"
-  "../../../src/generated/CalculatorLexer.h"
-  "../../../src/generated/CalculatorParser.cpp"
-  "../../../src/generated/CalculatorParser.h"
+  "../../../src/generated/WPLLexer.cpp"
+  "../../../src/generated/WPLLexer.h"
+  "../../../src/generated/WPLParser.cpp"
+  "../../../src/generated/WPLParser.h"
   "../../../src/lexparse/parser_sources.h"
-  "CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o"
-  "CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o.d"
-  "CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o"
-  "CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o.d"
+  "CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o"
+  "CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o.d"
+  "CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o"
+  "CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

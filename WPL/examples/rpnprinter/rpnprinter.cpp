@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-#include "CalculatorLexer.h"
-#include "CalculatorParser.h"
 #include "RPNVisitor.h"
+#include "WPLLexer.h"
+#include "WPLParser.h"
 #include "antlr4-runtime.h"
 //#include "antlr4/include/ANTLRInputStream.h"
 //#include "antlr4/include/CommonTokenStream.h"
@@ -15,16 +15,16 @@ int main(int argc, const char **argv) {
     antlr4::ANTLRInputStream input(str);
 
     // Create a lexer from the input
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
 
     // Create a token stream from the lexer
     antlr4::CommonTokenStream tokens(&lexer);
 
     // Create a parser from the token stream
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
 
     // Parse the input
-    CalculatorParser::ProgramContext *tree = parser.program();
+    WPLParser::ProgramContext *tree = parser.program();
 
     // Now visit the parse tree
     std::cout << "RPN for " << str << std::endl;

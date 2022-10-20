@@ -1,8 +1,7 @@
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o: \
- /home/lmz/cs544/calculator-starter/src/symbol/Scope.cpp \
- /usr/include/stdc-predef.h \
- /home/lmz/cs544/calculator-starter/src/symbol/include/Scope.h \
- /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
+ /home/lmz/cs544/WPL/src/symbol/Scope.cpp /usr/include/stdc-predef.h \
+ /home/lmz/cs544/WPL/src/symbol/include/Scope.h /usr/include/c++/11/map \
+ /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -49,7 +48,7 @@ bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o: \
  /usr/include/c++/11/bits/invoke.h \
  /usr/include/c++/11/bits/stl_multimap.h \
  /usr/include/c++/11/bits/erase_if.h \
- /home/lmz/cs544/calculator-starter/src/symbol/include/Symbol.h \
+ /home/lmz/cs544/WPL/src/symbol/include/Symbol.h \
  /usr/include/c++/11/sstream /usr/include/c++/11/istream \
  /usr/include/c++/11/ios /usr/include/c++/11/iosfwd \
  /usr/include/c++/11/bits/stringfwd.h /usr/include/c++/11/bits/postypes.h \

@@ -4,7 +4,7 @@
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o: ../examples/rpnprinter/RPNVisitor.cpp \
   /usr/include/stdc-predef.h \
   ../examples/rpnprinter/RPNVisitor.h \
-  ../src/generated/CalculatorBaseVisitor.h \
+  ../src/generated/WPLBaseVisitor.h \
   ../antlr/include/antlr4-runtime.h \
   ../antlr/include/antlr4-common.h \
   /usr/include/c++/11/algorithm \
@@ -441,8 +441,8 @@ examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o: ../examples/rpnprinter/
   ../antlr/include/tree/xpath/XPathTokenElement.h \
   ../antlr/include/tree/xpath/XPathWildcardAnywhereElement.h \
   ../antlr/include/tree/xpath/XPathWildcardElement.h \
-  ../src/generated/CalculatorVisitor.h \
-  ../src/generated/CalculatorParser.h
+  ../src/generated/WPLVisitor.h \
+  ../src/generated/WPLParser.h
 
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/rpnprinter.cpp \
   /usr/include/stdc-predef.h \
@@ -626,7 +626,8 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/bits/istream.tcc \
-  ../src/generated/CalculatorLexer.h \
+  ../examples/rpnprinter/RPNVisitor.h \
+  ../src/generated/WPLBaseVisitor.h \
   ../antlr/include/antlr4-runtime.h \
   ../antlr/include/antlr4-common.h \
   /usr/include/c++/11/algorithm \
@@ -883,17 +884,18 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
   ../antlr/include/tree/xpath/XPathTokenElement.h \
   ../antlr/include/tree/xpath/XPathWildcardAnywhereElement.h \
   ../antlr/include/tree/xpath/XPathWildcardElement.h \
-  ../src/generated/CalculatorParser.h \
-  ../examples/rpnprinter/RPNVisitor.h \
-  ../src/generated/CalculatorBaseVisitor.h \
-  ../src/generated/CalculatorVisitor.h
+  ../src/generated/WPLVisitor.h \
+  ../src/generated/WPLParser.h \
+  ../src/generated/WPLLexer.h
 
 
-../src/generated/CalculatorLexer.h:
+../src/generated/WPLLexer.h:
 
 ../examples/rpnprinter/rpnprinter.cpp:
 
-../src/generated/CalculatorVisitor.h:
+../src/generated/WPLParser.h:
+
+../src/generated/WPLVisitor.h:
 
 ../antlr/include/tree/xpath/XPathTokenAnywhereElement.h:
 
@@ -940,8 +942,6 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 ../antlr/include/atn/StarBlockStartState.h:
 
 ../antlr/include/atn/RuleTransition.h:
-
-../src/generated/CalculatorParser.h:
 
 ../antlr/include/atn/PredicateTransition.h:
 
@@ -1249,6 +1249,26 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 
 /usr/include/c++/11/bit:
 
+/usr/include/c++/11/bits/stl_algobase.h:
+
+../antlr/include/tree/Trees.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
+
+/usr/include/c++/11/cwchar:
+
+/usr/include/c++/11/bits/functexcept.h:
+
+/usr/include/c++/11/streambuf:
+
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+../antlr/include/TokenStreamRewriter.h:
+
+/usr/include/c++/11/tuple:
+
+/usr/include/c++/11/bits/stl_tree.h:
+
 ../antlr/include/atn/LexerActionType.h:
 
 ../antlr/include/atn/PredictionContextCache.h:
@@ -1283,6 +1303,10 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 
 /usr/include/c++/11/bits/allocator.h:
 
+/usr/include/c++/11/type_traits:
+
+/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
 /usr/include/c++/11/bits/vector.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
@@ -1298,16 +1322,6 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
-
-/usr/include/c++/11/type_traits:
-
-../antlr/include/TokenStreamRewriter.h:
-
-/usr/include/c++/11/tuple:
-
-/usr/include/c++/11/bits/stl_tree.h:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
 
@@ -1345,22 +1359,6 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
-../src/generated/CalculatorBaseVisitor.h:
-
-../antlr/include/atn/ParserATNSimulator.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/11/cerrno:
-
-../antlr/include/tree/Trees.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
-
-/usr/include/c++/11/bits/stl_algobase.h:
-
-/usr/include/c++/11/cwchar:
-
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/alloca.h:
@@ -1372,12 +1370,6 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 /usr/include/c++/11/stdexcept:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++allocator.h:
-
-/usr/include/c++/11/bits/functexcept.h:
-
-/usr/include/c++/11/streambuf:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
@@ -1403,15 +1395,17 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:
 
+/usr/include/c++/11/pstl/glue_memory_defs.h:
+
+/usr/include/c++/11/bits/unordered_map.h:
+
 ../antlr/include/tree/xpath/XPathLexer.h:
 
 ../antlr/include/atn/ATNState.h:
 
 /usr/include/c++/11/ext/type_traits.h:
 
-/usr/include/c++/11/pstl/glue_memory_defs.h:
-
-/usr/include/c++/11/bits/unordered_map.h:
+../src/generated/WPLBaseVisitor.h:
 
 /usr/include/errno.h:
 
@@ -1423,9 +1417,9 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 
 /usr/include/c++/11/bits/stl_multimap.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h:
-
 /usr/include/c++/11/debug/debug.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h:
 
 /usr/include/features-time64.h:
 
@@ -1644,6 +1638,12 @@ examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/
 /usr/include/c++/11/cstdio:
 
 /usr/include/stdio.h:
+
+../antlr/include/atn/ParserATNSimulator.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/11/cerrno:
 
 ../antlr/include/atn/LexerSkipAction.h:
 

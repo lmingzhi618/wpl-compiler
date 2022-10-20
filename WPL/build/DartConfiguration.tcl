@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /home/lmz/cs544/calculator-starter
-BuildDirectory: /home/lmz/cs544/calculator-starter/build
+SourceDirectory: /home/lmz/cs544/WPL
+BuildDirectory: /home/lmz/cs544/WPL/build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -26,7 +26,7 @@ SubmitURL: http://
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/usr/bin/cmake" "/home/lmz/cs544/calculator-starter"
+ConfigureCommand: "/usr/bin/cmake" "/home/lmz/cs544/WPL"
 MakeCommand: /usr/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 

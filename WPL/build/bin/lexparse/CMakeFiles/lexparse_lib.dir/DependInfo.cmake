@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/lmz/cs544/calculator-starter/src/generated/CalculatorLexer.cpp" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o" "gcc" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o.d"
-  "/home/lmz/cs544/calculator-starter/src/generated/CalculatorParser.cpp" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o" "gcc" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/generated/WPLLexer.cpp" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o" "gcc" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/generated/WPLParser.cpp" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o" "gcc" "bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o.d"
   )
 
 # Targets to which this target links.

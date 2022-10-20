@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for NightlyBuild.
 
@@ -67,7 +67,7 @@ include test/CMakeFiles/NightlyBuild.dir/compiler_depend.make
 include test/CMakeFiles/NightlyBuild.dir/progress.make
 
 test/CMakeFiles/NightlyBuild:
-	cd /home/lmz/cs544/calculator-starter/build/test && /usr/bin/ctest -D NightlyBuild
+	cd /home/lmz/cs544/WPL/build/test && /usr/bin/ctest -D NightlyBuild
 
 NightlyBuild: test/CMakeFiles/NightlyBuild
 NightlyBuild: test/CMakeFiles/NightlyBuild.dir/build.make
@@ -78,10 +78,10 @@ test/CMakeFiles/NightlyBuild.dir/build: NightlyBuild
 .PHONY : test/CMakeFiles/NightlyBuild.dir/build
 
 test/CMakeFiles/NightlyBuild.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/test && $(CMAKE_COMMAND) -P CMakeFiles/NightlyBuild.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/test && $(CMAKE_COMMAND) -P CMakeFiles/NightlyBuild.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/NightlyBuild.dir/clean
 
 test/CMakeFiles/NightlyBuild.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/test /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/test /home/lmz/cs544/calculator-starter/build/test/CMakeFiles/NightlyBuild.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/test /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/test /home/lmz/cs544/WPL/build/test/CMakeFiles/NightlyBuild.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/NightlyBuild.dir/depend
 

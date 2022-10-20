@@ -1,8 +1,8 @@
-# Install script for directory: /home/lmz/cs544/calculator-starter/examples/rpnprinter
+# Install script for directory: /home/lmz/cs544/WPL/examples/rpnprinter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/lmz/cs544/calculator-starter")
+  set(CMAKE_INSTALL_PREFIX "/home/lmz/cs544/WPL")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

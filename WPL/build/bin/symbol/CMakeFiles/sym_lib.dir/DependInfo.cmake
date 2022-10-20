@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/lmz/cs544/calculator-starter/src/symbol/STManager.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o.d"
-  "/home/lmz/cs544/calculator-starter/src/symbol/Scope.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/symbol/STManager.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/symbol/Scope.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o.d"
   )
 
 # Targets to which this target links.

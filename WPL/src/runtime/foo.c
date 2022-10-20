@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+#include "wpl_runtime.h"
+
+int program() {
+    int nArgs = getArgCount();
+    int sum = 0;
+    int i = 1;
+    while (i < nArgs) {
+        sum += getIntArg(i++);
+    }
+    printf("The sum of the arguments is: %d\n", sum);
+    return sum;
+}
+

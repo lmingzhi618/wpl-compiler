@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for generate_parser.
 
@@ -69,8 +69,8 @@ include bin/lexparse/CMakeFiles/generate_parser.dir/progress.make
 bin/lexparse/CMakeFiles/generate_parser: ../src/lexparse/parser_sources.h
 
 bin/lexparse/(:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating (, ../../../src/lexparse/parser_sources.h, )"
-	cd /home/lmz/cs544/calculator-starter/src/lexparse && /bin/sh generate.sh Calculator
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating (, ../../../src/lexparse/parser_sources.h, )"
+	cd /home/lmz/cs544/WPL/src/lexparse && /bin/sh generate.sh WPL
 
 ../src/lexparse/parser_sources.h: bin/lexparse/(
 	@$(CMAKE_COMMAND) -E touch_nocreate ../src/lexparse/parser_sources.h
@@ -90,10 +90,10 @@ bin/lexparse/CMakeFiles/generate_parser.dir/build: generate_parser
 .PHONY : bin/lexparse/CMakeFiles/generate_parser.dir/build
 
 bin/lexparse/CMakeFiles/generate_parser.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/generate_parser.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/generate_parser.dir/cmake_clean.cmake
 .PHONY : bin/lexparse/CMakeFiles/generate_parser.dir/clean
 
 bin/lexparse/CMakeFiles/generate_parser.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/lexparse /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/lexparse /home/lmz/cs544/calculator-starter/build/bin/lexparse/CMakeFiles/generate_parser.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/lexparse /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/lexparse /home/lmz/cs544/WPL/build/bin/lexparse/CMakeFiles/generate_parser.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/lexparse/CMakeFiles/generate_parser.dir/depend
 

@@ -1,20 +1,20 @@
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
 
-#include "CalcErrorHandler.h"
-#include "CalculatorLexer.h"
-#include "CalculatorParser.h"
+#include "ErrorHandler.h"
 #include "PropertyManager.h"
 #include "SemanticVisitor.h"
+#include "WPLLexer.h"
+#include "WPLParser.h"
 #include "antlr4-runtime.h"
 
 TEST_CASE("Development tests", "[semantic]") {
     antlr4::ANTLRInputStream input("42;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -29,11 +29,11 @@ TEST_CASE("Development tests", "[semantic]") {
 
 TEST_CASE("Simple valid expressions", "[semantics]") {
     antlr4::ANTLRInputStream input("3 * 2 = ((2 * 3) < 10);");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -47,11 +47,11 @@ TEST_CASE("Simple valid expressions", "[semantics]") {
 
 TEST_CASE("Defined variables", "[semantic]") {
     antlr4::ANTLRInputStream input("a := 1; b := a;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     STManager* stm = new STManager();
@@ -66,11 +66,11 @@ TEST_CASE("Defined variables", "[semantic]") {
 
 TEST_CASE("Undefined variables", "[semantic]") {
     antlr4::ANTLRInputStream input("a + 1;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     STManager* stm = new STManager();
@@ -84,11 +84,11 @@ TEST_CASE("Undefined variables", "[semantic]") {
 
 TEST_CASE("Assignment tests", "[semantic]") {
     antlr4::ANTLRInputStream input("a := 5 * 3;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -99,11 +99,11 @@ TEST_CASE("Assignment tests", "[semantic]") {
 
 TEST_CASE("UnaryMinus tests", "[semantic]") {
     antlr4::ANTLRInputStream input("42; true; -3;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -118,11 +118,11 @@ TEST_CASE("UnaryMinus tests", "[semantic]") {
 
 TEST_CASE("UnaryNot tests", "[semantic]") {
     antlr4::ANTLRInputStream input("~false;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -137,11 +137,11 @@ TEST_CASE("UnaryNot tests", "[semantic]") {
 
 TEST_CASE("BinaryArithExpr tests", "[semantic]") {
     antlr4::ANTLRInputStream input("2 + 3; 4 * 5 * 2;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -156,11 +156,11 @@ TEST_CASE("BinaryArithExpr tests", "[semantic]") {
 
 TEST_CASE("BinaryRelExpr tests", "[semantic]") {
     antlr4::ANTLRInputStream input("2 < 3;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =
@@ -175,11 +175,11 @@ TEST_CASE("BinaryRelExpr tests", "[semantic]") {
 
 TEST_CASE("EqExpr tests", "[semantic]") {
     antlr4::ANTLRInputStream input("1 < 4 = 3 = 2 = 4 > 3;");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    CalculatorParser parser(&tokens);
+    WPLParser parser(&tokens);
     parser.removeErrorListeners();
-    CalculatorParser::ProgramContext* tree = NULL;
+    WPLParser::ProgramContext* tree = NULL;
     REQUIRE_NOTHROW(tree = parser.program());
     REQUIRE(tree != NULL);
     SemanticVisitor* sv =

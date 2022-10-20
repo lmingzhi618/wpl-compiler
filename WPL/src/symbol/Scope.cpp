@@ -14,10 +14,10 @@ Symbol *Scope::addSymbol(std::string id, SymType t) {
 }
 
 // Symbol &Scope::addSymbol(Symbol &symbol) {
-//     if (symbols.count(symbol.identifier)) {
-//         return *symbols[symbol.identifier];
+//     if (symbols.count(symbol.id)) {
+//         return *symbols[symbol.id];
 //     }
-//     symbols.insert(std::pair(symbol.identifier, &symbol));
+//     symbols.insert(std::pair(symbol.id, &symbol));
 //     return symbol;
 // }
 

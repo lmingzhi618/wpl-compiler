@@ -1,10 +1,10 @@
 _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_debugger.cpp.o: \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/internal/catch_debugger.cpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/internal/catch_debugger.cpp \
  /usr/include/stdc-predef.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_debugger.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_platform.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_errno_guard.hpp \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_stdstreams.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_debugger.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_platform.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_errno_guard.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_stdstreams.hpp \
  /usr/include/c++/11/iosfwd \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

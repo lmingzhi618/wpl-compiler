@@ -1,5 +1,5 @@
 
-// Generated from Calculator.g4 by ANTLR 4.10.1
+// Generated from WPL.g4 by ANTLR 4.10.1
 
 #pragma once
 
@@ -10,16 +10,16 @@
 #include <llvm/IR/NoFolder.h>
 #include <llvm/IR/Type.h>
 
-#include "CalcErrorHandler.h"
-#include "CalculatorBaseVisitor.h"
-#include "CalculatorLexer.h"
-#include "CalculatorParser.h"
-#include "CalculatorVisitor.h"
+#include "ErrorHandler.h"
 #include "PropertyManager.h"
+#include "WPLBaseVisitor.h"
+#include "WPLLexer.h"
+#include "WPLParser.h"
+#include "WPLVisitor.h"
 #include "antlr4-runtime.h"
 
 using namespace llvm;
-class CodegenVisitor : public CalculatorBaseVisitor {
+class CodegenVisitor : public WPLBaseVisitor {
    public:
     CodegenVisitor(PropertyManager *pm, std::string moduleName) {
         props = pm;
@@ -39,25 +39,22 @@ class CodegenVisitor : public CalculatorBaseVisitor {
         Int8PtrPtrTy = i8p->getPointerTo();
     }
 
-    std::any visitProgram(CalculatorParser::ProgramContext *ctx) override;
-    std::any visitBooleanConstant(
-        CalculatorParser::BooleanConstantContext *ctx) override;
-    std::any visitAssignExpression(
-        CalculatorParser::AssignExpressionContext *ctx) override;
-    //  std::any visitAsgExpr(CalculatorParser::AsgExprContext *ctx) override;
-    std::any visitIConstExpr(CalculatorParser::IConstExprContext *ctx) override;
-    std::any visitBinaryArithExpr(
-        CalculatorParser::BinaryArithExprContext *ctx) override;
-    std::any visitEqExpr(CalculatorParser::EqExprContext *ctx) override;
-    std::any visitUnaryNotExpr(
-        CalculatorParser::UnaryNotExprContext *ctx) override;
-    std::any visitVariableExpr(
-        CalculatorParser::VariableExprContext *ctx) override;
-    std::any visitParenExpr(CalculatorParser::ParenExprContext *ctx) override;
-    std::any visitBinaryRelExpr(
-        CalculatorParser::BinaryRelExprContext *ctx) override;
-    std::any visitUnaryMinusExpr(
-        CalculatorParser::UnaryMinusExprContext *ctx) override;
+    // std::any visitProgram(WPLParser::ProgramContext *ctx) override;
+    // std::any visitBooleanConstant(
+    //     WPLParser::BooleanConstantContext *ctx) override;
+    // std::any visitAssignExpression(
+    //     WPLParser::AssignExpressionContext *ctx) override;
+    ////  std::any visitAsgExpr(WPLParser::AsgExprContext *ctx) override;
+    // std::any visitIConstExpr(WPLParser::IConstExprContext *ctx) override;
+    // std::any visitBinaryArithExpr(
+    //     WPLParser::BinaryArithExprContext *ctx) override;
+    // std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
+    // std::any visitUnaryNotExpr(WPLParser::UnaryNotExprContext *ctx) override;
+    // std::any visitVariableExpr(WPLParser::VariableExprContext *ctx) override;
+    // std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
+    // std::any visitBinaryRelExpr(WPLParser::BinaryRelExprContext *ctx)
+    // override; std::any visitUnaryMinusExpr(
+    //     WPLParser::UnaryMinusExprContext *ctx) override;
 
     std::string getErrors() { return errors.errorList(); }
     PropertyManager *getProperties() { return props; }
@@ -67,7 +64,7 @@ class CodegenVisitor : public CalculatorBaseVisitor {
 
    private:
     PropertyManager *props;
-    CalcErrorHandler errors;
+    ErrorHandler errors;
 
     LLVMContext *context;
     Module *module;

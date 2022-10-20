@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include bin/symbol/CMakeFiles/sym_lib.dir/depend.make
@@ -72,30 +72,30 @@ include bin/symbol/CMakeFiles/sym_lib.dir/flags.make
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/flags.make
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o: ../src/symbol/Scope.cpp
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o -MF CMakeFiles/sym_lib.dir/Scope.cpp.o.d -o CMakeFiles/sym_lib.dir/Scope.cpp.o -c /home/lmz/cs544/calculator-starter/src/symbol/Scope.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o -MF CMakeFiles/sym_lib.dir/Scope.cpp.o.d -o CMakeFiles/sym_lib.dir/Scope.cpp.o -c /home/lmz/cs544/WPL/src/symbol/Scope.cpp
 
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sym_lib.dir/Scope.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/symbol/Scope.cpp > CMakeFiles/sym_lib.dir/Scope.cpp.i
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/symbol/Scope.cpp > CMakeFiles/sym_lib.dir/Scope.cpp.i
 
 bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sym_lib.dir/Scope.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/symbol/Scope.cpp -o CMakeFiles/sym_lib.dir/Scope.cpp.s
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/symbol/Scope.cpp -o CMakeFiles/sym_lib.dir/Scope.cpp.s
 
 bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/flags.make
 bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o: ../src/symbol/STManager.cpp
 bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o -MF CMakeFiles/sym_lib.dir/STManager.cpp.o.d -o CMakeFiles/sym_lib.dir/STManager.cpp.o -c /home/lmz/cs544/calculator-starter/src/symbol/STManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o -MF CMakeFiles/sym_lib.dir/STManager.cpp.o.d -o CMakeFiles/sym_lib.dir/STManager.cpp.o -c /home/lmz/cs544/WPL/src/symbol/STManager.cpp
 
 bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sym_lib.dir/STManager.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/symbol/STManager.cpp > CMakeFiles/sym_lib.dir/STManager.cpp.i
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/symbol/STManager.cpp > CMakeFiles/sym_lib.dir/STManager.cpp.i
 
 bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sym_lib.dir/STManager.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/symbol/STManager.cpp -o CMakeFiles/sym_lib.dir/STManager.cpp.s
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/symbol/STManager.cpp -o CMakeFiles/sym_lib.dir/STManager.cpp.s
 
 sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o
 sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o
@@ -107,10 +107,10 @@ bin/symbol/CMakeFiles/sym_lib.dir/build: sym_lib
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/build
 
 bin/symbol/CMakeFiles/sym_lib.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/symbol && $(CMAKE_COMMAND) -P CMakeFiles/sym_lib.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/symbol && $(CMAKE_COMMAND) -P CMakeFiles/sym_lib.dir/cmake_clean.cmake
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/clean
 
 bin/symbol/CMakeFiles/sym_lib.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/symbol /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/symbol /home/lmz/cs544/calculator-starter/build/bin/symbol/CMakeFiles/sym_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/symbol /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/symbol /home/lmz/cs544/WPL/build/bin/symbol/CMakeFiles/sym_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/depend
 

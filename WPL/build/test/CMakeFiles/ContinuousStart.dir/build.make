@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for ContinuousStart.
 
@@ -67,7 +67,7 @@ include test/CMakeFiles/ContinuousStart.dir/compiler_depend.make
 include test/CMakeFiles/ContinuousStart.dir/progress.make
 
 test/CMakeFiles/ContinuousStart:
-	cd /home/lmz/cs544/calculator-starter/build/test && /usr/bin/ctest -D ContinuousStart
+	cd /home/lmz/cs544/WPL/build/test && /usr/bin/ctest -D ContinuousStart
 
 ContinuousStart: test/CMakeFiles/ContinuousStart
 ContinuousStart: test/CMakeFiles/ContinuousStart.dir/build.make
@@ -78,10 +78,10 @@ test/CMakeFiles/ContinuousStart.dir/build: ContinuousStart
 .PHONY : test/CMakeFiles/ContinuousStart.dir/build
 
 test/CMakeFiles/ContinuousStart.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ContinuousStart.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ContinuousStart.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/ContinuousStart.dir/clean
 
 test/CMakeFiles/ContinuousStart.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/test /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/test /home/lmz/cs544/calculator-starter/build/test/CMakeFiles/ContinuousStart.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/test /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/test /home/lmz/cs544/WPL/build/test/CMakeFiles/ContinuousStart.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/ContinuousStart.dir/depend
 

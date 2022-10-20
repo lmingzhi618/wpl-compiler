@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include examples/bin/CMakeFiles/rpnprinter.dir/depend.make
@@ -72,30 +72,30 @@ include examples/bin/CMakeFiles/rpnprinter.dir/flags.make
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: examples/bin/CMakeFiles/rpnprinter.dir/flags.make
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: ../examples/rpnprinter/rpnprinter.cpp
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o: examples/bin/CMakeFiles/rpnprinter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o -MF CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o.d -o CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o -c /home/lmz/cs544/calculator-starter/examples/rpnprinter/rpnprinter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o"
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o -MF CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o.d -o CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o -c /home/lmz/cs544/WPL/examples/rpnprinter/rpnprinter.cpp
 
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/examples/rpnprinter/rpnprinter.cpp > CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/examples/rpnprinter/rpnprinter.cpp > CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i
 
 examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/examples/rpnprinter/rpnprinter.cpp -o CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/examples/rpnprinter/rpnprinter.cpp -o CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s
 
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o: examples/bin/CMakeFiles/rpnprinter.dir/flags.make
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o: ../examples/rpnprinter/RPNVisitor.cpp
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o: examples/bin/CMakeFiles/rpnprinter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o -MF CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o.d -o CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o -c /home/lmz/cs544/calculator-starter/examples/rpnprinter/RPNVisitor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o"
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o -MF CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o.d -o CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o -c /home/lmz/cs544/WPL/examples/rpnprinter/RPNVisitor.cpp
 
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/examples/rpnprinter/RPNVisitor.cpp > CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/examples/rpnprinter/RPNVisitor.cpp > CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i
 
 examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/examples/rpnprinter/RPNVisitor.cpp -o CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s
+	cd /home/lmz/cs544/WPL/build/examples/bin && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/examples/rpnprinter/RPNVisitor.cpp -o CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s
 
 # Object files for target rpnprinter
 rpnprinter_OBJECTS = \
@@ -104,28 +104,28 @@ rpnprinter_OBJECTS = \
 
 # External object files for target rpnprinter
 rpnprinter_EXTERNAL_OBJECTS = \
-"/home/lmz/cs544/calculator-starter/build/bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o" \
-"/home/lmz/cs544/calculator-starter/build/bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o"
+"/home/lmz/cs544/WPL/build/bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o" \
+"/home/lmz/cs544/WPL/build/bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o"
 
 examples/bin/rpnprinter: examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o
 examples/bin/rpnprinter: examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o
-examples/bin/rpnprinter: bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o
-examples/bin/rpnprinter: bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o
+examples/bin/rpnprinter: bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o
+examples/bin/rpnprinter: bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o
 examples/bin/rpnprinter: examples/bin/CMakeFiles/rpnprinter.dir/build.make
 examples/bin/rpnprinter: ../antlr/lib/libantlr4-runtime.a
 examples/bin/rpnprinter: examples/bin/CMakeFiles/rpnprinter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable rpnprinter"
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rpnprinter.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable rpnprinter"
+	cd /home/lmz/cs544/WPL/build/examples/bin && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rpnprinter.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 examples/bin/CMakeFiles/rpnprinter.dir/build: examples/bin/rpnprinter
 .PHONY : examples/bin/CMakeFiles/rpnprinter.dir/build
 
 examples/bin/CMakeFiles/rpnprinter.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/examples/bin && $(CMAKE_COMMAND) -P CMakeFiles/rpnprinter.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/examples/bin && $(CMAKE_COMMAND) -P CMakeFiles/rpnprinter.dir/cmake_clean.cmake
 .PHONY : examples/bin/CMakeFiles/rpnprinter.dir/clean
 
 examples/bin/CMakeFiles/rpnprinter.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/examples/rpnprinter /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/examples/bin /home/lmz/cs544/calculator-starter/build/examples/bin/CMakeFiles/rpnprinter.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/examples/rpnprinter /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/examples/bin /home/lmz/cs544/WPL/build/examples/bin/CMakeFiles/rpnprinter.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : examples/bin/CMakeFiles/rpnprinter.dir/depend
 

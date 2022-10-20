@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/lmz/cs544/calculator-starter/antlr/include -I/home/lmz/cs544/calculator-starter/src/generated -I/home/lmz/cs544/calculator-starter/src/symbol/include -I/home/lmz/cs544/calculator-starter/src/semantic/include -I/home/lmz/cs544/calculator-starter/src/utility/include -I/home/lmz/cs544/calculator-starter/src/codegen/include -I/usr/lib/llvm-14/include -I/home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/.. -I/home/lmz/cs544/calculator-starter/build/generated-includes
+CXX_INCLUDES = -I/home/lmz/cs544/WPL/antlr/include -I/home/lmz/cs544/WPL/src/generated -I/home/lmz/cs544/WPL/src/symbol/include -I/home/lmz/cs544/WPL/src/semantic/include -I/home/lmz/cs544/WPL/src/utility/include -I/home/lmz/cs544/WPL/src/codegen/include -I/usr/lib/llvm-14/include -I/home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/.. -I/home/lmz/cs544/WPL/build/generated-includes
 
 CXX_FLAGS =  -O0 -Wall -g2 -ggdb -std=gnu++17
 

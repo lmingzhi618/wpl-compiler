@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/lmz/cs544/calculator-starter/src/semantic/SemanticVisitor.cpp" "bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o" "gcc" "bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/semantic/SemanticVisitor.cpp" "bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o" "gcc" "bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -391,7 +391,7 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
   /usr/lib/llvm-14/include/llvm/IR/Operator.h \
   /usr/lib/llvm-14/include/llvm/IR/ValueHandle.h \
   /usr/lib/llvm-14/include/llvm/IR/NoFolder.h \
-  ../src/utility/include/CalcErrorHandler.h \
+  ../src/utility/include/ErrorHandler.h \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/ios \
@@ -596,21 +596,21 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
   ../antlr/include/tree/xpath/XPathTokenElement.h \
   ../antlr/include/tree/xpath/XPathWildcardAnywhereElement.h \
   ../antlr/include/tree/xpath/XPathWildcardElement.h \
-  ../src/generated/CalculatorBaseVisitor.h \
-  ../src/generated/CalculatorVisitor.h \
-  ../src/generated/CalculatorParser.h \
-  ../src/generated/CalculatorLexer.h \
   ../src/semantic/include/PropertyManager.h \
-  ../src/symbol/include/Symbol.h
+  ../src/symbol/include/Symbol.h \
+  ../src/generated/WPLBaseVisitor.h \
+  ../src/generated/WPLVisitor.h \
+  ../src/generated/WPLParser.h \
+  ../src/generated/WPLLexer.h
 
+
+../src/generated/WPLLexer.h:
+
+../src/generated/WPLParser.h:
+
+../src/generated/WPLVisitor.h:
 
 ../src/symbol/include/Symbol.h:
-
-../src/generated/CalculatorLexer.h:
-
-../src/generated/CalculatorParser.h:
-
-../src/generated/CalculatorVisitor.h:
 
 ../antlr/include/tree/xpath/XPathWildcardElement.h:
 
@@ -673,8 +673,6 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
 ../antlr/include/atn/PredicateTransition.h:
 
 ../antlr/include/atn/PrecedencePredicateTransition.h:
-
-../src/generated/CalculatorBaseVisitor.h:
 
 ../antlr/include/atn/PlusBlockStartState.h:
 
@@ -773,6 +771,8 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
 /usr/include/c++/11/backward/auto_ptr.h:
 
 /usr/include/c++/11/bits/stl_uninitialized.h:
+
+../src/generated/WPLBaseVisitor.h:
 
 /usr/include/c++/11/memory:
 
@@ -1334,8 +1334,6 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
-../src/utility/include/CalcErrorHandler.h:
-
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /usr/include/x86_64-linux-gnu/bits/fp-logb.h:
@@ -1661,6 +1659,8 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
 ../antlr/include/ANTLRFileStream.h:
 
 ../antlr/include/atn/TransitionType.h:
+
+../src/utility/include/ErrorHandler.h:
 
 /usr/include/c++/11/ctime:
 

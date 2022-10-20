@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-std::any RPNVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
+std::any RPNVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
     for (auto e : ctx->exprs) {
         e->accept(this);
         std::cout << std::endl;
@@ -11,68 +11,65 @@ std::any RPNVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
 }
 
 std::any RPNVisitor::visitAssignExpression(
-    CalculatorParser::AssignExpressionContext *ctx) {
+    WPLParser::AssignExpressionContext *ctx) {
     ctx->ex->accept(this);          // ex: expression
     std::cout << ctx->v->getText()  // v: VARIABLE
               << ":=";
     return NULL;
 }
 
-std::any RPNVisitor::visitParenExpr(CalculatorParser::ParenExprContext *ctx) {
+std::any RPNVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
     ctx->ex->accept(this);
     return NULL;
 }
 
 std::any RPNVisitor::visitBooleanConstant(
-    CalculatorParser::BooleanConstantContext *ctx) {
+    WPLParser::BooleanConstantContext *ctx) {
     std::cout << ctx->getText();
     return NULL;
 }
 
 std::any RPNVisitor::visitUnaryMinusExpr(
-    CalculatorParser::UnaryMinusExprContext *ctx) {
+    WPLParser::UnaryMinusExprContext *ctx) {
     ctx->ex->accept(this);
     std::cout << "-";
     return NULL;
 }
 
-std::any RPNVisitor::visitUnaryNotExpr(
-    CalculatorParser::UnaryNotExprContext *ctx) {
+std::any RPNVisitor::visitUnaryNotExpr(WPLParser::UnaryNotExprContext *ctx) {
     ctx->ex->accept(this);
     std::cout << "~";
     return NULL;
 }
 
 std::any RPNVisitor::visitBinaryArithExpr(
-    CalculatorParser::BinaryArithExprContext *ctx) {
+    WPLParser::BinaryArithExprContext *ctx) {
     ctx->left->accept(this);
     ctx->right->accept(this);
     std::cout << ctx->op->getText();
     return NULL;
 }
 
-std::any RPNVisitor::visitBinaryRelExpr(
-    CalculatorParser::BinaryRelExprContext *ctx) {
+std::any RPNVisitor::visitBinaryRelExpr(WPLParser::BinaryRelExprContext *ctx) {
     ctx->left->accept(this);
     ctx->right->accept(this);
     std::cout << ctx->op->getText();
     return NULL;
 }
 
-std::any RPNVisitor::visitEqExpr(CalculatorParser::EqExprContext *ctx) {
+std::any RPNVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     ctx->right->accept(this);  // right associative
     ctx->left->accept(this);
     std::cout << ctx->op->getText();
     return NULL;
 }
 
-std::any RPNVisitor::visitVariableExpr(
-    CalculatorParser::VariableExprContext *ctx) {
+std::any RPNVisitor::visitVariableExpr(WPLParser::VariableExprContext *ctx) {
     std::cout << ctx->getText();
     return NULL;
 }
 
-std::any RPNVisitor::visitIConstExpr(CalculatorParser::IConstExprContext *ctx) {
+std::any RPNVisitor::visitIConstExpr(WPLParser::IConstExprContext *ctx) {
     std::cout << ctx->getText();
     return NULL;
 }

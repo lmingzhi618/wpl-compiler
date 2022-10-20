@@ -7,7 +7,7 @@ class Scope {
    public:
     Scope() : parent(nullptr) {}
     Scope(Scope* p) : parent(p) {}
-    // Symbol& addSymbol(Symbol& s);
+    Symbol* addSymbol(Symbol* s);  // return nullptr if duplicate - wpl
     Symbol* addSymbol(std::string id, SymType t);
     Symbol* findSymbol(std::string id);
     Scope* getParent() { return parent; }

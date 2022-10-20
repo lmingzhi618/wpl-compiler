@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles /home/lmz/cs544/calculator-starter/build/bin/codegen//CMakeFiles/progress.marks
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles /home/lmz/cs544/WPL/build/bin/codegen//CMakeFiles/progress.marks
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/clean
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 bin/codegen/CMakeFiles/codegen_lib.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/CMakeFiles/codegen_lib.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/codegen/CMakeFiles/codegen_lib.dir/rule
 .PHONY : bin/codegen/CMakeFiles/codegen_lib.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ codegen_lib: bin/codegen/CMakeFiles/codegen_lib.dir/rule
 
 # fast build rule for target.
 codegen_lib/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/build
 .PHONY : codegen_lib/fast
 
 CodegenVisitor.o: CodegenVisitor.cpp.o
@@ -190,7 +190,7 @@ CodegenVisitor.o: CodegenVisitor.cpp.o
 
 # target to build an object file
 CodegenVisitor.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o
 .PHONY : CodegenVisitor.cpp.o
 
 CodegenVisitor.i: CodegenVisitor.cpp.i
@@ -198,7 +198,7 @@ CodegenVisitor.i: CodegenVisitor.cpp.i
 
 # target to preprocess a source file
 CodegenVisitor.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i
 .PHONY : CodegenVisitor.cpp.i
 
 CodegenVisitor.s: CodegenVisitor.cpp.s
@@ -206,7 +206,7 @@ CodegenVisitor.s: CodegenVisitor.cpp.s
 
 # target to generate assembly for a file
 CodegenVisitor.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/codegen/CMakeFiles/codegen_lib.dir/build.make bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s
 .PHONY : CodegenVisitor.cpp.s
 
 # Help Target
@@ -237,6 +237,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

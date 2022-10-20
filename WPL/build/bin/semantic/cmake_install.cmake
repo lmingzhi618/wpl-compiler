@@ -1,4 +1,4 @@
-# Install script for directory: /home/lmz/cs544/calculator-starter/src/semantic
+# Install script for directory: /home/lmz/cs544/WPL/src/semantic
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

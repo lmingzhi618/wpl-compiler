@@ -27,12 +27,12 @@ add_subdirectory(src bin)
 set (CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 install(
   TARGETS 
-    calculator
+   wpl 
   DESTINATION install
 )
 
 enable_testing()
-add_subdirectory(examples)
-add_subdirectory(test)
+#add_subdirectory(examples)
+#add_subdirectory(test)
 
 # include(Install)

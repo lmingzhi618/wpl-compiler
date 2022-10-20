@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o"
-  "CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o.d"
-  "CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o"
-  "CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o.d"
+  "CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o"
+  "CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o.d"
+  "CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o"
+  "CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o.d"
   "liblexparse_lib.a"
   "liblexparse_lib.pdb"
 )

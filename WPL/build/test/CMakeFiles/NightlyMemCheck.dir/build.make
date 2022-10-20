@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for NightlyMemCheck.
 
@@ -67,7 +67,7 @@ include test/CMakeFiles/NightlyMemCheck.dir/compiler_depend.make
 include test/CMakeFiles/NightlyMemCheck.dir/progress.make
 
 test/CMakeFiles/NightlyMemCheck:
-	cd /home/lmz/cs544/calculator-starter/build/test && /usr/bin/ctest -D NightlyMemCheck
+	cd /home/lmz/cs544/WPL/build/test && /usr/bin/ctest -D NightlyMemCheck
 
 NightlyMemCheck: test/CMakeFiles/NightlyMemCheck
 NightlyMemCheck: test/CMakeFiles/NightlyMemCheck.dir/build.make
@@ -78,10 +78,10 @@ test/CMakeFiles/NightlyMemCheck.dir/build: NightlyMemCheck
 .PHONY : test/CMakeFiles/NightlyMemCheck.dir/build
 
 test/CMakeFiles/NightlyMemCheck.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/test && $(CMAKE_COMMAND) -P CMakeFiles/NightlyMemCheck.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/test && $(CMAKE_COMMAND) -P CMakeFiles/NightlyMemCheck.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/NightlyMemCheck.dir/clean
 
 test/CMakeFiles/NightlyMemCheck.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/test /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/test /home/lmz/cs544/calculator-starter/build/test/CMakeFiles/NightlyMemCheck.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/test /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/test /home/lmz/cs544/WPL/build/test/CMakeFiles/NightlyMemCheck.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/NightlyMemCheck.dir/depend
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/lmz/cs544/calculator-starter/src
+# Install script for directory: /home/lmz/cs544/WPL/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,31 +44,31 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/lexparse/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/lexparse/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/symbol/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/symbol/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/semantic/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/semantic/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/utility/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/utility/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/codegen/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/codegen/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/bin/runtime/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/bin/runtime/cmake_install.cmake")
 endif()
 

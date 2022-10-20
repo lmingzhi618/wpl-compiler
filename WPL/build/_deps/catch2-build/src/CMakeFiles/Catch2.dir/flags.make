@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/.. -I/home/lmz/cs544/calculator-starter/build/generated-includes
+CXX_INCLUDES = -I/home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/.. -I/home/lmz/cs544/WPL/build/generated-includes
 
-CXX_FLAGS =  -O0 -Wall -g2 -ggdb -ffile-prefix-map=/home/lmz/cs544/calculator-starter/build/_deps/catch2-src=. -std=gnu++17
+CXX_FLAGS =  -O0 -Wall -g2 -ggdb -ffile-prefix-map=/home/lmz/cs544/WPL/build/_deps/catch2-src=. -std=gnu++17
 

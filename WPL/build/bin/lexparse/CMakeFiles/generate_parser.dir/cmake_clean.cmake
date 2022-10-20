@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
   "("
   ")"
-  "../../../src/generated/CalculatorLexer.cpp"
-  "../../../src/generated/CalculatorLexer.h"
-  "../../../src/generated/CalculatorParser.cpp"
-  "../../../src/generated/CalculatorParser.h"
+  "../../../src/generated/WPLLexer.cpp"
+  "../../../src/generated/WPLLexer.h"
+  "../../../src/generated/WPLParser.cpp"
+  "../../../src/generated/WPLParser.h"
   "../../../src/lexparse/parser_sources.h"
   "CMakeFiles/generate_parser"
 )

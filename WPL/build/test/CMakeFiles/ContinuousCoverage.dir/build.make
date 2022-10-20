@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for ContinuousCoverage.
 
@@ -67,7 +67,7 @@ include test/CMakeFiles/ContinuousCoverage.dir/compiler_depend.make
 include test/CMakeFiles/ContinuousCoverage.dir/progress.make
 
 test/CMakeFiles/ContinuousCoverage:
-	cd /home/lmz/cs544/calculator-starter/build/test && /usr/bin/ctest -D ContinuousCoverage
+	cd /home/lmz/cs544/WPL/build/test && /usr/bin/ctest -D ContinuousCoverage
 
 ContinuousCoverage: test/CMakeFiles/ContinuousCoverage
 ContinuousCoverage: test/CMakeFiles/ContinuousCoverage.dir/build.make
@@ -78,10 +78,10 @@ test/CMakeFiles/ContinuousCoverage.dir/build: ContinuousCoverage
 .PHONY : test/CMakeFiles/ContinuousCoverage.dir/build
 
 test/CMakeFiles/ContinuousCoverage.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ContinuousCoverage.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/test && $(CMAKE_COMMAND) -P CMakeFiles/ContinuousCoverage.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/ContinuousCoverage.dir/clean
 
 test/CMakeFiles/ContinuousCoverage.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/test /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/test /home/lmz/cs544/calculator-starter/build/test/CMakeFiles/ContinuousCoverage.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/test /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/test /home/lmz/cs544/WPL/build/test/CMakeFiles/ContinuousCoverage.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/ContinuousCoverage.dir/depend
 

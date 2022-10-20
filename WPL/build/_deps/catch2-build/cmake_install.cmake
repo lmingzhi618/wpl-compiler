@@ -1,8 +1,8 @@
-# Install script for directory: /home/lmz/cs544/calculator-starter/build/_deps/catch2-src
+# Install script for directory: /home/lmz/cs544/WPL/build/_deps/catch2-src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/lmz/cs544/calculator-starter")
+  set(CMAKE_INSTALL_PREFIX "/home/lmz/cs544/WPL")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/lmz/cs544/calculator-starter/build/_deps/catch2-build/src/cmake_install.cmake")
+  include("/home/lmz/cs544/WPL/build/_deps/catch2-build/src/cmake_install.cmake")
 
 endif()
 

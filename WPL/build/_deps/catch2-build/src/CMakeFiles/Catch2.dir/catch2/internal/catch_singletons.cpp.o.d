@@ -1,7 +1,7 @@
 _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_singletons.cpp.o: \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/internal/catch_singletons.cpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/internal/catch_singletons.cpp \
  /usr/include/stdc-predef.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_singletons.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/internal/catch_singletons.hpp \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

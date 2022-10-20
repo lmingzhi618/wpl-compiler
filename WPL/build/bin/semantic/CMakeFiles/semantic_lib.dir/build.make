@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include bin/semantic/CMakeFiles/semantic_lib.dir/depend.make
@@ -72,16 +72,16 @@ include bin/semantic/CMakeFiles/semantic_lib.dir/flags.make
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: bin/semantic/CMakeFiles/semantic_lib.dir/flags.make
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/SemanticVisitor.cpp
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: bin/semantic/CMakeFiles/semantic_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o -MF CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o.d -o CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o -c /home/lmz/cs544/calculator-starter/src/semantic/SemanticVisitor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o -MF CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o.d -o CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o -c /home/lmz/cs544/WPL/src/semantic/SemanticVisitor.cpp
 
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/semantic/SemanticVisitor.cpp > CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.i
+	cd /home/lmz/cs544/WPL/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/semantic/SemanticVisitor.cpp > CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.i
 
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/semantic/SemanticVisitor.cpp -o CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.s
+	cd /home/lmz/cs544/WPL/build/bin/semantic && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/semantic/SemanticVisitor.cpp -o CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.s
 
 semantic_lib: bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o
 semantic_lib: bin/semantic/CMakeFiles/semantic_lib.dir/build.make
@@ -92,10 +92,10 @@ bin/semantic/CMakeFiles/semantic_lib.dir/build: semantic_lib
 .PHONY : bin/semantic/CMakeFiles/semantic_lib.dir/build
 
 bin/semantic/CMakeFiles/semantic_lib.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/semantic && $(CMAKE_COMMAND) -P CMakeFiles/semantic_lib.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/semantic && $(CMAKE_COMMAND) -P CMakeFiles/semantic_lib.dir/cmake_clean.cmake
 .PHONY : bin/semantic/CMakeFiles/semantic_lib.dir/clean
 
 bin/semantic/CMakeFiles/semantic_lib.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/semantic /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/semantic /home/lmz/cs544/calculator-starter/build/bin/semantic/CMakeFiles/semantic_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/semantic /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/semantic /home/lmz/cs544/WPL/build/bin/semantic/CMakeFiles/semantic_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/semantic/CMakeFiles/semantic_lib.dir/depend
 

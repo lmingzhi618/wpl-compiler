@@ -1,12 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "CalculatorLexer.h"
+#include "WPLLexer.h"
 #include "antlr4-runtime.h"
 #include "test_error_handlers.h"
 
 TEST_CASE("Scanner operator tests", "[front-end]") {
     antlr4::ANTLRInputStream input(":= / = > < - * ~ + ~=");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     lexer.removeErrorListeners();
     lexer.addErrorListener(new TestErrorListener());
     CHECK(lexer.nextToken()->getType() == lexer.ASSIGN);
@@ -23,7 +23,7 @@ TEST_CASE("Scanner operator tests", "[front-end]") {
 
 TEST_CASE("Invalid lexemes", "[front-end]") {
     antlr4::ANTLRInputStream input("{");
-    CalculatorLexer lexer(&input);
+    WPLLexer lexer(&input);
     lexer.removeErrorListeners();
     lexer.addErrorListener(new TestErrorListener());
     // The next assertion works if we do not have our test error listener

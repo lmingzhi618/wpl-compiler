@@ -7,23 +7,35 @@
 
 #include "llvm/IR/Value.h"
 
-enum SymType { INT, BOOL, UNDEFINED };
+enum SymType { SCALAR, ARRAY, METHOD };
+enum SymBaseType { UNDEFINED, INT, BOOL, STR };
+
+struct Param {
+    std::string id;
+    SymBaseType baseType;
+};
 
 struct Symbol {
-    std::string identifier;
-    SymType type;
+    std::string id;
+    SymType symType;
+    SymBaseType baseType;  // The base type of the symbol: SCALAR = type;a
+                           // FUNC = return type, ARRAY = element type
+    int length = 0;        // ARRAY only
+    std::vector<Param *> *params = nullptr;
+
     bool defined;
     llvm::Value *val;
-    Symbol(std::string id, SymType t) {
-        identifier = id;
-        type = t;
+    Symbol(std::string id, SymType t, std::vector<Param *> *params = nullptr) {
+        id = id;
+        symType = t;
+        params = params;
         defined = false;
         val = nullptr;
     }
 
     std::string toString() const {
         std::ostringstream desc;
-        desc << '[' << identifier << ", " << getSymTypeName(type) << ']';
+        desc << '[' << id << ", " << getSymTypeName(symType) << ']';
         return desc.str();
     }
 

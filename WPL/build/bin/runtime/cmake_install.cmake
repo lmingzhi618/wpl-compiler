@@ -1,4 +1,4 @@
-# Install script for directory: /home/lmz/cs544/calculator-starter/src/runtime
+# Install script for directory: /home/lmz/cs544/WPL/src/runtime
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

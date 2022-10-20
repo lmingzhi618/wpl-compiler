@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include bin/lexparse/CMakeFiles/lexparse_lib.dir/depend.make
@@ -69,59 +69,59 @@ include bin/lexparse/CMakeFiles/lexparse_lib.dir/progress.make
 # Include the compile flags for this target's objects.
 include bin/lexparse/CMakeFiles/lexparse_lib.dir/flags.make
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/flags.make
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o: ../src/generated/CalculatorLexer.cpp
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o -MF CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o.d -o CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o -c /home/lmz/cs544/calculator-starter/src/generated/CalculatorLexer.cpp
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/flags.make
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o: ../src/generated/WPLLexer.cpp
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o -MF CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o.d -o CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o -c /home/lmz/cs544/WPL/src/generated/WPLLexer.cpp
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/generated/CalculatorLexer.cpp > CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.i
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.i"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/generated/WPLLexer.cpp > CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.i
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/generated/CalculatorLexer.cpp -o CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.s
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.s"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/generated/WPLLexer.cpp -o CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.s
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/flags.make
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o: ../src/generated/CalculatorParser.cpp
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o -MF CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o.d -o CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o -c /home/lmz/cs544/calculator-starter/src/generated/CalculatorParser.cpp
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/flags.make
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o: ../src/generated/WPLParser.cpp
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o: bin/lexparse/CMakeFiles/lexparse_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o -MF CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o.d -o CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o -c /home/lmz/cs544/WPL/src/generated/WPLParser.cpp
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/generated/CalculatorParser.cpp > CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.i
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.i"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/generated/WPLParser.cpp > CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.i
 
-bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/generated/CalculatorParser.cpp -o CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.s
+bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.s"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/generated/WPLParser.cpp -o CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.s
 
 # Object files for target lexparse_lib
 lexparse_lib_OBJECTS = \
-"CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o" \
-"CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o"
+"CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o" \
+"CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o"
 
 # External object files for target lexparse_lib
 lexparse_lib_EXTERNAL_OBJECTS =
 
-bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o
-bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o
+bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o
+bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o
 bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make
 bin/lexparse/liblexparse_lib.a: bin/lexparse/CMakeFiles/lexparse_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library liblexparse_lib.a"
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/lexparse_lib.dir/cmake_clean_target.cmake
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lexparse_lib.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library liblexparse_lib.a"
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/lexparse_lib.dir/cmake_clean_target.cmake
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lexparse_lib.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 bin/lexparse/CMakeFiles/lexparse_lib.dir/build: bin/lexparse/liblexparse_lib.a
 .PHONY : bin/lexparse/CMakeFiles/lexparse_lib.dir/build
 
 bin/lexparse/CMakeFiles/lexparse_lib.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/lexparse_lib.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/lexparse && $(CMAKE_COMMAND) -P CMakeFiles/lexparse_lib.dir/cmake_clean.cmake
 .PHONY : bin/lexparse/CMakeFiles/lexparse_lib.dir/clean
 
 bin/lexparse/CMakeFiles/lexparse_lib.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/lexparse /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/lexparse /home/lmz/cs544/calculator-starter/build/bin/lexparse/CMakeFiles/lexparse_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/lexparse /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/lexparse /home/lmz/cs544/WPL/build/bin/lexparse/CMakeFiles/lexparse_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/lexparse/CMakeFiles/lexparse_lib.dir/depend
 

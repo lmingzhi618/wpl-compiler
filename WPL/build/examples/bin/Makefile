@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles /home/lmz/cs544/calculator-starter/build/examples/bin//CMakeFiles/progress.marks
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles /home/lmz/cs544/WPL/build/examples/bin//CMakeFiles/progress.marks
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/clean
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 examples/bin/CMakeFiles/rpnprinter.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/CMakeFiles/rpnprinter.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/bin/CMakeFiles/rpnprinter.dir/rule
 .PHONY : examples/bin/CMakeFiles/rpnprinter.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ rpnprinter: examples/bin/CMakeFiles/rpnprinter.dir/rule
 
 # fast build rule for target.
 rpnprinter/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/build
 .PHONY : rpnprinter/fast
 
 RPNVisitor.o: RPNVisitor.cpp.o
@@ -190,7 +190,7 @@ RPNVisitor.o: RPNVisitor.cpp.o
 
 # target to build an object file
 RPNVisitor.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o
 .PHONY : RPNVisitor.cpp.o
 
 RPNVisitor.i: RPNVisitor.cpp.i
@@ -198,7 +198,7 @@ RPNVisitor.i: RPNVisitor.cpp.i
 
 # target to preprocess a source file
 RPNVisitor.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.i
 .PHONY : RPNVisitor.cpp.i
 
 RPNVisitor.s: RPNVisitor.cpp.s
@@ -206,7 +206,7 @@ RPNVisitor.s: RPNVisitor.cpp.s
 
 # target to generate assembly for a file
 RPNVisitor.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.s
 .PHONY : RPNVisitor.cpp.s
 
 rpnprinter.o: rpnprinter.cpp.o
@@ -214,7 +214,7 @@ rpnprinter.o: rpnprinter.cpp.o
 
 # target to build an object file
 rpnprinter.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o
 .PHONY : rpnprinter.cpp.o
 
 rpnprinter.i: rpnprinter.cpp.i
@@ -222,7 +222,7 @@ rpnprinter.i: rpnprinter.cpp.i
 
 # target to preprocess a source file
 rpnprinter.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.i
 .PHONY : rpnprinter.cpp.i
 
 rpnprinter.s: rpnprinter.cpp.s
@@ -230,7 +230,7 @@ rpnprinter.s: rpnprinter.cpp.s
 
 # target to generate assembly for a file
 rpnprinter.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f examples/bin/CMakeFiles/rpnprinter.dir/build.make examples/bin/CMakeFiles/rpnprinter.dir/rpnprinter.cpp.s
 .PHONY : rpnprinter.cpp.s
 
 # Help Target
@@ -264,6 +264,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

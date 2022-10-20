@@ -18,7 +18,8 @@ void trace(std::string message, Value *v = nullptr) {
 #endif
 }
 
-std::any CodegenVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
+/*
+std::any CodegenVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
     // 1 Declare external functions.
     auto printf_prototype = FunctionType::get(i8p, true);
     auto printf_fn = Function::Create(
@@ -53,9 +54,9 @@ std::any CodegenVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
 }
 
 std::any CodegenVisitor::visitBooleanConstant(
-    CalculatorParser::BooleanConstantContext *ctx) {
+    WPLParser::BooleanConstantContext *ctx) {
     Value *v;
-    if (ctx->val->getType() == CalculatorParser::TRUE) {
+    if (ctx->val->getType() == WPLParser::TRUE) {
         v = builder->getInt32(1);
     } else {
         v = builder->getInt32(0);
@@ -63,27 +64,25 @@ std::any CodegenVisitor::visitBooleanConstant(
     return v;
 }
 
-std::any CodegenVisitor::visitIConstExpr(
-    CalculatorParser::IConstExprContext *ctx) {
+std::any CodegenVisitor::visitIConstExpr(WPLParser::IConstExprContext *ctx) {
     int i = std::stoi(ctx->i->getText());
     Value *v = builder->getInt32(i);
     return v;
 }
 
-std::any CodegenVisitor::visitParenExpr(
-    CalculatorParser::ParenExprContext *ctx) {
+std::any CodegenVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
     return ctx->ex->accept(this);
 }
 
 std::any CodegenVisitor::visitUnaryMinusExpr(
-    CalculatorParser::UnaryMinusExprContext *ctx) {
+    WPLParser::UnaryMinusExprContext *ctx) {
     Value *exVal = std::any_cast<Value *>(ctx->ex->accept(this));
     Value *v = builder->CreateNSWSub(builder->getInt32(0), exVal);
     return v;
 }
 
 std::any CodegenVisitor::visitUnaryNotExpr(
-    CalculatorParser::UnaryNotExprContext *ctx) {
+    WPLParser::UnaryNotExprContext *ctx) {
     Value *v = std::any_cast<Value *>(ctx->ex->accept(this));
     v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
     v = builder->CreateXor(v, Int32One);
@@ -91,22 +90,22 @@ std::any CodegenVisitor::visitUnaryNotExpr(
 }
 
 std::any CodegenVisitor::visitBinaryArithExpr(
-    CalculatorParser::BinaryArithExprContext *ctx) {
+    WPLParser::BinaryArithExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
     auto opType = ctx->op->getType();
     switch (opType) {
-        case CalculatorParser::PLUS:
+        case WPLParser::PLUS:
             v = builder->CreateNSWAdd(lVal, rVal);
             break;
-        case CalculatorParser::MINUS:
+        case WPLParser::MINUS:
             v = builder->CreateNSWSub(lVal, rVal);
             break;
-        case CalculatorParser::MULTIPLY:
+        case WPLParser::MULTIPLY:
             v = builder->CreateNSWMul(lVal, rVal);
             break;
-        case CalculatorParser::DIVIDE:
+        case WPLParser::DIVIDE:
             v = builder->CreateSDiv(lVal, rVal);
             break;
     }
@@ -114,13 +113,13 @@ std::any CodegenVisitor::visitBinaryArithExpr(
 }
 
 std::any CodegenVisitor::visitBinaryRelExpr(
-    CalculatorParser::BinaryRelExprContext *ctx) {
+    WPLParser::BinaryRelExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
     auto op = ctx->op->getType();
     Value *v1;
-    if (op == CalculatorParser::LESS) {
+    if (op == WPLParser::LESS) {
         v1 = builder->CreateICmpSLT(lVal, rVal);
     } else {
         v1 = builder->CreateICmpSGT(lVal, rVal);
@@ -128,13 +127,13 @@ std::any CodegenVisitor::visitBinaryRelExpr(
     v = builder->CreateZExtOrTrunc(v1, CodegenVisitor::Int32Ty);
 }
 
-std::any CodegenVisitor::visitEqExpr(CalculatorParser::EqExprContext *ctx) {
+std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
     auto op = ctx->op->getType();
     Value *v1;
-    if (op == CalculatorParser::EQUAL) {
+    if (op == WPLParser::EQUAL) {
         v1 = builder->CreateICmpEQ(lVal, rVal);
     } else {
         v1 = builder->CreateICmpNE(lVal, rVal);
@@ -144,7 +143,7 @@ std::any CodegenVisitor::visitEqExpr(CalculatorParser::EqExprContext *ctx) {
 }
 
 std::any CodegenVisitor::visitAssignExpression(
-    CalculatorParser::AssignExpressionContext *ctx) {
+    WPLParser::AssignExpressionContext *ctx) {
     Value *v = nullptr;
     Value *exVal = std::any_cast<Value *>(ctx->ex->accept(this));
     Symbol *varSymbol = props->getBinding(ctx);  // child variable symbol
@@ -166,7 +165,7 @@ std::any CodegenVisitor::visitAssignExpression(
 }
 
 std::any CodegenVisitor::visitVariableExpr(
-    CalculatorParser::VariableExprContext *ctx) {
+    WPLParser::VariableExprContext *ctx) {
     // 1. Get the name of the variable.
     std::string varId = ctx->v->getText();
     // 2. Get the binding.
@@ -182,4 +181,4 @@ std::any CodegenVisitor::visitVariableExpr(
     }
     return v;
 }
-
+*/

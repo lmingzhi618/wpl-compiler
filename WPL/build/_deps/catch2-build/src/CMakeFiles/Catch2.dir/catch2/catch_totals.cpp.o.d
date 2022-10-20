@@ -1,7 +1,7 @@
 _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_totals.cpp.o: \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/catch_totals.cpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/catch_totals.cpp \
  /usr/include/stdc-predef.h \
- /home/lmz/cs544/calculator-starter/build/_deps/catch2-src/src/catch2/../catch2/catch_totals.hpp \
+ /home/lmz/cs544/WPL/build/_deps/catch2-src/src/catch2/../catch2/catch_totals.hpp \
  /usr/include/c++/11/cstdint \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles /home/lmz/cs544/calculator-starter/build/bin/symbol//CMakeFiles/progress.marks
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles /home/lmz/cs544/WPL/build/bin/symbol//CMakeFiles/progress.marks
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/clean
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 bin/symbol/CMakeFiles/sym_lib.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/CMakeFiles/sym_lib.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/CMakeFiles/sym_lib.dir/rule
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/rule
 
 # fast build rule for target.
 sym_lib/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/build
 .PHONY : sym_lib/fast
 
 STManager.o: STManager.cpp.o
@@ -190,7 +190,7 @@ STManager.o: STManager.cpp.o
 
 # target to build an object file
 STManager.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o
 .PHONY : STManager.cpp.o
 
 STManager.i: STManager.cpp.i
@@ -198,7 +198,7 @@ STManager.i: STManager.cpp.i
 
 # target to preprocess a source file
 STManager.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.i
 .PHONY : STManager.cpp.i
 
 STManager.s: STManager.cpp.s
@@ -206,7 +206,7 @@ STManager.s: STManager.cpp.s
 
 # target to generate assembly for a file
 STManager.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.s
 .PHONY : STManager.cpp.s
 
 Scope.o: Scope.cpp.o
@@ -214,7 +214,7 @@ Scope.o: Scope.cpp.o
 
 # target to build an object file
 Scope.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o
 .PHONY : Scope.cpp.o
 
 Scope.i: Scope.cpp.i
@@ -222,7 +222,7 @@ Scope.i: Scope.cpp.i
 
 # target to preprocess a source file
 Scope.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.i
 .PHONY : Scope.cpp.i
 
 Scope.s: Scope.cpp.s
@@ -230,7 +230,7 @@ Scope.s: Scope.cpp.s
 
 # target to generate assembly for a file
 Scope.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.s
 .PHONY : Scope.cpp.s
 
 # Help Target
@@ -264,6 +264,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

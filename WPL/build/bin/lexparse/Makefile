@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles /home/lmz/cs544/calculator-starter/build/bin/lexparse//CMakeFiles/progress.marks
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles /home/lmz/cs544/WPL/build/bin/lexparse//CMakeFiles/progress.marks
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/clean
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 bin/lexparse/CMakeFiles/generate_parser.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/generate_parser.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/generate_parser.dir/rule
 .PHONY : bin/lexparse/CMakeFiles/generate_parser.dir/rule
 
 # Convenience name for target.
@@ -182,12 +182,12 @@ generate_parser: bin/lexparse/CMakeFiles/generate_parser.dir/rule
 
 # fast build rule for target.
 generate_parser/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/generate_parser.dir/build.make bin/lexparse/CMakeFiles/generate_parser.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/generate_parser.dir/build.make bin/lexparse/CMakeFiles/generate_parser.dir/build
 .PHONY : generate_parser/fast
 
 # Convenience name for target.
 bin/lexparse/CMakeFiles/parser_lib.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/parser_lib.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/parser_lib.dir/rule
 .PHONY : bin/lexparse/CMakeFiles/parser_lib.dir/rule
 
 # Convenience name for target.
@@ -196,12 +196,12 @@ parser_lib: bin/lexparse/CMakeFiles/parser_lib.dir/rule
 
 # fast build rule for target.
 parser_lib/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/build
 .PHONY : parser_lib/fast
 
 # Convenience name for target.
 bin/lexparse/CMakeFiles/lexparse_lib.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/lexparse_lib.dir/rule
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/lexparse/CMakeFiles/lexparse_lib.dir/rule
 .PHONY : bin/lexparse/CMakeFiles/lexparse_lib.dir/rule
 
 # Convenience name for target.
@@ -210,62 +210,62 @@ lexparse_lib: bin/lexparse/CMakeFiles/lexparse_lib.dir/rule
 
 # fast build rule for target.
 lexparse_lib/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/build
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/build
 .PHONY : lexparse_lib/fast
 
-__/generated/CalculatorLexer.o: __/generated/CalculatorLexer.cpp.o
-.PHONY : __/generated/CalculatorLexer.o
+__/generated/WPLLexer.o: __/generated/WPLLexer.cpp.o
+.PHONY : __/generated/WPLLexer.o
 
 # target to build an object file
-__/generated/CalculatorLexer.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.o
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o
-.PHONY : __/generated/CalculatorLexer.cpp.o
+__/generated/WPLLexer.cpp.o:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o
+.PHONY : __/generated/WPLLexer.cpp.o
 
-__/generated/CalculatorLexer.i: __/generated/CalculatorLexer.cpp.i
-.PHONY : __/generated/CalculatorLexer.i
+__/generated/WPLLexer.i: __/generated/WPLLexer.cpp.i
+.PHONY : __/generated/WPLLexer.i
 
 # target to preprocess a source file
-__/generated/CalculatorLexer.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.i
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.i
-.PHONY : __/generated/CalculatorLexer.cpp.i
+__/generated/WPLLexer.cpp.i:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.i
+.PHONY : __/generated/WPLLexer.cpp.i
 
-__/generated/CalculatorLexer.s: __/generated/CalculatorLexer.cpp.s
-.PHONY : __/generated/CalculatorLexer.s
+__/generated/WPLLexer.s: __/generated/WPLLexer.cpp.s
+.PHONY : __/generated/WPLLexer.s
 
 # target to generate assembly for a file
-__/generated/CalculatorLexer.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorLexer.cpp.s
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.s
-.PHONY : __/generated/CalculatorLexer.cpp.s
+__/generated/WPLLexer.cpp.s:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.s
+.PHONY : __/generated/WPLLexer.cpp.s
 
-__/generated/CalculatorParser.o: __/generated/CalculatorParser.cpp.o
-.PHONY : __/generated/CalculatorParser.o
+__/generated/WPLParser.o: __/generated/WPLParser.cpp.o
+.PHONY : __/generated/WPLParser.o
 
 # target to build an object file
-__/generated/CalculatorParser.cpp.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.o
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o
-.PHONY : __/generated/CalculatorParser.cpp.o
+__/generated/WPLParser.cpp.o:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o
+.PHONY : __/generated/WPLParser.cpp.o
 
-__/generated/CalculatorParser.i: __/generated/CalculatorParser.cpp.i
-.PHONY : __/generated/CalculatorParser.i
+__/generated/WPLParser.i: __/generated/WPLParser.cpp.i
+.PHONY : __/generated/WPLParser.i
 
 # target to preprocess a source file
-__/generated/CalculatorParser.cpp.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.i
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.i
-.PHONY : __/generated/CalculatorParser.cpp.i
+__/generated/WPLParser.cpp.i:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.i
+.PHONY : __/generated/WPLParser.cpp.i
 
-__/generated/CalculatorParser.s: __/generated/CalculatorParser.cpp.s
-.PHONY : __/generated/CalculatorParser.s
+__/generated/WPLParser.s: __/generated/WPLParser.cpp.s
+.PHONY : __/generated/WPLParser.s
 
 # target to generate assembly for a file
-__/generated/CalculatorParser.cpp.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/CalculatorParser.cpp.s
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.s
-.PHONY : __/generated/CalculatorParser.cpp.s
+__/generated/WPLParser.cpp.s:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/parser_lib.dir/build.make bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/lexparse/CMakeFiles/lexparse_lib.dir/build.make bin/lexparse/CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.s
+.PHONY : __/generated/WPLParser.cpp.s
 
 # Help Target
 help:
@@ -283,12 +283,12 @@ help:
 	@echo "... generate_parser"
 	@echo "... lexparse_lib"
 	@echo "... parser_lib"
-	@echo "... __/generated/CalculatorLexer.o"
-	@echo "... __/generated/CalculatorLexer.i"
-	@echo "... __/generated/CalculatorLexer.s"
-	@echo "... __/generated/CalculatorParser.o"
-	@echo "... __/generated/CalculatorParser.i"
-	@echo "... __/generated/CalculatorParser.s"
+	@echo "... __/generated/WPLLexer.o"
+	@echo "... __/generated/WPLLexer.i"
+	@echo "... __/generated/WPLLexer.s"
+	@echo "... __/generated/WPLParser.o"
+	@echo "... __/generated/WPLParser.i"
+	@echo "... __/generated/WPLParser.s"
 .PHONY : help
 
 
@@ -300,6 +300,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

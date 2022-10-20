@@ -1,2 +1,2 @@
-/usr/bin/ar Dqc liblexparse_lib.a CMakeFiles/lexparse_lib.dir/__/generated/CalculatorLexer.cpp.o CMakeFiles/lexparse_lib.dir/__/generated/CalculatorParser.cpp.o
+/usr/bin/ar Dqc liblexparse_lib.a CMakeFiles/lexparse_lib.dir/__/generated/WPLLexer.cpp.o CMakeFiles/lexparse_lib.dir/__/generated/WPLParser.cpp.o
 /usr/bin/ranlib -D liblexparse_lib.a

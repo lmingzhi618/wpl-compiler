@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Include any dependencies generated for this target.
 include bin/codegen/CMakeFiles/codegen_lib.dir/depend.make
@@ -72,16 +72,16 @@ include bin/codegen/CMakeFiles/codegen_lib.dir/flags.make
 bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: bin/codegen/CMakeFiles/codegen_lib.dir/flags.make
 bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/CodegenVisitor.cpp
 bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: bin/codegen/CMakeFiles/codegen_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/calculator-starter/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o"
-	cd /home/lmz/cs544/calculator-starter/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o -MF CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o.d -o CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o -c /home/lmz/cs544/calculator-starter/src/codegen/CodegenVisitor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o -MF CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o.d -o CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o -c /home/lmz/cs544/WPL/src/codegen/CodegenVisitor.cpp
 
 bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i"
-	cd /home/lmz/cs544/calculator-starter/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/calculator-starter/src/codegen/CodegenVisitor.cpp > CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i
+	cd /home/lmz/cs544/WPL/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/codegen/CodegenVisitor.cpp > CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.i
 
 bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s"
-	cd /home/lmz/cs544/calculator-starter/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/calculator-starter/src/codegen/CodegenVisitor.cpp -o CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s
+	cd /home/lmz/cs544/WPL/build/bin/codegen && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/codegen/CodegenVisitor.cpp -o CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.s
 
 codegen_lib: bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o
 codegen_lib: bin/codegen/CMakeFiles/codegen_lib.dir/build.make
@@ -92,10 +92,10 @@ bin/codegen/CMakeFiles/codegen_lib.dir/build: codegen_lib
 .PHONY : bin/codegen/CMakeFiles/codegen_lib.dir/build
 
 bin/codegen/CMakeFiles/codegen_lib.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin/codegen && $(CMAKE_COMMAND) -P CMakeFiles/codegen_lib.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin/codegen && $(CMAKE_COMMAND) -P CMakeFiles/codegen_lib.dir/cmake_clean.cmake
 .PHONY : bin/codegen/CMakeFiles/codegen_lib.dir/clean
 
 bin/codegen/CMakeFiles/codegen_lib.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src/codegen /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin/codegen /home/lmz/cs544/calculator-starter/build/bin/codegen/CMakeFiles/codegen_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src/codegen /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin/codegen /home/lmz/cs544/WPL/build/bin/codegen/CMakeFiles/codegen_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/codegen/CMakeFiles/codegen_lib.dir/depend
 

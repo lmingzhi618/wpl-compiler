@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles /home/lmz/cs544/calculator-starter/build/bin/runtime//CMakeFiles/progress.marks
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/calculator-starter/build/CMakeFiles 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles /home/lmz/cs544/WPL/build/bin/runtime//CMakeFiles/progress.marks
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/clean
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,56 +158,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/preinstall
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
-bin/runtime/CMakeFiles/calc_runtime.dir/rule:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/CMakeFiles/calc_runtime.dir/rule
-.PHONY : bin/runtime/CMakeFiles/calc_runtime.dir/rule
+bin/runtime/CMakeFiles/wpl_runtime.dir/rule:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/runtime/CMakeFiles/wpl_runtime.dir/rule
+.PHONY : bin/runtime/CMakeFiles/wpl_runtime.dir/rule
 
 # Convenience name for target.
-calc_runtime: bin/runtime/CMakeFiles/calc_runtime.dir/rule
-.PHONY : calc_runtime
+wpl_runtime: bin/runtime/CMakeFiles/wpl_runtime.dir/rule
+.PHONY : wpl_runtime
 
 # fast build rule for target.
-calc_runtime/fast:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/calc_runtime.dir/build.make bin/runtime/CMakeFiles/calc_runtime.dir/build
-.PHONY : calc_runtime/fast
+wpl_runtime/fast:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/build
+.PHONY : wpl_runtime/fast
 
-calculator_runtime.o: calculator_runtime.c.o
-.PHONY : calculator_runtime.o
+wpl_runtime.o: wpl_runtime.c.o
+.PHONY : wpl_runtime.o
 
 # target to build an object file
-calculator_runtime.c.o:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/calc_runtime.dir/build.make bin/runtime/CMakeFiles/calc_runtime.dir/calculator_runtime.c.o
-.PHONY : calculator_runtime.c.o
+wpl_runtime.c.o:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/wpl_runtime.c.o
+.PHONY : wpl_runtime.c.o
 
-calculator_runtime.i: calculator_runtime.c.i
-.PHONY : calculator_runtime.i
+wpl_runtime.i: wpl_runtime.c.i
+.PHONY : wpl_runtime.i
 
 # target to preprocess a source file
-calculator_runtime.c.i:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/calc_runtime.dir/build.make bin/runtime/CMakeFiles/calc_runtime.dir/calculator_runtime.c.i
-.PHONY : calculator_runtime.c.i
+wpl_runtime.c.i:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/wpl_runtime.c.i
+.PHONY : wpl_runtime.c.i
 
-calculator_runtime.s: calculator_runtime.c.s
-.PHONY : calculator_runtime.s
+wpl_runtime.s: wpl_runtime.c.s
+.PHONY : wpl_runtime.s
 
 # target to generate assembly for a file
-calculator_runtime.c.s:
-	cd /home/lmz/cs544/calculator-starter/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/calc_runtime.dir/build.make bin/runtime/CMakeFiles/calc_runtime.dir/calculator_runtime.c.s
-.PHONY : calculator_runtime.c.s
+wpl_runtime.c.s:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/wpl_runtime.c.s
+.PHONY : wpl_runtime.c.s
 
 # Help Target
 help:
@@ -222,10 +222,10 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... calc_runtime"
-	@echo "... calculator_runtime.o"
-	@echo "... calculator_runtime.i"
-	@echo "... calculator_runtime.s"
+	@echo "... wpl_runtime"
+	@echo "... wpl_runtime.o"
+	@echo "... wpl_runtime.i"
+	@echo "... wpl_runtime.s"
 .PHONY : help
 
 
@@ -237,6 +237,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

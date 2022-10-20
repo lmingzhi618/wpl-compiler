@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lmz/cs544/calculator-starter
+CMAKE_SOURCE_DIR = /home/lmz/cs544/WPL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lmz/cs544/calculator-starter/build
+CMAKE_BINARY_DIR = /home/lmz/cs544/WPL/build
 
 # Utility rule file for intrinsics_gen.
 
@@ -74,10 +74,10 @@ bin/CMakeFiles/intrinsics_gen.dir/build: intrinsics_gen
 .PHONY : bin/CMakeFiles/intrinsics_gen.dir/build
 
 bin/CMakeFiles/intrinsics_gen.dir/clean:
-	cd /home/lmz/cs544/calculator-starter/build/bin && $(CMAKE_COMMAND) -P CMakeFiles/intrinsics_gen.dir/cmake_clean.cmake
+	cd /home/lmz/cs544/WPL/build/bin && $(CMAKE_COMMAND) -P CMakeFiles/intrinsics_gen.dir/cmake_clean.cmake
 .PHONY : bin/CMakeFiles/intrinsics_gen.dir/clean
 
 bin/CMakeFiles/intrinsics_gen.dir/depend:
-	cd /home/lmz/cs544/calculator-starter/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/calculator-starter /home/lmz/cs544/calculator-starter/src /home/lmz/cs544/calculator-starter/build /home/lmz/cs544/calculator-starter/build/bin /home/lmz/cs544/calculator-starter/build/bin/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lmz/cs544/WPL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lmz/cs544/WPL /home/lmz/cs544/WPL/src /home/lmz/cs544/WPL/build /home/lmz/cs544/WPL/build/bin /home/lmz/cs544/WPL/build/bin/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bin/CMakeFiles/intrinsics_gen.dir/depend
 

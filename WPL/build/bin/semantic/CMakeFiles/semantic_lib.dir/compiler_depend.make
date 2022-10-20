@@ -4,7 +4,7 @@
 bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/SemanticVisitor.cpp \
   /usr/include/stdc-predef.h \
   ../src/semantic/include/SemanticVisitor.h \
-  ../src/utility/include/CalcErrorHandler.h \
+  ../src/utility/include/ErrorHandler.h \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/ios \
@@ -441,9 +441,6 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
   ../antlr/include/tree/xpath/XPathTokenElement.h \
   ../antlr/include/tree/xpath/XPathWildcardAnywhereElement.h \
   ../antlr/include/tree/xpath/XPathWildcardElement.h \
-  ../src/generated/CalculatorBaseVisitor.h \
-  ../src/generated/CalculatorVisitor.h \
-  ../src/generated/CalculatorParser.h \
   ../src/semantic/include/PropertyManager.h \
   ../src/symbol/include/Symbol.h \
   /usr/include/llvm/IR/Value.h \
@@ -501,8 +498,15 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
   /usr/include/c++/11/tr1/riemann_zeta.tcc \
   /usr/include/llvm/IR/Value.def \
   ../src/symbol/include/STManager.h \
-  ../src/symbol/include/Scope.h
+  ../src/symbol/include/Scope.h \
+  ../src/generated/WPLBaseVisitor.h \
+  ../src/generated/WPLVisitor.h \
+  ../src/generated/WPLParser.h
 
+
+../src/generated/WPLParser.h:
+
+../src/generated/WPLVisitor.h:
 
 ../src/symbol/include/STManager.h:
 
@@ -536,6 +540,8 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 /usr/include/llvm/IR/Use.h:
 
+/usr/include/llvm/ADT/StringRef.h:
+
 /usr/include/llvm/ADT/iterator_range.h:
 
 /usr/include/llvm/Support/Alignment.h:
@@ -563,12 +569,6 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 ../src/symbol/include/Symbol.h:
 
 ../src/semantic/include/PropertyManager.h:
-
-/usr/include/llvm/ADT/StringRef.h:
-
-../src/generated/CalculatorVisitor.h:
-
-../src/generated/CalculatorBaseVisitor.h:
 
 ../antlr/include/tree/xpath/XPathTokenAnywhereElement.h:
 
@@ -613,8 +613,6 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 ../antlr/include/atn/StarBlockStartState.h:
 
 ../antlr/include/atn/RuleTransition.h:
-
-../src/generated/CalculatorParser.h:
 
 ../antlr/include/atn/PredicateTransition.h:
 
@@ -860,6 +858,8 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/11/ext/new_allocator.h:
@@ -956,8 +956,6 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
 ../antlr/include/TokenStreamRewriter.h:
 
 /usr/include/c++/11/tuple:
@@ -1030,6 +1028,20 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 /usr/include/c++/11/exception:
 
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+../src/generated/WPLBaseVisitor.h:
+
+../antlr/include/tree/xpath/XPathLexer.h:
+
+../antlr/include/atn/ATNState.h:
+
+/usr/include/c++/11/ext/type_traits.h:
+
+/usr/include/c++/11/tr1/gamma.tcc:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/c++/11/bits/ostream_insert.h:
@@ -1040,59 +1052,11 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
 
-/usr/include/c++/11/tr1/gamma.tcc:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/c++/11/iostream:
 
 /usr/include/c++/11/bits/node_handle.h:
-
-../src/utility/include/CalcErrorHandler.h:
-
-/usr/include/c++/11/pstl/glue_algorithm_defs.h:
-
-/usr/include/c++/11/stdexcept:
-
-../antlr/include/BailErrorStrategy.h:
-
-/usr/include/c++/11/sstream:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
-/usr/include/c++/11/cwchar:
-
-../antlr/include/tree/Trees.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
-
-/usr/include/c++/11/bits/stl_algobase.h:
-
-../antlr/include/InterpreterRuleContext.h:
-
-/usr/include/c++/11/bits/nested_exception.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-../antlr/include/atn/OrderedATNConfigSet.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-../antlr/include/tree/xpath/XPathLexer.h:
-
-../antlr/include/atn/ATNState.h:
-
-/usr/include/c++/11/ext/type_traits.h:
 
 /usr/include/llvm/ADT/Hashing.h:
 
@@ -1127,6 +1091,36 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 /usr/include/linux/errno.h:
 
 /usr/include/c++/11/functional:
+
+../antlr/include/BailErrorStrategy.h:
+
+/usr/include/c++/11/sstream:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/c++/11/cwchar:
+
+../antlr/include/tree/Trees.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
+
+/usr/include/c++/11/bits/stl_algobase.h:
+
+../antlr/include/InterpreterRuleContext.h:
+
+/usr/include/c++/11/bits/nested_exception.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+../antlr/include/atn/OrderedATNConfigSet.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/c++/11/chrono:
 
@@ -1256,9 +1250,9 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 ../antlr/include/Version.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
 /usr/include/c++/11/string_view:
 
@@ -1299,6 +1293,8 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/c++/11/cerrno:
+
+../src/utility/include/ErrorHandler.h:
 
 /usr/include/errno.h:
 
@@ -1343,6 +1339,10 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 /usr/include/c++/11/utility:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
+
+/usr/include/c++/11/pstl/glue_algorithm_defs.h:
+
+/usr/include/c++/11/stdexcept:
 
 /usr/include/string.h:
 
@@ -1436,9 +1436,9 @@ bin/semantic/CMakeFiles/semantic_lib.dir/SemanticVisitor.cpp.o: ../src/semantic/
 
 ../antlr/include/atn/BlockEndState.h:
 
-/usr/include/c++/11/new:
-
 /usr/include/c++/11/bits/sstream.tcc:
+
+/usr/include/c++/11/new:
 
 /usr/include/c++/11/climits:
 
