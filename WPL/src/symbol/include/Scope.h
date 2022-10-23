@@ -3,12 +3,13 @@
 
 #include "Symbol.h"
 
+// Scope implemented as Flattened Tree
 class Scope {
    public:
     Scope() : parent(nullptr) {}
     Scope(Scope* p) : parent(p) {}
     Symbol* addSymbol(Symbol* s);  // return nullptr if duplicate - wpl
-    Symbol* addSymbol(std::string id, SymType t);
+    // Symbol* addSymbol(std::string id, SymBaseType t);
     Symbol* findSymbol(std::string id);
     Scope* getParent() { return parent; }
     void setId(int id) { scopeId = id; }  // used by STManager

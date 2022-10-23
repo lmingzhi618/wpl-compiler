@@ -233,6 +233,30 @@ Scope.cpp.s:
 	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.s
 .PHONY : Scope.cpp.s
 
+SymbolVisitor.o: SymbolVisitor.cpp.o
+.PHONY : SymbolVisitor.o
+
+# target to build an object file
+SymbolVisitor.cpp.o:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o
+.PHONY : SymbolVisitor.cpp.o
+
+SymbolVisitor.i: SymbolVisitor.cpp.i
+.PHONY : SymbolVisitor.i
+
+# target to preprocess a source file
+SymbolVisitor.cpp.i:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.i
+.PHONY : SymbolVisitor.cpp.i
+
+SymbolVisitor.s: SymbolVisitor.cpp.s
+.PHONY : SymbolVisitor.s
+
+# target to generate assembly for a file
+SymbolVisitor.cpp.s:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.s
+.PHONY : SymbolVisitor.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -253,6 +277,9 @@ help:
 	@echo "... Scope.o"
 	@echo "... Scope.i"
 	@echo "... Scope.s"
+	@echo "... SymbolVisitor.o"
+	@echo "... SymbolVisitor.i"
+	@echo "... SymbolVisitor.s"
 .PHONY : help
 
 

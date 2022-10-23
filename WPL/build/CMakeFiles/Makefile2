@@ -78,7 +78,7 @@ clean: bin/clean
 # Directory level rules for directory bin
 
 # Recursive "all" directory target.
-bin/all: bin/CMakeFiles/wpl.dir/all
+bin/all: bin/CMakeFiles/wplc.dir/all
 bin/all: bin/lexparse/all
 bin/all: bin/symbol/all
 bin/all: bin/semantic/all
@@ -100,7 +100,7 @@ bin/preinstall: bin/runtime/preinstall
 bin/clean: bin/CMakeFiles/intrinsics_gen.dir/clean
 bin/clean: bin/CMakeFiles/omp_gen.dir/clean
 bin/clean: bin/CMakeFiles/acc_gen.dir/clean
-bin/clean: bin/CMakeFiles/wpl.dir/clean
+bin/clean: bin/CMakeFiles/wplc.dir/clean
 bin/clean: bin/lexparse/clean
 bin/clean: bin/symbol/clean
 bin/clean: bin/semantic/clean
@@ -282,35 +282,35 @@ bin/CMakeFiles/acc_gen.dir/clean:
 .PHONY : bin/CMakeFiles/acc_gen.dir/clean
 
 #=============================================================================
-# Target rules for target bin/CMakeFiles/wpl.dir
+# Target rules for target bin/CMakeFiles/wplc.dir
 
 # All Build rule for target.
-bin/CMakeFiles/wpl.dir/all: bin/lexparse/CMakeFiles/parser_lib.dir/all
-bin/CMakeFiles/wpl.dir/all: bin/symbol/CMakeFiles/sym_lib.dir/all
-bin/CMakeFiles/wpl.dir/all: bin/semantic/CMakeFiles/semantic_lib.dir/all
-bin/CMakeFiles/wpl.dir/all: bin/utility/CMakeFiles/utility_lib.dir/all
-bin/CMakeFiles/wpl.dir/all: bin/codegen/CMakeFiles/codegen_lib.dir/all
-bin/CMakeFiles/wpl.dir/all: bin/runtime/CMakeFiles/wpl_runtime.dir/all
-	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/depend
-	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=13,14 "Built target wpl"
-.PHONY : bin/CMakeFiles/wpl.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/lexparse/CMakeFiles/parser_lib.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/symbol/CMakeFiles/sym_lib.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/semantic/CMakeFiles/semantic_lib.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/utility/CMakeFiles/utility_lib.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/codegen/CMakeFiles/codegen_lib.dir/all
+bin/CMakeFiles/wplc.dir/all: bin/runtime/CMakeFiles/wpl_runtime.dir/all
+	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/depend
+	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=15,16 "Built target wplc"
+.PHONY : bin/CMakeFiles/wplc.dir/all
 
 # Build rule for subdir invocation for target.
-bin/CMakeFiles/wpl.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 11
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/wpl.dir/all
+bin/CMakeFiles/wplc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 12
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/wplc.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
-.PHONY : bin/CMakeFiles/wpl.dir/rule
+.PHONY : bin/CMakeFiles/wplc.dir/rule
 
 # Convenience name for target.
-wpl: bin/CMakeFiles/wpl.dir/rule
-.PHONY : wpl
+wplc: bin/CMakeFiles/wplc.dir/rule
+.PHONY : wplc
 
 # clean rule for target.
-bin/CMakeFiles/wpl.dir/clean:
-	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/clean
-.PHONY : bin/CMakeFiles/wpl.dir/clean
+bin/CMakeFiles/wplc.dir/clean:
+	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/clean
+.PHONY : bin/CMakeFiles/wplc.dir/clean
 
 #=============================================================================
 # Target rules for target bin/lexparse/CMakeFiles/generate_parser.dir
@@ -394,15 +394,17 @@ bin/lexparse/CMakeFiles/lexparse_lib.dir/clean:
 # Target rules for target bin/symbol/CMakeFiles/sym_lib.dir
 
 # All Build rule for target.
-bin/symbol/CMakeFiles/sym_lib.dir/all:
+bin/symbol/CMakeFiles/sym_lib.dir/all: bin/lexparse/CMakeFiles/parser_lib.dir/all
+bin/symbol/CMakeFiles/sym_lib.dir/all: bin/semantic/CMakeFiles/semantic_lib.dir/all
+bin/symbol/CMakeFiles/sym_lib.dir/all: bin/utility/CMakeFiles/utility_lib.dir/all
 	$(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f bin/symbol/CMakeFiles/sym_lib.dir/build.make bin/symbol/CMakeFiles/sym_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=10,11 "Built target sym_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=10,11,12 "Built target sym_lib"
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/all
 
 # Build rule for subdir invocation for target.
 bin/symbol/CMakeFiles/sym_lib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/symbol/CMakeFiles/sym_lib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lmz/cs544/WPL/build/CMakeFiles 0
 .PHONY : bin/symbol/CMakeFiles/sym_lib.dir/rule
@@ -449,7 +451,7 @@ bin/semantic/CMakeFiles/semantic_lib.dir/clean:
 bin/utility/CMakeFiles/utility_lib.dir/all:
 	$(MAKE) $(MAKESILENT) -f bin/utility/CMakeFiles/utility_lib.dir/build.make bin/utility/CMakeFiles/utility_lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f bin/utility/CMakeFiles/utility_lib.dir/build.make bin/utility/CMakeFiles/utility_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=12 "Built target utility_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=13 "Built target utility_lib"
 .PHONY : bin/utility/CMakeFiles/utility_lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -503,7 +505,7 @@ bin/codegen/CMakeFiles/codegen_lib.dir/clean:
 bin/runtime/CMakeFiles/wpl_runtime.dir/all:
 	$(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/depend
 	$(MAKE) $(MAKESILENT) -f bin/runtime/CMakeFiles/wpl_runtime.dir/build.make bin/runtime/CMakeFiles/wpl_runtime.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=15 "Built target wpl_runtime"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=14 "Built target wpl_runtime"
 .PHONY : bin/runtime/CMakeFiles/wpl_runtime.dir/all
 
 # Build rule for subdir invocation for target.

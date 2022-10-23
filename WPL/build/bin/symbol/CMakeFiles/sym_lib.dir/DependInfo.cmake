@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/lmz/cs544/WPL/src/symbol/STManager.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o.d"
   "/home/lmz/cs544/WPL/src/symbol/Scope.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o.d"
+  "/home/lmz/cs544/WPL/src/symbol/SymbolVisitor.cpp" "bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o" "gcc" "bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o.d"
   )
 
 # Targets to which this target links.

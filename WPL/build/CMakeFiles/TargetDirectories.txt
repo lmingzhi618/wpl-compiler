@@ -8,7 +8,7 @@
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/intrinsics_gen.dir
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/omp_gen.dir
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/acc_gen.dir
-/home/lmz/cs544/WPL/build/bin/CMakeFiles/wpl.dir
+/home/lmz/cs544/WPL/build/bin/CMakeFiles/wplc.dir
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/test.dir
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/edit_cache.dir
 /home/lmz/cs544/WPL/build/bin/CMakeFiles/rebuild_cache.dir

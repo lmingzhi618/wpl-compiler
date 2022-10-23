@@ -211,17 +211,17 @@ acc_gen/fast:
 .PHONY : acc_gen/fast
 
 #=============================================================================
-# Target rules for targets named wpl
+# Target rules for targets named wplc
 
 # Build rule for target.
-wpl: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wpl
-.PHONY : wpl
+wplc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wplc
+.PHONY : wplc
 
 # fast build rule for target.
-wpl/fast:
-	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/build
-.PHONY : wpl/fast
+wplc/fast:
+	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/build
+.PHONY : wplc/fast
 
 #=============================================================================
 # Target rules for targets named generate_parser
@@ -350,8 +350,8 @@ help:
 	@echo "... semantic_lib"
 	@echo "... sym_lib"
 	@echo "... utility_lib"
-	@echo "... wpl"
 	@echo "... wpl_runtime"
+	@echo "... wplc"
 .PHONY : help
 
 

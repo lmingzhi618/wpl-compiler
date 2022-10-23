@@ -9,8 +9,8 @@ compilationUnit   : cuComponent+ EOF;
 cuComponent       : varDeclaration | procedure | function | externDeclaration ;
 varDeclaration    : scalarDeclaration | arrayDeclaration ;
 scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)* ';' ;
-scalar            : ID varInitializer? ;
-arrayDeclaration  : typename=type '[' INTEGER ']' ID ';' ;       // No dynamic arrays, type not inferred
+scalar            : id=ID varInitializer? ;
+arrayDeclaration  : t=type '[' INTEGER ']' id=ID ';' ;       // No dynamic arrays, type not inferred
 type              : b=BOOL | i=INT | s=STR ;  
 varInitializer    : '<-' c=constant ;
 externDeclaration : 'extern' (externProcHeader | externFuncHeader) ';';
@@ -22,7 +22,8 @@ function          : funcHeader block  ;
 funcHeader        : t=type 'func' id=ID '(' p=params? ')' ;
 externFuncHeader  : t=type 'func' id=ID '(' ((params ',' ELLIPSIS) | params? | ELLIPSIS?) ')' ;
 
-params            : (type ID (',' type ID)*) ;
+param             : t=type id=ID;
+params            : (ps+=param (',' ps+=param)*) ;
 block            : '{' (statement | varDeclaration | block)+ '}' ;   // Change to expr ???
 
 statement         : assignment
@@ -43,7 +44,7 @@ arguments         : (arg (',' arg)*) ;
 arg               : (id=ID | c=constant) ; 
 return            : 'return' expr? ';' ;
 
-constant          : INTEGER | STRING | BOOLEAN ;
+constant          : i=INTEGER | s=STRING | b=BOOLEAN ;
 assignment        : target=ID '<-' e+=expr ';' 
                   | arrayIndex '<-' e+=expr ';' ;
 arrayIndex        : id=ID '[' expr ']' ;
@@ -61,7 +62,7 @@ expr              :
                   | left=expr OR right=expr                               # OrExpr
                   | '(' expr ')'                                          # ParenExpr
                   | arrayname=ID '.' 'length'                             # ArrayLengthExpr
-                  | ID                                                    # IDExpr
+                  | id=ID                                                 # IDExpr
                   | constant                                              # ConstExpr
                   ;
 

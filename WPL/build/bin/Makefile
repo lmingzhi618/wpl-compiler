@@ -214,25 +214,25 @@ acc_gen/fast:
 .PHONY : acc_gen/fast
 
 # Convenience name for target.
-bin/CMakeFiles/wpl.dir/rule:
-	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/wpl.dir/rule
-.PHONY : bin/CMakeFiles/wpl.dir/rule
+bin/CMakeFiles/wplc.dir/rule:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/wplc.dir/rule
+.PHONY : bin/CMakeFiles/wplc.dir/rule
 
 # Convenience name for target.
-wpl: bin/CMakeFiles/wpl.dir/rule
-.PHONY : wpl
+wplc: bin/CMakeFiles/wplc.dir/rule
+.PHONY : wplc
 
 # fast build rule for target.
-wpl/fast:
-	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/build
-.PHONY : wpl/fast
+wplc/fast:
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/build
+.PHONY : wplc/fast
 
 wpl.o: wpl.cpp.o
 .PHONY : wpl.o
 
 # target to build an object file
 wpl.cpp.o:
-	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/wpl.cpp.o
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/wpl.cpp.o
 .PHONY : wpl.cpp.o
 
 wpl.i: wpl.cpp.i
@@ -240,7 +240,7 @@ wpl.i: wpl.cpp.i
 
 # target to preprocess a source file
 wpl.cpp.i:
-	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/wpl.cpp.i
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/wpl.cpp.i
 .PHONY : wpl.cpp.i
 
 wpl.s: wpl.cpp.s
@@ -248,7 +248,7 @@ wpl.s: wpl.cpp.s
 
 # target to generate assembly for a file
 wpl.cpp.s:
-	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wpl.dir/build.make bin/CMakeFiles/wpl.dir/wpl.cpp.s
+	cd /home/lmz/cs544/WPL/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/wplc.dir/build.make bin/CMakeFiles/wplc.dir/wpl.cpp.s
 .PHONY : wpl.cpp.s
 
 # Help Target
@@ -267,7 +267,7 @@ help:
 	@echo "... acc_gen"
 	@echo "... intrinsics_gen"
 	@echo "... omp_gen"
-	@echo "... wpl"
+	@echo "... wplc"
 	@echo "... wpl.o"
 	@echo "... wpl.i"
 	@echo "... wpl.s"

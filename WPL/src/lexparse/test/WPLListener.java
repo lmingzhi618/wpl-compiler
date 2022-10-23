@@ -157,6 +157,16 @@ public interface WPLListener extends ParseTreeListener {
 	 */
 	void exitExternFuncHeader(WPLParser.ExternFuncHeaderContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link WPLParser#param}.
+	 * @param ctx the parse tree
+	 */
+	void enterParam(WPLParser.ParamContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link WPLParser#param}.
+	 * @param ctx the parse tree
+	 */
+	void exitParam(WPLParser.ParamContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link WPLParser#params}.
 	 * @param ctx the parse tree
 	 */

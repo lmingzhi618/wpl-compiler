@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
 
-CXX_INCLUDES = -I/home/lmz/cs544/WPL/src/symbol/sym_lib -I/home/lmz/cs544/WPL/src/symbol/include
+CXX_INCLUDES = -I/home/lmz/cs544/WPL/src/symbol/sym_lib -I/home/lmz/cs544/WPL/antlr/include -I/home/lmz/cs544/WPL/src/generated -I/home/lmz/cs544/WPL/src/semantic/include -I/home/lmz/cs544/WPL/src/utility/include -I/home/lmz/cs544/WPL/src/symbol/include
 
 CXX_FLAGS =  -fPIC -fno-semantic-interposition -fvisibility-inlines-hidden -Werror=date-time -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wcast-qual -Wno-missing-field-initializers -Wimplicit-fallthrough -Wno-class-memaccess -Wno-redundant-move -Wno-pessimizing-move -Wno-noexcept-type -Wdelete-non-virtual-dtor -Wsuggest-override -Wno-comment -Wmisleading-indentation  -O0 -Wall -g2 -ggdb -std=gnu++17
 

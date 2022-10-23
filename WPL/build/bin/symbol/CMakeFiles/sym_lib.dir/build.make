@@ -97,8 +97,23 @@ bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sym_lib.dir/STManager.cpp.s"
 	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/symbol/STManager.cpp -o CMakeFiles/sym_lib.dir/STManager.cpp.s
 
+bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/flags.make
+bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o: ../src/symbol/SymbolVisitor.cpp
+bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o: bin/symbol/CMakeFiles/sym_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lmz/cs544/WPL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o"
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o -MF CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o.d -o CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o -c /home/lmz/cs544/WPL/src/symbol/SymbolVisitor.cpp
+
+bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.i"
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lmz/cs544/WPL/src/symbol/SymbolVisitor.cpp > CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.i
+
+bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.s"
+	cd /home/lmz/cs544/WPL/build/bin/symbol && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lmz/cs544/WPL/src/symbol/SymbolVisitor.cpp -o CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.s
+
 sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/Scope.cpp.o
 sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/STManager.cpp.o
+sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o
 sym_lib: bin/symbol/CMakeFiles/sym_lib.dir/build.make
 .PHONY : sym_lib
 

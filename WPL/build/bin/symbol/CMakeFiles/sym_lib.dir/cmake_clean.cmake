@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/sym_lib.dir/STManager.cpp.o.d"
   "CMakeFiles/sym_lib.dir/Scope.cpp.o"
   "CMakeFiles/sym_lib.dir/Scope.cpp.o.d"
+  "CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o"
+  "CMakeFiles/sym_lib.dir/SymbolVisitor.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

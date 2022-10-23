@@ -8,7 +8,10 @@
 
 #include "CodegenVisitor.h"
 #include "ErrorHandler.h"
+#include "PropertyManager.h"
+#include "STManager.h"
 #include "SemanticVisitor.h"
+#include "SymbolVisitor.h"
 #include "WPLLexer.h"
 #include "WPLParser.h"
 #include "antlr4-runtime.h"
@@ -166,13 +169,17 @@ int main_wplcc(int argc, char** argv) {
 }*/
 
 int main_parse_tree(int argc, char** argv) {
-    // parseArgs(argc, argv);
-    //  Provide the input text in a stream
-    // antlr4::ANTLRInputStream input("int a; int b; a <- 14; b <- 14");
-    antlr4::ANTLRInputStream input("int a; int b; a <- 14; b <- 14");
+    antlr4::ANTLRInputStream* input = nullptr;
+    if (argc < 2) {
+        std::string inputStr = "int a; bool b; str c;";
+        input = new antlr4::ANTLRInputStream(inputStr);
+    } else {
+        std::fstream* inStream = new std::fstream(argv[1]);
+        input = new antlr4::ANTLRInputStream(*inStream);
+    }
 
     // Create a lexer from the input
-    WPLLexer lexer(&input);
+    WPLLexer lexer(input);
 
     // Create a token stream from the lexer
     antlr4::CommonTokenStream tokens(&lexer);
@@ -181,8 +188,24 @@ int main_parse_tree(int argc, char** argv) {
     WPLParser parser(&tokens);
 
     // Display the parse tree
-    std::cout << "OUTPUT\n"
-              << parser.compilationUnit()->toStringTree() << std::endl;
+    // std::cout << "OUTPUT\n"
+    //          << parser.compilationUnit()->toStringTree() << std::endl;
+
+    auto tree = parser.compilationUnit();
+
+    STManager* stm = new STManager();
+    PropertyManager* pm = new PropertyManager();
+    SymbolVisitor* sv = new SymbolVisitor(stm, pm);
+
+    sv->visitCompilationUnit(tree);
+    std::cout << stm->toString() << std::endl;
+
+    if (sv->hasErrors()) {
+        std::cerr << "Error: " << std::endl;
+        std::cerr << sv->getErrors() << std::endl;
+        std::cerr << "Aborting... " << std::endl;
+        exit(-1);
+    }
     return 0;
 }
 

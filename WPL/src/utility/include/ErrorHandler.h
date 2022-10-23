@@ -36,7 +36,9 @@ struct WPLError {
 
 class ErrorHandler {
    public:
-    void addError(antlr4::Token* t, std::string msg);  // wpl
+    void addError(antlr4::Token* t, std::string msg) {
+        addSemanticError(t, msg);
+    }
 
     void addSemanticError(antlr4::Token* t, std::string msg) {
         WPLError* e = new WPLError(t, msg, SEMANTIC);

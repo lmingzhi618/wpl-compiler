@@ -1,6 +1,4 @@
-# Calculator -- reference compiler application
-
-The details for this project are in the course notebooks. However, much of the information is also provided here.
+# WPL -- reference compiler application
 
 ## Setup
 
@@ -26,51 +24,68 @@ The details for this project are in the course notebooks. However, much of the i
 
 You should see output of: `<EOF> <EOF>`. If you do, congratulations, you're all set. If there are errors you need to do some debugging. Ask for help from the staff or on the Slack #toolchain channel.
 
----
+## Grade C: Minimal functionality
+- Implement standard and inline comments.
+- Compile a single int program() function that can be compiled by llc and then assembled with the runtime library by clang. A single int program() means that you do not have to implement functions and procedures in this level except for this one. 
+- All variables must be declared individually and typed.
+- Only one variable can be declared in a variable declaration (i.e., int x, y; is illegal).
+- Variable definition is not allowed. That is you cannot assign a value to a variable in the declaration (int a <- 1; is illegal).
+- No string or boolean types, just integers.
+- No function or procedure calls.
+- No arrays.
+- Only integer arithmetic: +, -, *, /, and unary -
+- Parentheses to change the precedence.
+- The only statements are: assignment, condition, block, return.
 
-## If you have to modify the `PROJECT_ROOT/src/lexparse/generate.sh` script
 
-This script looks like this in the initial project:
 
-```
-#! /usr/bin/env bash
+grun WPL tokens -tokens
+grun WPL tokens -tokens test.txt
 
-if [ ! -f ../generated/$1Parser.cpp ] || [ "$1.g4" -nt "../generated/$1Parser.cpp" ]; 
-then 
-  echo ">>> Generating <<<"
-  pwd
-  java -jar ../../antlr/antlr4.jar -Dlanguage=Cpp -visitor -listener -o ../generated $1.g4 
-  touch parser_sources.h
-fi
-```
+grun WPL compilationUnit -gui
+> int a; int func program() {a <- 1; return 0;}
 
-You should create an equivalent script for your platform, but name it something different; something like `generate.win`. **Do not change the original script**. Here is what the script does:
 
-1. Check to see if there is a `CalculatorParser.cpp` file in the `generated` directory. 
 
-2. If there is no `CalculatorParser.cpp`, or if the `Calculator.g4` has a new timestamp than the `CalculatorParser.gpp` file, then it runs ANTLR to create the scanner, parser, parse tree visitor, and parser tree listener in the `generated` directory.
 
-3. When done, create or update the timestamp on `parser_sources.h`, which is a dummy file in the `lexparse` folder.
+## Symbol table hierarchy
+### Necessary operations
+* Look up an ID
+  - in current scope
+  - in current and enclosing scopes
+* Insert a ID(and symbol)
+* Enter a new scope
+* Exit a new scope
 
-If you do not want to do all of this, you can just make the script run ANTLR without any checks. This will add just a short amout of time to your builds because it will build the scanner and parser every time you do a build.
 
-If you have changed the script, you will also need to change the `lexparse/CMakeLists.txt` file to modify the custom command:
+### Symbol table requirements
+* Fast lookup and retrival of symbols
+* Allow multiple definitions of an ID in the source language
+  - The language may or may not dictate that one instance hides another
+* Support dynamic and/or static scoping
+* Support various definition paradigms
 
-```
-add_custom_command(
-  OUTPUT(
-    ${CMAKE_CURRENT_SOURCE_DIR}/parser_sources.h
-  )
-  BYPRODUCTS ${ANTLR_SOURCES}
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  COMMAND /bin/sh  generate.sh Calculator       # Change this if you have a different script
-)
-```
+### Two symbol table implementations
+#### Stack
+* When a new scope is needed, create an put on top of the stack
+* After the code for the scope has been processed, pop it off the symbol table stack
+* Once a scope has been popped, it is no longer accessible
 
----
+#### (Flattened)Tree
+* Array or list
+* Pointer from child tree to parent
+* Scopes are always accessible
 
-## References and readings
 
-\[1] *ANTLR Parsing and C++*, Matt Scarpino, Code Project, 2021. https://www.codeproject.com/Articles/5308882/ANTLR-Parsing-and-Cplusplus-Part-1-Introduction, .
 
-[1]: https://www.codeproject.com/Articles/5308882/ANTLR-Parsing-and-Cplusplus-Part-1-Introduction (*ANTLR Parsing and C++*, Matt Scarpino, Code Project, 2021.)
+## Symbol Table Data Structure
+The base type of function is the return type
+The base type of precedure is undefined
+The base type of array is the element type(length is used on array)
+The base type of scalar is type;
+
+
+
+
+
+

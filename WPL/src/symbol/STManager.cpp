@@ -34,21 +34,23 @@ Scope& STManager::exitScope() {
  * @return Symbol*: pointer to the symbol that was added or nullptr if a symbol
  * with the same identifyer already existed in the current scope.
  */
-// Symbol* STManager::addSymbol(Symbol& symbol) {
-//     // Check to see if it exists.
-//     std::string id = symbol.id;
-//     if (currentScope->findSymbol(id) != nullptr) {
-//         return nullptr;
-//     }
-//     return &currentScope->addSymbol(symbol);
-// }
+Symbol* STManager::addSymbol(Symbol* symbol) {
+    // Check to see if it exists.
+    std::string id = symbol->id;
+    if (currentScope->findSymbol(id) != nullptr) {
+        return nullptr;
+    }
+    return currentScope->addSymbol(symbol);
+}
 
-Symbol* STManager::addSymbol(std::string id, SymType t) {
+// Symbol* STManager::addSymbol(std::string id, SymBaseType t,
+//                              SymbolDescriptor* desc) {
+Symbol* STManager::addSymbol(std::string id, SymBaseType t, int len) {
     // Check to see if it exists.
     if (currentScope->findSymbol(id) != nullptr) {
         return nullptr;
     }
-    return currentScope->addSymbol(id, t);
+    return currentScope->addSymbol(new Symbol(id, t, len));
 }
 
 Symbol* STManager::findSymbol(std::string id) {

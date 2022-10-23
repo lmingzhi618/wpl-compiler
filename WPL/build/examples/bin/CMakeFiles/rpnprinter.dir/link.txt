@@ -1,1 +1,0 @@
-/usr/bin/c++  -O0 -Wall -g2 -ggdb CMakeFiles/rpnprinter.dir/rpnprinter.cpp.o CMakeFiles/rpnprinter.dir/RPNVisitor.cpp.o ../../bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLLexer.cpp.o ../../bin/lexparse/CMakeFiles/parser_lib.dir/__/generated/WPLParser.cpp.o -o rpnprinter  ../../../antlr/lib/libantlr4-runtime.a 

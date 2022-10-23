@@ -1,0 +1,1 @@
+int func program(int a, int b) { int c; c <- a; return c; }

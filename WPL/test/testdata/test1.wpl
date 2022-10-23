@@ -1,0 +1,23 @@
+int error <- 0;
+
+int func sidesSquared(int a, int b) {
+    int hSquare <- 0;
+    if (a <= 0 | b <= 0) {
+        error <- -1;
+    } else {
+        int s1Squared, s2Squared;
+        s1Squared <- a * a;
+        s2Squared <- b * b;
+        hSquare <- s1Squared + s2Squared;
+    }
+    if error = -1 {
+        hSquare <- error;
+    }
+    return hSquare;
+}
+
+boolean b;  # global
+
+int func program() {
+    return sidesSquared(3, 4);
+}

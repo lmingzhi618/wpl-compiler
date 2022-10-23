@@ -21,18 +21,18 @@ add_subdirectory(codegen)
 add_subdirectory(runtime)
 
 
-add_executable(wpl wpl.cpp)
+add_executable(wplc wpl.cpp)
 
-add_dependencies(wpl
-    parser_lib
-    sym_lib
-    semantic_lib
+add_dependencies(wplc
     utility_lib
+    parser_lib
+    semantic_lib
+    sym_lib
     codegen_lib
     wpl_runtime
 )
 
-target_include_directories(wpl PUBLIC 
+target_include_directories(wplc PUBLIC 
     ${ANTLR_INCLUDE} ${ANTLR_GENERATED_DIR}
     ${SYMBOL_INCLUDE}
     ${SEMANTIC_INCLUDE}
@@ -42,7 +42,7 @@ target_include_directories(wpl PUBLIC
     ${LLVM_INCLUDE_DIR}
 )
 
-target_link_libraries(wpl 
+target_link_libraries(wplc 
     PRIVATE
     ${ANTLR_RUNTIME_LIB}
     parser_lib
