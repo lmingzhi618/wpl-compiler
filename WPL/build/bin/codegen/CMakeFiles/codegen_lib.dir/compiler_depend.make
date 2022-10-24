@@ -598,6 +598,7 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
   ../antlr/include/tree/xpath/XPathWildcardElement.h \
   ../src/semantic/include/PropertyManager.h \
   ../src/symbol/include/Symbol.h \
+  ../src/symbol/include/Scope.h \
   ../src/generated/WPLBaseVisitor.h \
   ../src/generated/WPLVisitor.h \
   ../src/generated/WPLParser.h \
@@ -609,6 +610,8 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o: ../src/codegen/Code
 ../src/generated/WPLParser.h:
 
 ../src/generated/WPLVisitor.h:
+
+../src/symbol/include/Scope.h:
 
 ../src/symbol/include/Symbol.h:
 

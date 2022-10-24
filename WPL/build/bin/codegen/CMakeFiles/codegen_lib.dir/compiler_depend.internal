@@ -599,6 +599,7 @@ bin/codegen/CMakeFiles/codegen_lib.dir/CodegenVisitor.cpp.o
  /home/lmz/cs544/WPL/antlr/include/tree/xpath/XPathWildcardElement.h
  /home/lmz/cs544/WPL/src/semantic/include/PropertyManager.h
  /home/lmz/cs544/WPL/src/symbol/include/Symbol.h
+ /home/lmz/cs544/WPL/src/symbol/include/Scope.h
  /home/lmz/cs544/WPL/src/generated/WPLBaseVisitor.h
  /home/lmz/cs544/WPL/src/generated/WPLVisitor.h
  /home/lmz/cs544/WPL/src/generated/WPLParser.h

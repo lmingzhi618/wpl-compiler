@@ -12,6 +12,8 @@
 
 #include "ErrorHandler.h"
 #include "PropertyManager.h"
+#include "Scope.h"
+#include "Symbol.h"
 #include "WPLBaseVisitor.h"
 #include "WPLLexer.h"
 #include "WPLParser.h"
@@ -39,26 +41,24 @@ class CodegenVisitor : public WPLBaseVisitor {
         Int8PtrPtrTy = i8p->getPointerTo();
     }
 
-    std::any visitCompilationUnit(
-        WPLParser::CompilationUnitContext *ctx) override;
-    // std::any visitCuComponent(WPLParser::CuComponentContext *ctx) override;
-    //   std::any visitVarDeclaration(WPLParser::VarDeclarationContext *ctx)
-    //   override;
-    //  std::any visitScalarDeclaration(
-    //     WPLParser::ScalarDeclarationContext *ctx) override;
-    //  std::any visitScalar(WPLParser::ScalarContext *ctx) override;
-    //  std::any visitArrayDeclaration(
-    //     WPLParser::ArrayDeclarationContext *ctx) override;
-    //  std::any visitType(WPLParser::TypeContext *ctx) override;
-    //  std::any visitVarInitializer(WPLParser::VarInitializerContext
-    //  *ctx)override;
-    //  std::any visitExternDeclaration(WPLParser::ExternDeclarationContext
-    //  *ctx) override; std::any visitProcedure(WPLParser::ProcedureContext
-    //  *ctx) override; std::any visitProcHeader(WPLParser::ProcHeaderContext
-    //  *ctx) override; std::any visitExternProcHeader(
-    //      WPLParser::ExternProcHeaderContext *ctx) override;
-    //  std::any visitFunction(WPLParser::FunctionContext *ctx) override;
-    //  std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
+    // std::any visitCompilationUnit(
+    //     WPLParser::CompilationUnitContext *ctx) override;
+    //  std::any visitCuComponent(WPLParser::CuComponentContext *ctx) override;
+    // std::any visitScalarDeclaration(
+    //    WPLParser::ScalarDeclarationContext *ctx) override;
+    std::any visitScalar(WPLParser::ScalarContext *ctx) override;
+    //   std::any visitArrayDeclaration(
+    //      WPLParser::ArrayDeclarationContext *ctx) override;
+    //   std::any visitType(WPLParser::TypeContext *ctx) override;
+    //   std::any visitVarInitializer(WPLParser::VarInitializerContext
+    //   *ctx)override;
+    //   std::any visitExternDeclaration(WPLParser::ExternDeclarationContext
+    //   *ctx) override; std::any visitProcedure(WPLParser::ProcedureContext
+    //   *ctx) override; std::any visitProcHeader(WPLParser::ProcHeaderContext
+    //   *ctx) override; std::any visitExternProcHeader(
+    //       WPLParser::ExternProcHeaderContext *ctx) override;
+    //   std::any visitFunction(WPLParser::FunctionContext *ctx) override;
+    //   std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
     //// std::any visitExternFuncHeader(
     ////     WPLParser::ExternFuncHeaderContext *ctx) override;
     // std::any visitParam(WPLParser::ParamContext *ctx) override;
@@ -78,7 +78,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
     //// std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
     // std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
-    // std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
+    std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
     //// std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
     ////   std::any
     ////   visitSubscriptExpr(WPLParser::SubscriptExprContext*ctx)override;
@@ -101,6 +101,17 @@ class CodegenVisitor : public WPLBaseVisitor {
     bool hasErrors() { return errors.hasErrors(); }
     llvm::Module *getModule() { return module; }
     void modPrint() { module->print(llvm::outs(), nullptr); }
+
+    Type *getLLVMType(SymBaseType bt) {
+        auto type = CodegenVisitor::Int32Ty;
+        if (bt == STR) {
+            type = CodegenVisitor::Int8PtrPtrTy;
+        } else if (bt == BOOL) {
+            type = CodegenVisitor::Int1Ty;
+        }
+        return type;
+    }
+    // bool isGlobal(Scope *scope) {}
 
    private:
     PropertyManager *props;

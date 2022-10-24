@@ -1,0 +1,9 @@
+int a;
+(* C positive test 2 *)
+int func program() {
+  int a;
+  int b;
+  a <- 14;
+  b <- 3;
+  return 0;
+}
