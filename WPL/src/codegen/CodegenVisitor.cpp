@@ -18,8 +18,8 @@ void trace(std::string message, Value *v = nullptr) {
 #endif
 }
 
-/*
-std::any CodegenVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
+std::any CodegenVisitor::visitCompilationUnit(
+    WPLParser::CompilationUnitContext *ctx) {
     // 1 Declare external functions.
     auto printf_prototype = FunctionType::get(i8p, true);
     auto printf_fn = Function::Create(
@@ -30,7 +30,7 @@ std::any CodegenVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
     FunctionType *mainFuncType =
         FunctionType::get(Int32Ty, {Int32Ty, Int8PtrPtrTy}, false);
     Function *mainFunc = Function::Create(
-        mainFuncType, GlobalValue::ExternalLinkage, "main", module);
+        mainFuncType, GlobalValue::ExternalLinkage, "program", module);
 
     // 3. Create a basic block and attach it to the builder
     BasicBlock *bBlock =
@@ -38,14 +38,8 @@ std::any CodegenVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
     builder->SetInsertPoint(bBlock);
 
     // 4. Generate the code for all of the expression in the block.
-    for (auto e : ctx->exprs) {
-        Value *exprResult = std::any_cast<Value *>(e->accept(this));
-        auto et = e->getText();  // the text of the expression
-        StringRef formatRef = "Expression %s evaluates to %d\n";
-        auto gFormat = builder->CreateGlobalStringPtr(formatRef, "fmtStr");
-        StringRef exprRef = et;
-        auto exFormat = builder->CreateGlobalStringPtr(exprRef, "exprStr");
-        builder->CreateCall(printf_fn, {gFormat, exFormat, exprResult});
+    for (auto cc : ctx->cuComponent()) {
+        std::any_cast<Value *>(cc->accept(this));
     }
 
     // 5. Generate code module trailer.
@@ -53,40 +47,39 @@ std::any CodegenVisitor::visitProgram(WPLParser::ProgramContext *ctx) {
     return nullptr;
 }
 
-std::any CodegenVisitor::visitBooleanConstant(
-    WPLParser::BooleanConstantContext *ctx) {
+std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
     Value *v;
-    if (ctx->val->getType() == WPLParser::TRUE) {
-        v = builder->getInt32(1);
+    if (ctx->b) {
+        if (ctx->b->getText() == "true") {
+            v = builder->getInt32(1);
+        } else {
+            v = builder->getInt32(0);
+        }
+    } else if (ctx->i) {
+        v = builder->getInt32(std::stoi(ctx->i->getText()));
     } else {
-        v = builder->getInt32(0);
+        StringRef sr = ctx->s->getText();
+        v = builder->CreateGlobalStringPtr(sr);
     }
     return v;
 }
 
-std::any CodegenVisitor::visitIConstExpr(WPLParser::IConstExprContext *ctx) {
-    int i = std::stoi(ctx->i->getText());
-    Value *v = builder->getInt32(i);
-    return v;
-}
-
 std::any CodegenVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
-    return ctx->ex->accept(this);
+    return ctx->expr()->accept(this);
 }
 
-std::any CodegenVisitor::visitUnaryMinusExpr(
-    WPLParser::UnaryMinusExprContext *ctx) {
-    Value *exVal = std::any_cast<Value *>(ctx->ex->accept(this));
+std::any CodegenVisitor::visitUMinusExpr(WPLParser::UMinusExprContext *ctx) {
+    Value *exVal = std::any_cast<Value *>(ctx->expr()->accept(this));
     Value *v = builder->CreateNSWSub(builder->getInt32(0), exVal);
     return v;
 }
 
-std::any CodegenVisitor::visitUnaryNotExpr(
-    WPLParser::UnaryNotExprContext *ctx) {
-    Value *v = std::any_cast<Value *>(ctx->ex->accept(this));
+std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
+    Value *v = std::any_cast<Value *>(ctx->expr()->accept(this));
     v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
     v = builder->CreateXor(v, Int32One);
     v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int32Ty);
+    return v;
 }
 
 std::any CodegenVisitor::visitBinaryArithExpr(
@@ -94,46 +87,42 @@ std::any CodegenVisitor::visitBinaryArithExpr(
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
-    auto opType = ctx->op->getType();
-    switch (opType) {
-        case WPLParser::PLUS:
-            v = builder->CreateNSWAdd(lVal, rVal);
-            break;
-        case WPLParser::MINUS:
-            v = builder->CreateNSWSub(lVal, rVal);
-            break;
-        case WPLParser::MULTIPLY:
-            v = builder->CreateNSWMul(lVal, rVal);
-            break;
-        case WPLParser::DIVIDE:
-            v = builder->CreateSDiv(lVal, rVal);
-            break;
+    if (ctx->PLUS()) {
+        v = builder->CreateNSWAdd(lVal, rVal);
+    } else if (ctx->MINUS()) {
+        v = builder->CreateNSWSub(lVal, rVal);
+    } else if (ctx->MUL()) {
+        v = builder->CreateNSWMul(lVal, rVal);
+    } else {
+        v = builder->CreateSDiv(lVal, rVal);
     }
     return v;
 }
 
-std::any CodegenVisitor::visitBinaryRelExpr(
-    WPLParser::BinaryRelExprContext *ctx) {
+std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
-    auto op = ctx->op->getType();
     Value *v1;
-    if (op == WPLParser::LESS) {
+    if (ctx->LESS()) {
         v1 = builder->CreateICmpSLT(lVal, rVal);
-    } else {
+    } else if (ctx->LEQ()) {
+        v1 = builder->CreateICmpSLE(lVal, rVal);
+    } else if (ctx->GTR()) {
         v1 = builder->CreateICmpSGT(lVal, rVal);
+    } else {
+        v1 = builder->CreateICmpSGE(lVal, rVal);
     }
     v = builder->CreateZExtOrTrunc(v1, CodegenVisitor::Int32Ty);
+    return v;
 }
 
 std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
-    auto op = ctx->op->getType();
     Value *v1;
-    if (op == WPLParser::EQUAL) {
+    if (ctx->EQUAL()) {
         v1 = builder->CreateICmpEQ(lVal, rVal);
     } else {
         v1 = builder->CreateICmpNE(lVal, rVal);
@@ -142,28 +131,55 @@ std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     return v;
 }
 
-std::any CodegenVisitor::visitAssignExpression(
-    WPLParser::AssignExpressionContext *ctx) {
+std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
     Value *v = nullptr;
-    Value *exVal = std::any_cast<Value *>(ctx->ex->accept(this));
-    Symbol *varSymbol = props->getBinding(ctx);  // child variable symbol
-    if (varSymbol == nullptr) {
-        trace("NULLPTR");
-        exit(-1);
-    }
-    if (false == varSymbol->defined) {
-        // Define the symbol and allocate memory.
-        v = builder->CreateAlloca(CodegenVisitor::Int32Ty, 0,
-                                  varSymbol->identifier);
-        varSymbol->defined = true;
-        varSymbol->val = v;
+    Value *exVal;
+    if (ctx->target) {
+        exVal = std::any_cast<Value *>(ctx->e->accept(this));
+        Symbol *symbol = props->getBinding(ctx);  // child variable symbol
+        if (symbol == nullptr) {
+            trace("NULLPTR");
+            exit(-1);
+        }
+        if (false == symbol->defined) {
+            // Define the symbol and allocate memory.
+            if (symbol->baseType == INT) {
+                v = builder->CreateAlloca(CodegenVisitor::Int32Ty, 0,
+                                          symbol->id);
+            } else if (symbol->baseType == STR) {
+                v = builder->CreateAlloca(CodegenVisitor::Int8PtrPtrTy, 0,
+                                          symbol->id);
+            } else if (symbol->baseType == BOOL) {
+                v = builder->CreateAlloca(CodegenVisitor::Int1Ty, 0,
+                                          symbol->id);
+            }
+            symbol->defined = true;
+            symbol->val = v;
+        } else {
+            v = symbol->val;
+        }
+        builder->CreateStore(exVal, v);
     } else {
-        v = varSymbol->val;
+        exVal = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
+        Symbol *symbol = props->getBinding(ctx);  // child variable symbol
+        if (symbol == nullptr) {
+            trace("NULLPTR");
+            exit(-1);
+        }
+        if (false == symbol->defined) {
+            // Define the symbol and allocate memory.
+            v = builder->CreateAlloca(CodegenVisitor::Int32Ty, 0, symbol->id);
+            symbol->defined = true;
+            symbol->val = v;
+        } else {
+            v = symbol->val;
+        }
+        builder->CreateStore(exVal, v);
     }
-    builder->CreateStore(exVal, v);
     return exVal;
 }
 
+/*
 std::any CodegenVisitor::visitVariableExpr(
     WPLParser::VariableExprContext *ctx) {
     // 1. Get the name of the variable.
@@ -175,9 +191,9 @@ std::any CodegenVisitor::visitVariableExpr(
     // phase
     if (!(symbol->defined)) {
         errors.addCodegenError(ctx->getStart(),
-                               "Undefined variable in expression: " + varId);
-    } else {
-        v = builder->CreateLoad(CodegenVisitor::Int32Ty, symbol->val, varId);
+                               "Undefined variable in expression: " +
+varId); } else { v = builder->CreateLoad(CodegenVisitor::Int32Ty,
+symbol->val, varId);
     }
     return v;
 }

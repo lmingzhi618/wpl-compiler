@@ -42,7 +42,7 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitConditional(WPLParser::ConditionalContext *ctx) override;
     // std::any visitSelect(WPLParser::SelectContext *ctx) override;
     std::any visitSelectAlt(WPLParser::SelectAltContext *ctx) override;
-    // std::any visitCall(WPLParser::CallContext *ctx) override;
+    std::any visitCall(WPLParser::CallContext *ctx) override;
     // std::any visitArguments(WPLParser::ArgumentsContext *ctx)override;
     // std::any visitArg(WPLParser::ArgContext *ctx) override;
     std::any visitReturn(WPLParser::ReturnContext *ctx) override;
@@ -66,7 +66,7 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
     std::any visitNotExpr(WPLParser::NotExprContext *ctx) override;
     std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
-    // std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override;
+    std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override;
 
     bool hasErrors() { return errors.hasErrors(); }
     std::string getErrors() { return errors.errorList(); }

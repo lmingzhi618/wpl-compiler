@@ -63,7 +63,7 @@ The base type of scalar is type;
 
 
 ## Grade C: Minimal functionalityｈ
-- Implement standard and inline comments.   OK
+- Implement standard and inline comments.   
 - Compile a single int program() function that can be compiled by llc and then assembled with the runtime library by clang. 
   A single int program() means that you do not have to implement functions and procedures in this level except for this one. 
 
@@ -73,13 +73,13 @@ The base type of scalar is type;
 - No string or boolean types, just integers.
 - No function or procedure calls.
 - No arrays.
-- Only integer arithmetic: +, -, *, /, and unary -    OK
-- Parentheses to change the precedence.               OK
+- Only integer arithmetic: +, -, *, /, and unary -    
+- Parentheses to change the precedence.               
 - statements: 
-  assignment  OK
-  condition   OK
-  block       OK
-  return.     OK
+  assignment  
+  condition   
+  block       
+  return.     
 
 
 Grade B: Utility
@@ -98,11 +98,11 @@ Grade B: Utility
 
 Grade A: Useful
 - Implement all of B grade requirements.
-- Implement logical expressions.
+- Implement logical expressions.                     OK
 - Implement functions and procedures completely (define your own and call any).
 - Type inference (var x;).
-- Implement select statements
-- Implement arrays
+- Implement select statements                        OK
+- Implement arrays                                   OK
 
 
 grun WPL tokens -tokens

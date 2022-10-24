@@ -1,6 +1,7 @@
 #include "SemanticVisitor.h"
 
 #include <any>
+#include <string>
 
 // std::any visitConstant(WPLParser::ConstantContext *ctx) {}
 
@@ -341,6 +342,11 @@ std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
                                     Symbol::getBaseTypeName(right));
         type = UNDEFINED;
     }
+    if (false == (ctx->LESS() || ctx->LEQ() || ctx->GTR() || ctx->GEQ())) {
+        errors.addSemanticError(ctx->getStart(), "Operator needed");
+        type = UNDEFINED;
+    }
+
     return type;
 }
 
@@ -387,7 +393,7 @@ std::any SemanticVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
 
 // return            : 'return' expr? ';' ;
 std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
-    SymBaseType type = BOOL;
+    SymBaseType type = UNDEFINED;
     if (ctx->expr()) {
         type = std::any_cast<SymBaseType>(ctx->expr()->accept(this));
     }
@@ -440,6 +446,81 @@ std::any SemanticVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
                                 "BOOL expected for select expr, but get " +
                                     Symbol::getBaseTypeName(st));
         result = UNDEFINED;
+    }
+    return result;
+}
+
+std::any SemanticVisitor::visitFuncCallExpr(
+    WPLParser::FuncCallExprContext *ctx) {
+    SymBaseType result = UNDEFINED;
+    std::string fn = ctx->fname->getText();
+    Symbol *symbol = stmgr->findSymbol(fn);
+    if (nullptr == symbol) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Function(" + fn + ") not found");
+    } else {
+        bindings->bind(ctx, symbol);
+        result = symbol->baseType;
+        int argc = ctx->args.size();
+        int required_argc = symbol->params->size();
+        if (argc != required_argc) {
+            errors.addSemanticError(ctx->getStart(),
+                                    "Need " + std::to_string(required_argc) +
+                                        " arguments, but provided " +
+                                        std::to_string(argc) + " arguments");
+            result = UNDEFINED;
+        } else {
+            for (int i = 0; i < argc; ++i) {
+                auto t1 =
+                    std::any_cast<SymBaseType>(ctx->args[i]->accept(this));
+                auto t2 = std::any_cast<SymBaseType>(symbol->params[i]);
+                if (t1 != t2) {
+                    errors.addSemanticError(
+                        ctx->getStart(),
+                        "Param type mismatch: required type: " +
+                            Symbol::getBaseTypeName(t2) + ", but got " +
+                            Symbol::getBaseTypeName(t1));
+                    result = UNDEFINED;
+                }
+            }
+        }
+    }
+    return result;
+}
+
+std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
+    SymBaseType result = UNDEFINED;
+    std::string id = ctx->id->getText();
+    Symbol *symbol = stmgr->findSymbol(id);
+    if (nullptr == symbol) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Function(" + id + ") not found");
+    } else {
+        bindings->bind(ctx, symbol);
+        result = symbol->baseType;
+        int argc = ctx->arguments()->arg().size();
+        int required_argc = symbol->params->size();
+        if (argc != required_argc) {
+            errors.addSemanticError(ctx->getStart(),
+                                    "Need " + std::to_string(required_argc) +
+                                        " arguments, but provided " +
+                                        std::to_string(argc) + " arguments");
+            result = UNDEFINED;
+        } else {
+            for (int i = 0; i < argc; ++i) {
+                auto t1 = std::any_cast<SymBaseType>(
+                    ctx->arguments()->arg(i)->accept(this));
+                auto t2 = std::any_cast<SymBaseType>(symbol->params[i]);
+                if (t1 != t2) {
+                    errors.addSemanticError(
+                        ctx->getStart(),
+                        "Param type mismatch: required type: " +
+                            Symbol::getBaseTypeName(t2) + ", but got " +
+                            Symbol::getBaseTypeName(t1));
+                    result = UNDEFINED;
+                }
+            }
+        }
     }
     return result;
 }
