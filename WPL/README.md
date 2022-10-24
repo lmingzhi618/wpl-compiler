@@ -82,6 +82,28 @@ The base type of scalar is type;
   return.     OK
 
 
+Grade B: Utility
+- Implement all of the C grade requirements. OK
+- Be able to call functions and procedures
+  from the standard library (e.g. printf) and from the WPL runtime library (e.g. getArgc).
+
+- Allow multiple variables to be declared in a declaration (int a, b, c;).  OK
+
+- Implement variable initialization (int a <- 42;).   OK
+- Implement string and boolean types.                 OK
+- Nested inline comments.                     ???
+- Boolean (relational expressions). No logical expressions (& and |). OK
+- Implement loop statements.                          OK
+
+
+Grade A: Useful
+- Implement all of B grade requirements.
+- Implement logical expressions.
+- Implement functions and procedures completely (define your own and call any).
+- Type inference (var x;).
+- Implement select statements
+- Implement arrays
+
 
 grun WPL tokens -tokens
 grun WPL tokens -tokens test.txt

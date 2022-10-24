@@ -38,10 +38,10 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitBlock(WPLParser::BlockContext *ctx) override;
 
     // std::any visitStatement(WPLParser::StatementContext *ctx)override;
-    // std::any visitLoop(WPLParser::LoopContext *ctx) override;
+    std::any visitLoop(WPLParser::LoopContext *ctx) override;
     std::any visitConditional(WPLParser::ConditionalContext *ctx) override;
     // std::any visitSelect(WPLParser::SelectContext *ctx) override;
-    // std::any visitSelectAlt(WPLParser::SelectAltContext *ctx) override;
+    std::any visitSelectAlt(WPLParser::SelectAltContext *ctx) override;
     // std::any visitCall(WPLParser::CallContext *ctx) override;
     // std::any visitArguments(WPLParser::ArgumentsContext *ctx)override;
     // std::any visitArg(WPLParser::ArgContext *ctx) override;
@@ -49,7 +49,7 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitConstant(WPLParser::ConstantContext *ctx) override;
     std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
     // std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
-    // std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
+    std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
     std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
     // std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
     //   std::any
@@ -62,7 +62,7 @@ class SemanticVisitor : WPLBaseVisitor {
     //  override;
 
     std::any visitUMinusExpr(WPLParser::UMinusExprContext *ctx) override;
-    // std::any visitOrExpr(WPLParser::OrExprContext *ctx) override;
+    std::any visitOrExpr(WPLParser::OrExprContext *ctx) override;
     std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
     std::any visitNotExpr(WPLParser::NotExprContext *ctx) override;
     std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;

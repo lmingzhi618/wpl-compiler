@@ -60,16 +60,21 @@ std::any SemanticVisitor::visitScalarDeclaration(
     for (auto s : ctx->scalars) {
         id = s->ID()->getText();
         Symbol *sym = new Symbol(id, type);
-
-        // std::cout << fn << "add symbol: id: " << id << ", type: " << type
-        //           << std::endl;
-
         Symbol *symbol = stmgr->addSymbol(sym);
-
-        // std::cout << ctx->t->getText() << id << std::endl;
         if (symbol == nullptr) {
-            // std::cerr << fn << ", add error" << std::endl;
             errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
+        }
+
+        if (s->varInitializer()) {
+            auto st =
+                std::any_cast<SymBaseType>(s->varInitializer()->accept(this));
+            if (st != type) {
+                errors.addError(ctx->getStart(),
+                                fn + "Value type(" +
+                                    Symbol::getBaseTypeName(st) +
+                                    ") doesn't match scalar type(" +
+                                    Symbol::getBaseTypeName(type) + ")");
+            }
         }
     }
     return nullptr;
@@ -297,7 +302,7 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
         }
         bindings->bind(ctx, symbol);
     } else if (ctx->arrayIndex()) {
-        // arrayIndex '<-' e = expr ';';
+        // | arrayIndex '<-' e += expr ';';
         // arrayIndex        : id=ID '[' expr ']' ;
         type =
             std::any_cast<SymBaseType>(ctx->arrayIndex()->expr()->accept(this));
@@ -325,14 +330,14 @@ std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
     if (left != INT) {
         errors.addSemanticError(ctx->getStart(),
-                                "BOOL left expression expected, but was " +
+                                "INT left expression expected, but was " +
                                     Symbol::getBaseTypeName(left));
         type = UNDEFINED;
     }
     auto right = std::any_cast<SymBaseType>(ctx->right->accept(this));
     if (right != INT) {
         errors.addSemanticError(ctx->getStart(),
-                                "BOOL right expression expected, but was " +
+                                "INT right expression expected, but was " +
                                     Symbol::getBaseTypeName(right));
         type = UNDEFINED;
     }
@@ -340,6 +345,17 @@ std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
 }
 
 std::any SemanticVisitor::visitConditional(WPLParser::ConditionalContext *ctx) {
+    auto type = std::any_cast<SymBaseType>(ctx->e->accept(this));
+    if (type != BOOL) {
+        errors.addSemanticError(ctx->getStart(),
+                                "BOOL expression expected, but was " +
+                                    Symbol::getBaseTypeName(type));
+        type = UNDEFINED;
+    }
+    return type;
+}
+
+std::any SemanticVisitor::visitLoop(WPLParser::LoopContext *ctx) {
     auto type = std::any_cast<SymBaseType>(ctx->e->accept(this));
     if (type != BOOL) {
         errors.addSemanticError(ctx->getStart(),
@@ -376,4 +392,54 @@ std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
         type = std::any_cast<SymBaseType>(ctx->expr()->accept(this));
     }
     return type;
+}
+
+std::any SemanticVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
+    auto result = std::any_cast<SymBaseType>(ctx->right->accept(this));
+    auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
+    if (result != left || left != BOOL) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Both sides of '=' must be BOOL type.");
+        result = UNDEFINED;
+    }
+    return result;
+}
+
+std::any SemanticVisitor::visitOrExpr(WPLParser::OrExprContext *ctx) {
+    SymBaseType result = BOOL;
+    result = std::any_cast<SymBaseType>(ctx->right->accept(this));
+    auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
+    if (result != left || left != BOOL) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Both sides of '=' must be BOOL type.");
+        result = UNDEFINED;
+    }
+    return result;
+}
+
+// std::any SemanticVisitor::visitSelect(WPLParser::SelectContext *ctx) {
+//     SymBaseType result = BOOL;
+//     for (auto s : ctx->selectAlt()) {
+//         auto st = std::any_cast<SymBaseType>(s->e->accept(this));
+//         if (st != BOOL) {
+//             errors.addSemanticError(ctx->getStart(),
+//                                     "BOOL expected for select expr, but get "
+//                                     +
+//                                         Symbol::getBaseTypeName(st));
+//             result = UNDEFINED;
+//         }
+//     }
+//     return result;
+// }
+
+std::any SemanticVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
+    SymBaseType result = BOOL;
+    auto st = std::any_cast<SymBaseType>(ctx->accept(this));
+    if (st != BOOL) {
+        errors.addSemanticError(ctx->getStart(),
+                                "BOOL expected for select expr, but get " +
+                                    Symbol::getBaseTypeName(st));
+        result = UNDEFINED;
+    }
+    return result;
 }
