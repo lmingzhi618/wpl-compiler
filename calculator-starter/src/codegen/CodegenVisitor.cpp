@@ -29,7 +29,7 @@ std::any CodegenVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
     FunctionType *mainFuncType =
         FunctionType::get(Int32Ty, {Int32Ty, Int8PtrPtrTy}, false);
     Function *mainFunc = Function::Create(
-        mainFuncType, GlobalValue::ExternalLinkage, "main", module);
+        mainFuncType, GlobalValue::ExternalLinkage, "program", module);
 
     // 3. Create a basic block and attach it to the builder
     BasicBlock *bBlock =
@@ -37,6 +37,8 @@ std::any CodegenVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
     builder->SetInsertPoint(bBlock);
 
     // 4. Generate the code for all of the expression in the block.
+    if (ctx->cuComponent) {
+    }
     for (auto e : ctx->exprs) {
         Value *exprResult = std::any_cast<Value *>(e->accept(this));
         auto et = e->getText();  // the text of the expression
@@ -88,6 +90,7 @@ std::any CodegenVisitor::visitUnaryNotExpr(
     v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
     v = builder->CreateXor(v, Int32One);
     v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int32Ty);
+    return v;
 }
 
 std::any CodegenVisitor::visitBinaryArithExpr(

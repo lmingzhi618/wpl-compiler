@@ -6,4 +6,5 @@ set (SYMBOL_INCLUDE ${SYMBOL_DIR}/include)
 set (SYMBOL_SOURCES
     ${SYMBOL_DIR}/Scope.cpp
     ${SYMBOL_DIR}/STManager.cpp
+    ${SYMBOL_DIR}/SymbolVisitor.cpp
 )
