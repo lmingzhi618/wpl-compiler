@@ -1,7 +1,7 @@
 # This is a comment
 int error <- 0;
 
-int func sidesSquared(int a, int b) {
+int proc sidesSquared(int a, int b) {
     int hSquare <- 0;
     if (a <= 0 | b <= 0) {
         error <- -1;

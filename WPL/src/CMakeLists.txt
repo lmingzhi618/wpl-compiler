@@ -9,6 +9,7 @@ include (Runtime)
 
 find_package(LLVM REQUIRED CONFIG)
 list(APPEND CMAKE_MODULE_PATH ${LLVM_DIR})
+
 include(AddLLVM)
 include(HandleLLVMOptions)
 

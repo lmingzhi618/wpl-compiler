@@ -3,9 +3,9 @@
 #include "Symbol.h"
 
 TEST_CASE("Create a Symbol", "[symbol]") {
-    Symbol s("a", SymType::BOOL);
+    Symbol s("a", SymBaseType::BOOL);
     CHECK(s.identifier == "a");
-    CHECK(s.type == BOOL);
+    CHECK(s.baseType == BOOL);
     // CHECK("foo" == s.toString())
     CHECK("[a, BOOL]" == s.toString());
 }

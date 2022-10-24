@@ -43,8 +43,6 @@ Symbol* STManager::addSymbol(Symbol* symbol) {
     return currentScope->addSymbol(symbol);
 }
 
-// Symbol* STManager::addSymbol(std::string id, SymBaseType t,
-//                              SymbolDescriptor* desc) {
 Symbol* STManager::addSymbol(std::string id, SymBaseType t, int len) {
     // Check to see if it exists.
     if (currentScope->findSymbol(id) != nullptr) {

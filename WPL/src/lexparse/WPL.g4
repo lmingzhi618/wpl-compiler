@@ -45,8 +45,8 @@ arg               : (id=ID | c=constant) ;
 return            : 'return' expr? ';' ;
 
 constant          : i=INTEGER | s=STRING | b=BOOLEAN ;
-assignment        : target=ID '<-' e+=expr ';' 
-                  | arrayIndex '<-' e+=expr ';' ;
+assignment        : target=ID '<-' e=expr ';' 
+                  | arrayIndex '<-' e=expr ';' ;
 arrayIndex        : id=ID '[' expr ']' ;
 
 expr              : 
@@ -54,8 +54,8 @@ expr              :
                   | arrayIndex                                            # SubscriptExpr
                   | <assoc=right> '-' expr                                # UMinusExpr
                   | <assoc=right> '~' expr                                # NotExpr
-                  | left=expr (MUL | DIV) right=expr                      # MultExpr
-                  | left=expr (PLUS | MINUS) right=expr                   # AddExpr
+                  | left=expr (MUL | DIV) right=expr                      # BinaryArithExpr 
+                  | left=expr (PLUS | MINUS) right=expr                   # BinaryArithExpr
                   | left=expr (LESS | LEQ | GTR | GEQ) right=expr         # RelExpr
                   | <assoc=right> left=expr (EQUAL | NEQ) right=expr      # EqExpr
                   | left=expr AND right=expr                              # AndExpr

@@ -10,198 +10,63 @@ class SemanticVisitor : WPLBaseVisitor {
     SemanticVisitor(STManager *stmgr, PropertyManager *pm)
         : stmgr(stmgr), bindings(pm) {}
 
-    // std::any visitCompilationUnit(
-    //     WPLParser::CompilationUnitContext *ctx) override;
-
-    //  std::any visitCuComponent(WPLParser::CuComponentContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitVarDeclaration(
-    //      WPLParser::VarDeclarationContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitScalarDeclaration(
-    //      WPLParser::ScalarDeclarationContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitScalar(WPLParser::ScalarContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitArrayDeclaration(
-    //      WPLParser::ArrayDeclarationContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    std::any visitType(WPLParser::TypeContext *ctx) override;
-
-    //  std::any visitVarInitializer(
-    //      WPLParser::VarInitializerContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitExternDeclaration(
-    //      WPLParser::ExternDeclarationContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitProcedure(WPLParser::ProcedureContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitProcHeader(WPLParser::ProcHeaderContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitExternProcHeader(
-    //      WPLParser::ExternProcHeaderContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitFunction(WPLParser::FunctionContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitExternFuncHeader(
-    //      WPLParser::ExternFuncHeaderContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitParams(WPLParser::ParamsContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitBlock(WPLParser::BlockContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitStatement(WPLParser::StatementContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitLoop(WPLParser::LoopContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitConditional(WPLParser::ConditionalContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitSelect(WPLParser::SelectContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitSelectAlt(WPLParser::SelectAltContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitCall(WPLParser::CallContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitArguments(WPLParser::ArgumentsContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitArg(WPLParser::ArgContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitReturn(WPLParser::ReturnContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    // std::any visitConstant(WPLParser::ConstantContext *ctx) override;
-
-    //  std::any visitAssignment(WPLParser::AssignmentContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitAndExpr(WPLParser::AndExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitIDExpr(WPLParser::IDExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitSubscriptExpr(WPLParser::SubscriptExprContext *ctx)
-    //  override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitRelExpr(WPLParser::RelExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitMultExpr(WPLParser::MultExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitAddExpr(WPLParser::AddExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitArrayLengthExpr(
-    //      WPLParser::ArrayLengthExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitUMinusExpr(WPLParser::UMinusExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitOrExpr(WPLParser::OrExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitEqExpr(WPLParser::EqExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitNotExpr(WPLParser::NotExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override {
-    //      return visitChildren(ctx);
-    //  }
-
-    //  std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override
-    //  {
-    //      return visitChildren(ctx);
-    //  }
-
-    // CALCULATOR ...
-    //  std::any visitBooleanConstant(
-    //      WPLParser::BooleanConstantContext *ctx) override;
-    //  std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
-    //  std::any visitUnaryMinusExpr(
-    //      WPLParser::UnaryMinusExprContext *ctx) override;
-    //  std::any visitUnaryNotExpr(WPLParser::UnaryNotExprContext *ctx)
-    //  override; std::any visitBinaryArithExpr(
-    //      WPLParser::BinaryArithExprContext *ctx) override;
-    //  std::any visitBinaryRelExpr(WPLParser::BinaryRelExprContext *ctx)
-    //  override; std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
-    //  std::any visitAssignExpression(
-    //      WPLParser::AssignExpressionContext *ctx) override;
-    //  std::any visitVariableExpr(WPLParser::VariableExprContext *ctx)
+    std::any visitCompilationUnit(
+        WPLParser::CompilationUnitContext *ctx) override;
+    // std::any visitCuComponent(WPLParser::CuComponentContext *ctx) override;
+    //  std::any visitVarDeclaration(WPLParser::VarDeclarationContext *ctx)
     //  override;
+    std::any visitScalarDeclaration(
+        WPLParser::ScalarDeclarationContext *ctx) override;
+    // std::any visitScalar(WPLParser::ScalarContext *ctx) override;
+    std::any visitArrayDeclaration(
+        WPLParser::ArrayDeclarationContext *ctx) override;
+    std::any visitType(WPLParser::TypeContext *ctx) override;
+    // std::any visitVarInitializer(WPLParser::VarInitializerContext
+    // *ctx)override;
+    // std::any visitExternDeclaration(WPLParser::ExternDeclarationContext *ctx)
+    // override;
+    std::any visitProcedure(WPLParser::ProcedureContext *ctx) override;
+    std::any visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
+    // std::any visitExternProcHeader(
+    //     WPLParser::ExternProcHeaderContext *ctx) override;
+    std::any visitFunction(WPLParser::FunctionContext *ctx) override;
+    std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
+    // std::any visitExternFuncHeader(
+    //     WPLParser::ExternFuncHeaderContext *ctx) override;
+    std::any visitParam(WPLParser::ParamContext *ctx) override;
+    std::any visitParams(WPLParser::ParamsContext *ctx) override;
+    std::any visitBlock(WPLParser::BlockContext *ctx) override;
+
+    // std::any visitStatement(WPLParser::StatementContext *ctx)override;
+    // std::any visitLoop(WPLParser::LoopContext *ctx) override;
+    std::any visitConditional(WPLParser::ConditionalContext *ctx) override;
+    // std::any visitSelect(WPLParser::SelectContext *ctx) override;
+    // std::any visitSelectAlt(WPLParser::SelectAltContext *ctx) override;
+    // std::any visitCall(WPLParser::CallContext *ctx) override;
+    // std::any visitArguments(WPLParser::ArgumentsContext *ctx)override;
+    // std::any visitArg(WPLParser::ArgContext *ctx) override;
+    std::any visitReturn(WPLParser::ReturnContext *ctx) override;
+    std::any visitConstant(WPLParser::ConstantContext *ctx) override;
+    std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
+    // std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
+    // std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
+    std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
+    // std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
+    //   std::any
+    //   visitSubscriptExpr(WPLParser::SubscriptExprContext*ctx)override;
+    std::any visitRelExpr(WPLParser::RelExprContext *ctx) override;
+    //  std::any visitMultExpr(WPLParser::MultExprContext *ctx) override;
+    std::any visitBinaryArithExpr(
+        WPLParser::BinaryArithExprContext *ctx) override;
+    //  std::any visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx)
+    //  override;
+
+    std::any visitUMinusExpr(WPLParser::UMinusExprContext *ctx) override;
+    // std::any visitOrExpr(WPLParser::OrExprContext *ctx) override;
+    std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
+    std::any visitNotExpr(WPLParser::NotExprContext *ctx) override;
+    std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
+    // std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override;
 
     bool hasErrors() { return errors.hasErrors(); }
     std::string getErrors() { return errors.errorList(); }

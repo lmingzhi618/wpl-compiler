@@ -13,7 +13,7 @@ TEST_CASE("Integer expresson", "[front-end]") {
     parser.removeErrorListeners();
     parser.addErrorListener(new TestErrorListener());
     antlr4::tree::ParseTree* tree = NULL;
-    REQUIRE_NOTHROW(tree = parser.program());
+    REQUIRE_NOTHROW(tree = parser.compilationUnit());
     REQUIRE(tree != NULL);
 }
 
@@ -26,6 +26,5 @@ TEST_CASE("Double operators", "[front-end]") {
     WPLParser parser(&tokens);
     parser.removeErrorListeners();
     parser.addErrorListener(new TestErrorListener());
-    // REQUIRE_THROWS(parser.program());
-    REQUIRE_THROWS(parser.expression());
+    REQUIRE_THROWS(parser.compilationUnit());
 }

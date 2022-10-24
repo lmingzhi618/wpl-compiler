@@ -122,12 +122,12 @@ int main_code_gen(int argc, char** argv) {
     }
     return 0;
 }
+*/
 
-int main_wplcc(int argc, char** argv) {
+int main(int argc, char** argv) {
     // Commandline handling from the llvm::cl classes.
     llvm::cl::HideUnrelatedOptions(WPLOptions);
     llvm::cl::ParseCommandLineOptions(argc, argv);
-
     if (((inputFileName == "-") && (inputString == "-")) ||
         ((inputFileName != "-") && (inputString != "-"))) {
         std::cerr << "You can only have an input file or an input string, but "
@@ -136,7 +136,6 @@ int main_wplcc(int argc, char** argv) {
         std::exit(-1);
     }
 
-    // 1. Create the lexer from the input.
     antlr4::ANTLRInputStream* input = nullptr;
     if ("-" != inputFileName) {
         std::fstream* inStream = new std::fstream(inputFileName);
@@ -144,72 +143,65 @@ int main_wplcc(int argc, char** argv) {
     } else {
         input = new antlr4::ANTLRInputStream(inputString);
     }
+
     WPLLexer lexer(input);
     antlr4::CommonTokenStream tokens(&lexer);
-
-    // 2. Create the parser with the lexer's token stream as input.
     WPLParser parser(&tokens);
-    WPLParser::ProgramContext* tree = NULL;
+    WPLParser::CompilationUnitContext* tree = parser.compilationUnit();
 
-    // 3. Parse the input and get the parse tree.
-    tree = parser.program();
+    // SymbolVisitor* symbolVisitor =
+    //     new SymbolVisitor(new STManager(), new PropertyManager());
+    // symbolVisitor->visitCompilationUnit(tree);
+
+    // std::cout << symbolVisitor->getSTManager()->toString() << std::endl;
+    // if (symbolVisitor->hasErrors()) {
+    //     std::cerr << "[main] Error: " << std::endl;
+    //     std::cerr << symbolVisitor->getErrors() << std::endl;
+    //     std::cerr << "[main] Aborting... " << std::endl;
+    //     exit(-1);
+    // }
 
     STManager* stm = new STManager();
     PropertyManager* pm = new PropertyManager();
-    SymbolVisitor* sv = new SymbolVisitor(stm, pm);
-    sv->visitCompilationUnit(tree);
-    std::cout << stm->toString() << std::end;
-    std::cout << "\n\n---------------------\nBINDINGS\n"
-              << pm->toString() << std::endl;
-    if (sv->hasErrors()) {
-        std::cerr << sv->getErrors() << std::endl;
-        std::cerr << "Aborting" << std::endl;
-        exit(-1);
-    }
-}*/
-
-int main_parse_tree(int argc, char** argv) {
-    antlr4::ANTLRInputStream* input = nullptr;
-    if (argc < 2) {
-        std::string inputStr = "int a; bool b; str c;";
-        input = new antlr4::ANTLRInputStream(inputStr);
-    } else {
-        std::fstream* inStream = new std::fstream(argv[1]);
-        input = new antlr4::ANTLRInputStream(*inStream);
-    }
-
-    // Create a lexer from the input
-    WPLLexer lexer(input);
-
-    // Create a token stream from the lexer
-    antlr4::CommonTokenStream tokens(&lexer);
-
-    // Create a parser from the token stream
-    WPLParser parser(&tokens);
-
-    // Display the parse tree
-    // std::cout << "OUTPUT\n"
-    //          << parser.compilationUnit()->toStringTree() << std::endl;
-
-    auto tree = parser.compilationUnit();
-
-    STManager* stm = new STManager();
-    PropertyManager* pm = new PropertyManager();
-    SymbolVisitor* sv = new SymbolVisitor(stm, pm);
-
-    sv->visitCompilationUnit(tree);
+    SemanticVisitor* semanticVisitor = new SemanticVisitor(stm, pm);
+    semanticVisitor->visitCompilationUnit(tree);
     std::cout << stm->toString() << std::endl;
+    if (semanticVisitor->hasErrors()) {
+        std::cerr << semanticVisitor->getErrors() << std::endl;
+        return -1;
+    }
 
-    if (sv->hasErrors()) {
-        std::cerr << "Error: " << std::endl;
-        std::cerr << sv->getErrors() << std::endl;
-        std::cerr << "Aborting... " << std::endl;
-        exit(-1);
+    // Generate the LLVM IR code
+    CodegenVisitor* cv = new CodegenVisitor(pm, "wpl.ll");
+    cv->visitCompilationUnit(tree);
+    if (cv->hasErrors()) {
+        std::cerr << cv->getErrors() << std::endl;
+        return -1;
+    }
+
+    // Printout the module contents.
+    llvm::Module* module = cv->getModule();
+    std::cout << std::endl << std::endl;
+    if (printOutput) {
+        cv->modPrint();
+    }
+
+    // Dump the code to an output file
+    if (!noCode) {
+        std::cout << "dump code to file" << std::endl;
+        std::string irFileName;
+        if (outputFileName != "-") {
+            irFileName = outputFileName;
+        } else {
+            irFileName =
+                inputFileName.substr(0, inputFileName.find_last_of('.')) +
+                ".ll";
+        }
+        std::error_code ec;
+        llvm::raw_fd_ostream irFileStream(irFileName, ec);
+        module->print(irFileStream, nullptr);
+        irFileStream.flush();
     }
     return 0;
 }
 
-int main(int argc, char** argv) {
-    return main_parse_tree(argc, argv);
-    // return main_code_gen(argc, argv);
-}

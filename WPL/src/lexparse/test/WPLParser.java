@@ -1953,8 +1953,7 @@ public class WPLParser extends Parser {
 
 	public static class AssignmentContext extends ParserRuleContext {
 		public Token target;
-		public ExprContext expr;
-		public List<ExprContext> e = new ArrayList<ExprContext>();
+		public ExprContext e;
 		public TerminalNode ASSIGN() { return getToken(WPLParser.ASSIGN, 0); }
 		public TerminalNode SEMICOLON() { return getToken(WPLParser.SEMICOLON, 0); }
 		public TerminalNode ID() { return getToken(WPLParser.ID, 0); }
@@ -1993,8 +1992,7 @@ public class WPLParser extends Parser {
 				setState(267);
 				match(ASSIGN);
 				setState(268);
-				((AssignmentContext)_localctx).expr = expr(0);
-				((AssignmentContext)_localctx).e.add(((AssignmentContext)_localctx).expr);
+				((AssignmentContext)_localctx).e = expr(0);
 				setState(269);
 				match(SEMICOLON);
 				}
@@ -2007,8 +2005,7 @@ public class WPLParser extends Parser {
 				setState(272);
 				match(ASSIGN);
 				setState(273);
-				((AssignmentContext)_localctx).expr = expr(0);
-				((AssignmentContext)_localctx).e.add(((AssignmentContext)_localctx).expr);
+				((AssignmentContext)_localctx).e = expr(0);
 				setState(274);
 				match(SEMICOLON);
 				}
@@ -2170,48 +2167,6 @@ public class WPLParser extends Parser {
 			if ( listener instanceof WPLListener ) ((WPLListener)listener).exitRelExpr(this);
 		}
 	}
-	public static class MultExprContext extends ExprContext {
-		public ExprContext left;
-		public ExprContext right;
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode MUL() { return getToken(WPLParser.MUL, 0); }
-		public TerminalNode DIV() { return getToken(WPLParser.DIV, 0); }
-		public MultExprContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WPLListener ) ((WPLListener)listener).enterMultExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WPLListener ) ((WPLListener)listener).exitMultExpr(this);
-		}
-	}
-	public static class AddExprContext extends ExprContext {
-		public ExprContext left;
-		public ExprContext right;
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode PLUS() { return getToken(WPLParser.PLUS, 0); }
-		public TerminalNode MINUS() { return getToken(WPLParser.MINUS, 0); }
-		public AddExprContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WPLListener ) ((WPLListener)listener).enterAddExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WPLListener ) ((WPLListener)listener).exitAddExpr(this);
-		}
-	}
 	public static class ArrayLengthExprContext extends ExprContext {
 		public Token arrayname;
 		public TerminalNode DOT() { return getToken(WPLParser.DOT, 0); }
@@ -2260,6 +2215,29 @@ public class WPLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof WPLListener ) ((WPLListener)listener).exitOrExpr(this);
+		}
+	}
+	public static class BinaryArithExprContext extends ExprContext {
+		public ExprContext left;
+		public ExprContext right;
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode MUL() { return getToken(WPLParser.MUL, 0); }
+		public TerminalNode DIV() { return getToken(WPLParser.DIV, 0); }
+		public TerminalNode PLUS() { return getToken(WPLParser.PLUS, 0); }
+		public TerminalNode MINUS() { return getToken(WPLParser.MINUS, 0); }
+		public BinaryArithExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof WPLListener ) ((WPLListener)listener).enterBinaryArithExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof WPLListener ) ((WPLListener)listener).exitBinaryArithExpr(this);
 		}
 	}
 	public static class EqExprContext extends ExprContext {
@@ -2493,8 +2471,8 @@ public class WPLParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,32,_ctx) ) {
 					case 1:
 						{
-						_localctx = new MultExprContext(new ExprContext(_parentctx, _parentState));
-						((MultExprContext)_localctx).left = _prevctx;
+						_localctx = new BinaryArithExprContext(new ExprContext(_parentctx, _parentState));
+						((BinaryArithExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(313);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
@@ -2509,13 +2487,13 @@ public class WPLParser extends Parser {
 							consume();
 						}
 						setState(315);
-						((MultExprContext)_localctx).right = expr(11);
+						((BinaryArithExprContext)_localctx).right = expr(11);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new AddExprContext(new ExprContext(_parentctx, _parentState));
-						((AddExprContext)_localctx).left = _prevctx;
+						_localctx = new BinaryArithExprContext(new ExprContext(_parentctx, _parentState));
+						((BinaryArithExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(316);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
@@ -2530,7 +2508,7 @@ public class WPLParser extends Parser {
 							consume();
 						}
 						setState(318);
-						((AddExprContext)_localctx).right = expr(10);
+						((BinaryArithExprContext)_localctx).right = expr(10);
 						}
 						break;
 					case 3:

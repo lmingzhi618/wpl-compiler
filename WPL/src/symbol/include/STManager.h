@@ -12,8 +12,6 @@ class STManager {
     // Pass through methods
     Symbol* addSymbol(Symbol* s);
     Symbol* addSymbol(std::string id, SymBaseType t, int len = 0);
-    // Symbol* addSymbol(std::string id, SymBaseType t,
-    //                   SymbolDescriptor* desc = nullptr);
     Symbol* findSymbol(std::string id);
 
     // Miscellaneous (useful for testing)

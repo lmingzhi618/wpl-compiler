@@ -367,30 +367,6 @@ public interface WPLListener extends ParseTreeListener {
 	 */
 	void exitRelExpr(WPLParser.RelExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MultExpr}
-	 * labeled alternative in {@link WPLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultExpr(WPLParser.MultExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code MultExpr}
-	 * labeled alternative in {@link WPLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultExpr(WPLParser.MultExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code AddExpr}
-	 * labeled alternative in {@link WPLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddExpr(WPLParser.AddExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code AddExpr}
-	 * labeled alternative in {@link WPLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddExpr(WPLParser.AddExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ArrayLengthExpr}
 	 * labeled alternative in {@link WPLParser#expr}.
 	 * @param ctx the parse tree
@@ -426,6 +402,18 @@ public interface WPLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrExpr(WPLParser.OrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BinaryArithExpr}
+	 * labeled alternative in {@link WPLParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinaryArithExpr(WPLParser.BinaryArithExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BinaryArithExpr}
+	 * labeled alternative in {@link WPLParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinaryArithExpr(WPLParser.BinaryArithExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code EqExpr}
 	 * labeled alternative in {@link WPLParser#expr}.

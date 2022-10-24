@@ -20,7 +20,7 @@ struct Param {
 struct Symbol {
     std::string id;
     SymType symType;
-    SymBaseType baseType;  // The base type of the symbol: SCALAR = type;a
+    SymBaseType baseType;  // The base type of the symbol: SCALAR = type;
                            // FUNC = return type, ARRAY = element type
                            // (Procedure doesn't have one)
     int length = 0;        // ARRAY only
@@ -30,6 +30,7 @@ struct Symbol {
     llvm::Value *val;
     Symbol(std::string id, SymBaseType t)
         : id(id),
+          symType(SCALAR),
           baseType(t),
           length(0),
           params(nullptr),
@@ -38,6 +39,7 @@ struct Symbol {
 
     Symbol(std::string id, SymBaseType t, int len)
         : id(id),
+          symType(ARRAY),
           baseType(t),
           length(len),
           params(nullptr),
@@ -46,6 +48,7 @@ struct Symbol {
 
     Symbol(std::string id, SymBaseType t, std::vector<Param *> *params)
         : id(id),
+          symType(METHOD),
           baseType(t),
           length(0),
           params(params),
@@ -54,13 +57,31 @@ struct Symbol {
 
     std::string toString() const {
         std::ostringstream desc;
-        desc << '[' << id << ", " << getSymTypeName(baseType) << ']';
+        desc << '[' << id << ": ";
+        if (symType == METHOD) {
+            if (baseType == UNDEFINED) {
+                desc << "proc ";
+            } else {
+                desc << getBaseTypeName(baseType) << " func ";
+            }
+            desc << "(";
+            if (params) {
+                for (auto p : *params) {
+                    desc << "{" << getBaseTypeName(p->baseType) << ' ' << p->id
+                         << "}";
+                }
+            }
+            desc << ")";
+        } else {
+            desc << getBaseTypeName(baseType);
+        }
+        desc << ']';
         return desc.str();
     }
 
-    static std::string getSymTypeName(SymBaseType st) {
+    static std::string getBaseTypeName(SymBaseType st) {
         std::string s;
-        // printf("[Symbol::getSymTypeName] st: %d\n", st);
+        // printf("[Symbol::getBaseTypeName] st: %d\n", st);
         switch (st) {
             case INT:
                 s = "INT";

@@ -14,21 +14,21 @@ list(APPEND CMAKE_MODULE_PATH ${LLVM_DIR})
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in ${LLVM_DIR}")
 
-include(AddLLVM)
+#include(AddLLVM)
 #include(HandleLLVMOptions)
 
 include(cmake/LexParseTests.cmake)
 include(cmake/SymbolTests.cmake)
-include(cmake/SemanticTests.cmake)
-include(cmake/CodegenTests.cmake)
+#include(cmake/SemanticTests.cmake)
+#include(cmake/CodegenTests.cmake)
 
 ### Set up all tests to be run
 add_executable(
   tests
   ${LEXPARSE_TESTS}
-  ${SYMBOL_TESTS}
-  ${SEMANTIC_TESTS}
-  ${CODEGEN_TESTS}
+# ${SYMBOL_TESTS}
+# ${SEMANTIC_TESTS}
+# ${CODEGEN_TESTS}
 )
 
 add_dependencies(tests 

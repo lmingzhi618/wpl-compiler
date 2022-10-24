@@ -24,30 +24,6 @@
 
 You should see output of: `<EOF> <EOF>`. If you do, congratulations, you're all set. If there are errors you need to do some debugging. Ask for help from the staff or on the Slack #toolchain channel.
 
-## Grade C: Minimal functionality
-- Implement standard and inline comments.
-- Compile a single int program() function that can be compiled by llc and then assembled with the runtime library by clang. A single int program() means that you do not have to implement functions and procedures in this level except for this one. 
-- All variables must be declared individually and typed.
-- Only one variable can be declared in a variable declaration (i.e., int x, y; is illegal).
-- Variable definition is not allowed. That is you cannot assign a value to a variable in the declaration (int a <- 1; is illegal).
-- No string or boolean types, just integers.
-- No function or procedure calls.
-- No arrays.
-- Only integer arithmetic: +, -, *, /, and unary -
-- Parentheses to change the precedence.
-- The only statements are: assignment, condition, block, return.
-
-
-
-grun WPL tokens -tokens
-grun WPL tokens -tokens test.txt
-
-grun WPL compilationUnit -gui
-> int a; int func program() {a <- 1; return 0;}
-
-
-
-
 ## Symbol table hierarchy
 ### Necessary operations
 * Look up an ID
@@ -85,6 +61,33 @@ The base type of array is the element type(length is used on array)
 The base type of scalar is type;
 
 
+
+## Grade C: Minimal functionalityｈ
+- Implement standard and inline comments.   OK
+- Compile a single int program() function that can be compiled by llc and then assembled with the runtime library by clang. 
+  A single int program() means that you do not have to implement functions and procedures in this level except for this one. 
+
+- All variables must be declared individually and typed.
+- Only one variable can be declared in a variable declaration (i.e., int x, y; is illegal).
+- Variable definition is not allowed. That is you cannot assign a value to a variable in the declaration (int a <- 1; is illegal).
+- No string or boolean types, just integers.
+- No function or procedure calls.
+- No arrays.
+- Only integer arithmetic: +, -, *, /, and unary -    OK
+- Parentheses to change the precedence.               OK
+- statements: 
+  assignment  OK
+  condition   OK
+  block       OK
+  return.     OK
+
+
+
+grun WPL tokens -tokens
+grun WPL tokens -tokens test.txt
+
+grun WPL compilationUnit -gui
+> int a; int func program() {a <- 1; return 0;}
 
 
 

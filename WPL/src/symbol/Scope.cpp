@@ -16,11 +16,13 @@
 // }
 
 Symbol *Scope::addSymbol(Symbol *symbol) {
-    if (symbols.count(symbol->id)) {
-        return symbols[symbol->id];
+    if (symbols.count(symbol->id) > 0) {
+        return nullptr;
     }
-    symbols.insert(std::pair(symbol->id, symbol));
-    return symbol;
+    //  The pair::second element in the pair is set to true if a new element was
+    //  inserted or false if an equivalent key already existed.
+    auto ret = (symbols.insert(std::pair(symbol->id, symbol))).first;
+    return ret->second;
 }
 
 Symbol *Scope::findSymbol(std::string id) {
@@ -47,8 +49,8 @@ std::string Scope::toString() const {
     }
     // std::cout << "symbol len: " << symbols.size() << std::endl;
     desc << std::endl << '{';
-    for (auto sys : symbols) {
-        desc << std::endl << "    " << sys.second->toString();
+    for (auto s : symbols) {
+        desc << std::endl << "    " << s.second->toString();
     }
     desc << std::endl << '}' << std::endl << std::endl;
     return desc.str();

@@ -10,15 +10,15 @@ TEST_CASE("Scanner operator tests", "[front-end]") {
     lexer.removeErrorListeners();
     lexer.addErrorListener(new TestErrorListener());
     CHECK(lexer.nextToken()->getType() == lexer.ASSIGN);
-    CHECK(lexer.nextToken()->getType() == lexer.DIVIDE);
+    CHECK(lexer.nextToken()->getType() == lexer.DIV);
     CHECK(lexer.nextToken()->getType() == lexer.EQUAL);
-    CHECK(lexer.nextToken()->getType() == lexer.GREATER);
+    CHECK(lexer.nextToken()->getType() == lexer.GTR);
     CHECK(lexer.nextToken()->getType() == lexer.LESS);
     CHECK(lexer.nextToken()->getType() == lexer.MINUS);
-    CHECK(lexer.nextToken()->getType() == lexer.MULTIPLY);
+    CHECK(lexer.nextToken()->getType() == lexer.MUL);
     CHECK(lexer.nextToken()->getType() == lexer.NOT);
     CHECK(lexer.nextToken()->getType() == lexer.PLUS);
-    CHECK(lexer.nextToken()->getType() == lexer.UNEQUAL);
+    CHECK(lexer.nextToken()->getType() == lexer.NEQ);
 }
 
 TEST_CASE("Invalid lexemes", "[front-end]") {
