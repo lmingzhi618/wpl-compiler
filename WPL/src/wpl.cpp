@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
 
     // Generate the LLVM IR code
     CodegenVisitor* cv = new CodegenVisitor(pm, "wpl.ll");
-    // cv->visit(tree);
+    cv->visitCompilationUnit(tree);
     if (cv->hasErrors()) {
         std::cerr << cv->getErrors() << std::endl;
         return -1;

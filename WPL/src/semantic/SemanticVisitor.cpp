@@ -47,6 +47,7 @@ std::any SemanticVisitor::visitCompilationUnit(
 
 // scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)*
 // ';'
+
 std::any SemanticVisitor::visitScalarDeclaration(
     WPLParser::ScalarDeclarationContext *ctx) {
     std::string fn("[SemanticVisitor::visitScalarDeclaration] ");
@@ -77,10 +78,31 @@ std::any SemanticVisitor::visitScalarDeclaration(
                                     Symbol::getBaseTypeName(type) + ")");
             }
         }
+        bindings->bind(s, symbol);  // bindings: property manager
     }
     return nullptr;
 }
 
+// std::any SemanticVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
+//     id = ctx->ID()->getText();
+//     Symbol *sym = new Symbol(id, type);
+//     Symbol *symbol = stmgr->addSymbol(sym);
+//     if (symbol == nullptr) {
+//         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
+//     }
+//
+//     if (ctx->varInitializer()) {
+//         auto st =
+//             std::any_cast<SymBaseType>(ctx->varInitializer()->accept(this));
+//         if (st != type) {
+//             errors.addError(ctx->getStart(),
+//                             fn + "Value type(" + Symbol::getBaseTypeName(st)
+//                             +
+//                                 ") doesn't match scalar type(" +
+//                                 Symbol::getBaseTypeName(type) + ")");
+//         }
+//     }
+// }
 std::any SemanticVisitor::visitType(WPLParser::TypeContext *ctx) {
     return ctx->b != nullptr ? BOOL : ctx->i != nullptr ? INT : STR;
 }
@@ -151,6 +173,7 @@ std::any SemanticVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
             }
         }
     }
+    bindings->bind(ctx, symbol);  // bindings: property manager
     return nullptr;
 }
 
@@ -184,10 +207,9 @@ std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     Symbol *symbol = stmgr->findSymbol(id);
     if (symbol) {
         bindings->bind(ctx, symbol);  // bindings: property manager
-    } else {
-        errors.addError(ctx->getStart(),
-                        fn + "Use of undefined variable: " + id);
+        return symbol->baseType;
     }
+    errors.addError(ctx->getStart(), fn + "Use of undefined variable: " + id);
     return nullptr;
 }
 
