@@ -113,4 +113,20 @@ grun WPL compilationUnit -gui
 
 
 
+### phi 指令用于实现 PHI 节点。
+
+example
+``` LLVM
+Loop:       ; Infinite loop that counts from 0 on up...
+  %indvar = phi i32 [ 0, %LoopHeader ], [ %nextindvar, %Loop ]
+  %nextindvar = add i32 %indvar, 1
+  br label %Loop
+```
+在运行时，phi 指令根据“在当前 block 之前执行的是哪一个 predecessor(前任) block”来得到相应的值。
+
+以上面示例中的 phi 指令为例，如果当前 block 之前执行的是 LoopHeader，则该 phi 指令的值是 0，而如果是从 Loop label 过来的，则该 phi 指令的值是 %nextindvar。
+
+在 phi 指令的语法中，后面是一个列表，列表中的每个元素是一个 value/label 对，每个 label 表示一个当前 block 的 predecessor block，phi 指令就是根据 label 选相应的 value。
+
+phi 指令必须在 basic block 的最前面，也就是在一个 basic block 中，在 phi 指令之前不允许有非 phi 指令。
 

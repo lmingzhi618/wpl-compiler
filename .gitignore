@@ -43,7 +43,7 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
+*.swp
 ## expression-compiler specific
 
 build/

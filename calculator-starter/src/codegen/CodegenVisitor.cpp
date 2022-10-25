@@ -37,8 +37,6 @@ std::any CodegenVisitor::visitProgram(CalculatorParser::ProgramContext *ctx) {
     builder->SetInsertPoint(bBlock);
 
     // 4. Generate the code for all of the expression in the block.
-    if (ctx->cuComponent) {
-    }
     for (auto e : ctx->exprs) {
         Value *exprResult = std::any_cast<Value *>(e->accept(this));
         auto et = e->getText();  // the text of the expression
