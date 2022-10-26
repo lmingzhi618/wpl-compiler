@@ -45,9 +45,12 @@ std::any SemanticVisitor::visitCompilationUnit(
     return visitChildren(ctx);
 }
 
-// scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)*
-// ';'
+std::any SemanticVisitor::visitVarInitializer(
+    WPLParser::VarInitializerContext *ctx) {
+    return ctx->c->accept(this);
+}
 
+// scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)*
 std::any SemanticVisitor::visitScalarDeclaration(
     WPLParser::ScalarDeclarationContext *ctx) {
     std::string fn("[SemanticVisitor::visitScalarDeclaration] ");
@@ -60,23 +63,22 @@ std::any SemanticVisitor::visitScalarDeclaration(
     // 2. Get the variable name(s)
     std::string id;
     for (auto s : ctx->scalars) {
-        id = s->ID()->getText();
-        Symbol *sym = new Symbol(id, type);
-        Symbol *symbol = stmgr->addSymbol(sym);
-        if (symbol == nullptr) {
-            errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
-        }
-
         if (s->varInitializer()) {
             auto st =
                 std::any_cast<SymBaseType>(s->varInitializer()->accept(this));
-            if (st != type) {
+            if (type != UNDEFINED && st != type) {
                 errors.addError(ctx->getStart(),
                                 fn + "Value type(" +
                                     Symbol::getBaseTypeName(st) +
                                     ") doesn't match scalar type(" +
                                     Symbol::getBaseTypeName(type) + ")");
             }
+        }
+        id = s->ID()->getText();
+        Symbol *sym = new Symbol(id, type);
+        Symbol *symbol = stmgr->addSymbol(sym);
+        if (symbol == nullptr) {
+            errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
         }
         bindings->bind(s, symbol);  // bindings: property manager
     }

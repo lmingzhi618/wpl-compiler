@@ -87,6 +87,7 @@ int main(int argc, char** argv) {
         std::cerr << cv->getErrors() << std::endl;
         return -1;
     }
+    std::cout << pm->toString() << std::endl;
 
     // Printout the module contents.
     llvm::Module* module = cv->getModule();

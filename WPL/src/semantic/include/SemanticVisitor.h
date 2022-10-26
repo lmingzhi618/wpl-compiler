@@ -21,8 +21,8 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitArrayDeclaration(
         WPLParser::ArrayDeclarationContext *ctx) override;
     std::any visitType(WPLParser::TypeContext *ctx) override;
-    // std::any visitVarInitializer(WPLParser::VarInitializerContext
-    // *ctx)override;
+    std::any visitVarInitializer(
+        WPLParser::VarInitializerContext *ctx) override;
     // std::any visitExternDeclaration(WPLParser::ExternDeclarationContext *ctx)
     // override;
     std::any visitProcedure(WPLParser::ProcedureContext *ctx) override;

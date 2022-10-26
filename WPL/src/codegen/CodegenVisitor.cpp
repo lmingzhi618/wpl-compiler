@@ -1,6 +1,7 @@
 #include "CodegenVisitor.h"
 
 #include <llvm/IR/BasicBlock.h>
+#include <llvm/IR/GlobalValue.h>
 #include <llvm/IR/GlobalVariable.h>
 
 #include <any>
@@ -19,45 +20,6 @@ void trace(std::string message, Value *v = nullptr) {
 #endif
 }
 
-/*
-std::any CodegenVisitor::visitCompilationUnit(
-    WPLParser::CompilationUnitContext *ctx) {
-    // External functions
-    // auto printf_prototype = FunctionType::get(i8p, true);
-    // auto printf_fn = Function::Create(
-    //    printf_prototype, Function::ExternalLinkage, "printf", module);
-
-    // FunctionCallee printExpr(printf_prototype, printf_fn);
-
-    //// main(arg, **string) prototype
-    // FunctionType *mainFuncType =
-    //     FunctionType::get(Int32Ty, {Int32Ty, Int8PtrPtrTy}, false);
-    // Function *mainFunc = Function::Create(
-    //     mainFuncType, GlobalValue::ExternalLinkage, "program", module);
-
-    // Create the basic block and attach it to the builder
-    BasicBlock *bBlock = BasicBlock::Create(module->getContext(), "entry");
-    builder->SetInsertPoint(bBlock);
-
-    // Generate code for all expressions
-    for (auto cc : ctx->cuComponent()) {
-        // Generate code to output this expression
-        auto cv = cc->accept(this);
-        // Value *exprResult = std::any_cast<Value *>(cv);
-        // auto et = cc->getText();  // the text of the expression
-        // StringRef formatRef = "Expression %s evaluates to %d\n";
-        // auto gFormat = builder->CreateGlobalStringPtr(formatRef, "fmtStr");
-        // StringRef exprRef = et;
-        // auto exFormat = builder->CreateGlobalStringPtr(exprRef, "exprStr");
-        // builder->CreateCall(printf_fn, {gFormat, exFormat, exprResult});
-    }
-
-    // Generate code module trailer
-    // builder->CreateRet(Int32Zero);
-    return nullptr;
-}
-*/
-
 std::any CodegenVisitor::visitVarDeclaration(
     WPLParser::VarDeclarationContext *ctx) {
     if (ctx->scalarDeclaration()) {
@@ -69,14 +31,6 @@ std::any CodegenVisitor::visitVarDeclaration(
     return nullptr;
 }
 
-// std::any CodegenVisitor::visitScalarDeclaration(
-//     WPLParser::ScalarDeclarationContext *ctx) {
-//     for (auto s : ctx->scalars) {
-//         s->accept(this);
-//     }
-//     return nullptr;
-// }
-
 std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
@@ -84,31 +38,31 @@ std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
         exit(-1);
     }
 
-    Value *v = nullptr;
+    Value *alloca = nullptr;
     if (!(symbol->defined)) {
         auto type = getLLVMType(symbol->baseType);
         if (isGlobal(ctx)) {
-            v = module->getOrInsertGlobal(symbol->id, type);
+            alloca = M->getOrInsertGlobal(symbol->id, type);
         } else {
-            v = builder->CreateAlloca(type, 0, symbol->id);
+            alloca = builder->CreateAlloca(type, nullptr, symbol->id);
         }
         symbol->defined = true;
-        symbol->val = v;
+        symbol->val = alloca;
     } else {
-        v = symbol->val;
+        alloca = symbol->val;
     }
 
     if (ctx->varInitializer()) {
         Value *val =
             std::any_cast<Value *>(ctx->varInitializer()->accept(this));
         if (isGlobal(ctx)) {
-            static_cast<GlobalVariable *>(v)->setInitializer(
+            static_cast<GlobalVariable *>(alloca)->setInitializer(
                 static_cast<Constant *>(val));
         } else {
-            builder->CreateStore(val, v);
+            builder->CreateStore(val, alloca);
         }
     }
-    return v;
+    return alloca;
 }
 
 std::any CodegenVisitor::visitVarInitializer(
@@ -121,45 +75,52 @@ std::any CodegenVisitor::visitArrayDeclaration(
     return nullptr;
 }
 
-// std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
-//     return ctx->visitChildren();
-// }
+BasicBlock *CodegenVisitor::createBB(std::string twine, Function *parent,
+                                     BasicBlock *insertBefore) {
+    auto BB = BasicBlock::Create(M->getContext(), twine, parent, insertBefore);
+    if (BB == nullptr) {
+        trace("Failed to createBB");
+        exit(-1);
+    }
+    return BB;
+}
 
-// std::any CodegenVisitor::visitFunction(WPLParser::FunctionContext *ctx) {
+Function *CodegenVisitor::createFunc(FunctionType *ft, std::string twine) {
+    return Function::Create(ft, GlobalValue::ExternalLinkage, twine, M);
+}
+
+std::any CodegenVisitor::visitFunction(WPLParser::FunctionContext *ctx) {
+    auto fn = std::any_cast<Function *>(ctx->funcHeader()->accept(this));
+    builder->SetInsertPoint(createBB(ctx->getText(), fn));
+    ctx->block()->accept(this);
+    return nullptr;
+}
+
 std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
-        trace("NULLPTR");
+        trace("Function symbol is null!");
         exit(-1);
     }
-    if (symbol->defined) {
-        return symbol->val;
-    }
-    // 1. Create Function Prototype
-    auto retType = getLLVMType(symbol->baseType);
     std::vector<Type *> args;
     if (symbol->params) {
         for (auto param : *(symbol->params)) {
             args.push_back(getLLVMType(param->baseType));
         }
     }
-    ArrayRef<Type *> funcArgs(args);
-    FunctionType *fn_type =
-        FunctionType::get(retType, funcArgs, /*isVarArg*/ false);
-    auto fn = Function::Create(fn_type, Function::ExternalLinkage, symbol->id,
-                               module);
-    // auto fn = module->getOrInsertFunction(symbol->id, fn_type);
-
-    // Save params
-    //  Function::arg_iterator argsIT = fn->arg_begin();
-    //  Value *arg_a = argsIT++;
-    //  arg_a->setName("a");
-    //  Value *arg_b = argsIT++;
-    //  arg_b->setName("b");
-
+    auto retType = getLLVMType(symbol->baseType);
+    auto *ft = FunctionType::get(retType, args, false);
+    auto fn = createFunc(ft, symbol->id);
     symbol->defined = true;
-    symbol->val = static_cast<Value *>(fn);
-    return nullptr;
+    symbol->val = fn;
+
+    return fn;
+}
+
+std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
+    BasicBlock *BB = BasicBlock::Create(M->getContext(), ctx->getText());
+    builder->SetInsertPoint(BB);
+    return visitChildren(ctx);
 }
 
 std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
@@ -244,17 +205,6 @@ std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     }
     v = builder->CreateZExtOrTrunc(v1, CodegenVisitor::Int32Ty);
     return v;
-}
-
-// Every block will have a BasicBlock.
-std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
-    // 1. Create a basic block and attach it to the builder
-    BasicBlock *bBlock =
-        BasicBlock::Create(module->getContext(), ctx->getText());
-    builder->SetInsertPoint(bBlock);
-
-    // 2. Generate the code for all of the expression in the block.
-    return this->visitChildren(ctx);
 }
 
 std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {

@@ -23,21 +23,21 @@
 using namespace llvm;
 class CodegenVisitor : public WPLBaseVisitor {
    public:
-    CodegenVisitor(PropertyManager *pm, std::string moduleName) {
+    CodegenVisitor(PropertyManager *pm, std::string MName) {
         props = pm;
         context = new LLVMContext();
-        module = new Module(moduleName, *context);
+        M = new Module(MName, *context);
         // Use the NoFolder to turn off constant folding
-        builder = new IRBuilder<NoFolder>(module->getContext());
+        builder = new IRBuilder<NoFolder>(M->getContext());
 
         // cached types
-        VoidTy = Type::getVoidTy(module->getContext());
-        Int32Ty = Type::getInt32Ty(module->getContext());
-        Int1Ty = Type::getInt1Ty(module->getContext());
-        Int8Ty = Type::getInt8Ty(module->getContext());
+        VoidTy = Type::getVoidTy(M->getContext());
+        Int32Ty = Type::getInt32Ty(M->getContext());
+        Int1Ty = Type::getInt1Ty(M->getContext());
+        Int8Ty = Type::getInt8Ty(M->getContext());
         Int32Zero = ConstantInt::get(Int32Ty, 0, true);
         Int32One = ConstantInt::get(Int32Ty, 1, true);
-        i8p = Type::getInt8PtrTy(module->getContext());
+        i8p = Type::getInt8PtrTy(M->getContext());
         Int8PtrPtrTy = i8p->getPointerTo();
     }
 
@@ -59,7 +59,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     //   visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
     //   std::any visitExternProcHeader(
     //       WPLParser::ExternProcHeaderContext *ctx) override;
-    // std::any visitFunction(WPLParser::FunctionContext *ctx) override;
+    std::any visitFunction(WPLParser::FunctionContext *ctx) override;
     std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
     //// std::any visitExternFuncHeader(
     ////     WPLParser::ExternFuncHeaderContext *ctx) override;
@@ -104,8 +104,8 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::string getErrors() { return errors.errorList(); }
     PropertyManager *getProperties() { return props; }
     bool hasErrors() { return errors.hasErrors(); }
-    llvm::Module *getModule() { return module; }
-    void modPrint() { module->print(llvm::outs(), nullptr); }
+    llvm::Module *getModule() { return M; }
+    void modPrint() { M->print(llvm::outs(), nullptr); }
 
     Type *getLLVMType(SymBaseType bt) {
         auto type = CodegenVisitor::Int32Ty;
@@ -125,11 +125,16 @@ class CodegenVisitor : public WPLBaseVisitor {
     }
 
    private:
+    BasicBlock *createBB(std::string twine, Function *Parent = nullptr,
+                         BasicBlock *InsertBefore = nullptr);
+    Function *createFunc(FunctionType *fn_type, std::string twine);
+
+   private:
     PropertyManager *props;
     ErrorHandler errors;
 
     LLVMContext *context;
-    Module *module;
+    Module *M;
     IRBuilder<NoFolder> *builder;
     // Catch commonly used types
     Type *VoidTy;
@@ -140,5 +145,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     Type *Int8PtrPtrTy;
     Constant *Int32Zero;
     Constant *Int32One;
+    StringMap<Value *> nameMap;
+    Value *V;
 };
 
