@@ -20,6 +20,60 @@ void trace(std::string message, Value *v = nullptr) {
 #endif
 }
 
+static std::vector<std::string> FunArgs;
+
+Value *CodegenVisitor::createArith(IRBuilder<> &Builder, Value *L, Value *R) {
+    return Builder.CreateMul(L, R, "multmp");
+}
+
+void CodegenVisitor::setFuncArgs(Function *fooFunc,
+                                 std::vector<std::string> funArgs) {
+    unsigned idx = 0;
+    Function::arg_iterator AI, AE;
+    for (AI = fooFunc->arg_begin(), AE = fooFunc->arg_end(); AI != AE;
+         ++AI, ++idx) {
+        AI->setName(funArgs[idx]);
+    }
+}
+
+BasicBlock *CodegenVisitor::createBB(Function *func, std::string name) {
+    return BasicBlock::Create(*context, name, func);
+}
+
+GlobalVariable *CodegenVisitor::createGlob(Type *type, std::string name) {
+    M->getOrInsertGlobal(name, type);
+    GlobalVariable *gVar = M->getNamedGlobal(name);
+    gVar->setLinkage(GlobalValue::CommonLinkage);
+    gVar->setAlignment(MaybeAlign(4));
+    return gVar;
+}
+
+Value *CodegenVisitor::createIfElse(IRBuilder<> &Builder, BBList List,
+                                    VarList VL) {
+    Value *Condtn = VL[0];
+    Value *Arg1 = VL[1];
+    BasicBlock *ThenBB = List[0];
+    BasicBlock *ElseBB = List[1];
+    BasicBlock *MergeBB = List[2];
+    Builder.CreateCondBr(Condtn, ThenBB, ElseBB);
+
+    Builder.SetInsertPoint(ThenBB);
+    Value *ThenVal = Builder.CreateAdd(Arg1, Builder.getInt32(1), "thenaddtmp");
+    Builder.CreateBr(MergeBB);
+
+    Builder.SetInsertPoint(ElseBB);
+    Value *ElseVal = Builder.CreateAdd(Arg1, Builder.getInt32(2), "elseaddtmp");
+    Builder.CreateBr(MergeBB);
+
+    unsigned PhiBBSize = List.size() - 1;
+    Builder.SetInsertPoint(MergeBB);
+    PHINode *Phi =
+        Builder.CreatePHI(Type::getInt32Ty(*context), PhiBBSize, "iftmp");
+    Phi->addIncoming(ThenVal, ThenBB);
+    Phi->addIncoming(ElseVal, ElseBB);
+    return Phi;
+}
+
 std::any CodegenVisitor::visitVarDeclaration(
     WPLParser::VarDeclarationContext *ctx) {
     if (ctx->scalarDeclaration()) {
@@ -32,9 +86,10 @@ std::any CodegenVisitor::visitVarDeclaration(
 }
 
 std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
+    std::string fn("CodegenVisitor::visitScalar ");
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
-        trace("NULLPTR");
+        trace(fn + "NULLPTR");
         exit(-1);
     }
 
@@ -75,25 +130,8 @@ std::any CodegenVisitor::visitArrayDeclaration(
     return nullptr;
 }
 
-BasicBlock *CodegenVisitor::createBB(std::string twine, Function *parent,
-                                     BasicBlock *insertBefore) {
-    auto BB = BasicBlock::Create(M->getContext(), twine, parent, insertBefore);
-    if (BB == nullptr) {
-        trace("Failed to createBB");
-        exit(-1);
-    }
-    return BB;
-}
-
-Function *CodegenVisitor::createFunc(FunctionType *ft, std::string twine) {
-    return Function::Create(ft, GlobalValue::ExternalLinkage, twine, M);
-}
-
-std::any CodegenVisitor::visitFunction(WPLParser::FunctionContext *ctx) {
-    auto fn = std::any_cast<Function *>(ctx->funcHeader()->accept(this));
-    builder->SetInsertPoint(createBB(ctx->getText(), fn));
-    ctx->block()->accept(this);
-    return nullptr;
+Function *CodegenVisitor::createFunc(FunctionType *ft, std::string name) {
+    return Function::Create(ft, GlobalValue::ExternalLinkage, name, M);
 }
 
 std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
@@ -102,26 +140,103 @@ std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
         trace("Function symbol is null!");
         exit(-1);
     }
-    std::vector<Type *> args;
+    std::vector<Type *> args_type;
+    std::vector<std::string> args_name;
     if (symbol->params) {
         for (auto param : *(symbol->params)) {
-            args.push_back(getLLVMType(param->baseType));
+            args_type.push_back(getLLVMType(param->baseType));
+            args_name.push_back(param->id);
         }
     }
     auto retType = getLLVMType(symbol->baseType);
-    auto *ft = FunctionType::get(retType, args, false);
+    auto *ft = FunctionType::get(retType, args_type, false);
     auto fn = createFunc(ft, symbol->id);
+    setFuncArgs(fn, args_name);
     symbol->defined = true;
     symbol->val = fn;
 
+    BasicBlock *entry = createBB(fn, "entry");
+    builder->SetInsertPoint(entry);
+    return fn;
+}
+std::any CodegenVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
+    Value *retVal = builder->getInt32(0);
+    // if (ctx->expr()) {
+    //     retVal = std::any_cast<Value *>(ctx->expr()->accept(this));
+    // }
+    builder->CreateRet(retVal);
+    return retVal;
+}
+
+std::any CodegenVisitor::visitExternFuncHeader(
+    WPLParser::ExternFuncHeaderContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Function symbol is null!");
+        exit(-1);
+    }
+    std::vector<Type *> args_type;
+    std::vector<std::string> args_name;
+    // TO DO LIST: ELLIPSIS
+    if (symbol->params) {
+        for (auto param : *(symbol->params)) {
+            args_type.push_back(getLLVMType(param->baseType));
+            args_name.push_back(param->id);
+        }
+    }
+    auto retType = getLLVMType(symbol->baseType);
+    auto *ft = FunctionType::get(retType, args_type, false);
+    auto fn = createFunc(ft, symbol->id);
+    setFuncArgs(fn, args_name);
+    symbol->defined = true;
+    symbol->val = fn;
+    return fn;
+}
+
+std::any CodegenVisitor::visitFuncCallExpr(
+    WPLParser::FuncCallExprContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Function symbol is null!");
+        exit(-1);
+    }
+    std::vector<Type *> args_type;
+    std::vector<std::string> args_name;
+    // TO DO LIST: ELLIPSIS
+    if (symbol->params) {
+        for (auto param : *(symbol->params)) {
+            args_type.push_back(getLLVMType(param->baseType));
+            args_name.push_back(param->id);
+        }
+    }
+    auto retType = getLLVMType(symbol->baseType);
+    auto *ft = FunctionType::get(retType, args_type, false);
+    auto fn = createFunc(ft, symbol->id);
+    setFuncArgs(fn, args_name);
+    symbol->defined = true;
+    symbol->val = fn;
     return fn;
 }
 
 std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
-    BasicBlock *BB = BasicBlock::Create(M->getContext(), ctx->getText());
-    builder->SetInsertPoint(BB);
+    for (auto b : ctx->block()) {
+        builder->SetInsertPoint(createBB(nullptr, ""));
+        b->accept(this);
+    }
+    for (auto s : ctx->statement()) {
+        s->accept(this);
+    }
+    for (auto vd : ctx->varDeclaration()) {
+        vd->accept(this);
+    }
     return visitChildren(ctx);
 }
+
+// std::any visitFunction(WPLParser::FunctionContext *ctx) {
+//     auto fn = ctx->funcHeader()->acccept(this);
+//     ctx->visitChildren();
+//     return nullptr;
+// }
 
 std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
     Value *v;
@@ -208,13 +323,19 @@ std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
 }
 
 std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
+    std::string fn("[CodegenVisitor::visitAssignment] ");
     Value *v = nullptr;
     Value *exVal;
     if (ctx->target) {
-        exVal = std::any_cast<Value *>(ctx->e->accept(this));
+        auto ev = ctx->e->accept(this);
+        if (typeid(ev) == typeid(Function *)) {
+            exVal = builder->getInt32(0);
+        } else {
+            exVal = std::any_cast<Value *>(ev);
+        }
         Symbol *symbol = props->getBinding(ctx);  // child variable symbol
         if (symbol == nullptr) {
-            trace("NULLPTR");
+            trace(fn + "NULLPTR");
             exit(-1);
         }
         if (false == symbol->defined) {
@@ -231,7 +352,7 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
         exVal = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
         Symbol *symbol = props->getBinding(ctx);  // child variable symbol
         if (symbol == nullptr) {
-            trace("NULLPTR");
+            trace(fn + "NULLPTR");
             exit(-1);
         }
         if (false == symbol->defined) {
@@ -248,12 +369,13 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
 }
 
 std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
+    std::string fn("[CodegenVisitor::visitIDExpr] ");
     // 1. Get the name of the variable.
     std::string id = ctx->id->getText();
     // 2. Get the binding.
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
-        trace("NULLPTR");
+        trace(fn + "NULLPTR");
         exit(-1);
     }
     Value *v = nullptr;
@@ -261,7 +383,7 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     // phase
     if (!(symbol->defined)) {
         errors.addCodegenError(ctx->getStart(),
-                               "Undefined variable in expression: " + id);
+                               fn + "Undefined variable in expression: " + id);
     } else {
         v = builder->CreateLoad(CodegenVisitor::Int32Ty, symbol->val, id);
     }

@@ -23,16 +23,16 @@ class SemanticVisitor : WPLBaseVisitor {
     std::any visitType(WPLParser::TypeContext *ctx) override;
     std::any visitVarInitializer(
         WPLParser::VarInitializerContext *ctx) override;
-    // std::any visitExternDeclaration(WPLParser::ExternDeclarationContext *ctx)
-    // override;
+    // std::any visitExternDeclaration(
+    //     WPLParser::ExternDeclarationContext *ctx) override;
     std::any visitProcedure(WPLParser::ProcedureContext *ctx) override;
     std::any visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
     // std::any visitExternProcHeader(
     //     WPLParser::ExternProcHeaderContext *ctx) override;
     std::any visitFunction(WPLParser::FunctionContext *ctx) override;
     std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
-    // std::any visitExternFuncHeader(
-    //     WPLParser::ExternFuncHeaderContext *ctx) override;
+    std::any visitExternFuncHeader(
+        WPLParser::ExternFuncHeaderContext *ctx) override;
     std::any visitParam(WPLParser::ParamContext *ctx) override;
     std::any visitParams(WPLParser::ParamsContext *ctx) override;
     std::any visitBlock(WPLParser::BlockContext *ctx) override;
@@ -51,9 +51,9 @@ class SemanticVisitor : WPLBaseVisitor {
     // std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
     std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
     std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
-    // std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
-    //   std::any
-    //   visitSubscriptExpr(WPLParser::SubscriptExprContext*ctx)override;
+    //  std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
+    //    std::any
+    //    visitSubscriptExpr(WPLParser::SubscriptExprContext*ctx)override;
     std::any visitRelExpr(WPLParser::RelExprContext *ctx) override;
     //  std::any visitMultExpr(WPLParser::MultExprContext *ctx) override;
     std::any visitBinaryArithExpr(

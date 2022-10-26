@@ -1,0 +1,12 @@
+# B negative test 1
+int func program() {
+  int i;
+  i <- getIntArg(1);
+  return i;
+}
+
+# B negative test 2
+int func program() {
+  int i <- 1, b <- true;
+  return b;
+}

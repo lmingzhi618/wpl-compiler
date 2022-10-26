@@ -21,6 +21,10 @@
 #include "antlr4-runtime.h"
 
 using namespace llvm;
+
+typedef SmallVector<BasicBlock *, 16> BBList;
+typedef SmallVector<Value *, 16> VarList;
+
 class CodegenVisitor : public WPLBaseVisitor {
    public:
     CodegenVisitor(PropertyManager *pm, std::string MName) {
@@ -53,16 +57,17 @@ class CodegenVisitor : public WPLBaseVisitor {
     //   std::any visitType(WPLParser::TypeContext *ctx) override;
     std::any visitVarInitializer(
         WPLParser::VarInitializerContext *ctx) override;
-    //   std::any visitExternDeclaration(WPLParser::ExternDeclarationContext
-    //   *ctx) override; std::any visitProcedure(WPLParser::ProcedureContext
-    //   *ctx) override; std::any
-    //   visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
-    //   std::any visitExternProcHeader(
-    //       WPLParser::ExternProcHeaderContext *ctx) override;
-    std::any visitFunction(WPLParser::FunctionContext *ctx) override;
+    // std::any visitExternDeclaration(
+    //     WPLParser::ExternDeclarationContext *ctx) override;
+    //  std::any visitProcedure(WPLParser::ProcedureContext
+    //    *ctx) override; std::any
+    //    visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
+    //    std::any visitExternProcHeader(
+    //        WPLParser::ExternProcHeaderContext *ctx) override;
+    //  std::any visitFunction(WPLParser::FunctionContext *ctx) override;
     std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
-    //// std::any visitExternFuncHeader(
-    ////     WPLParser::ExternFuncHeaderContext *ctx) override;
+    std::any visitExternFuncHeader(
+        WPLParser::ExternFuncHeaderContext *ctx) override;
     // std::any visitParam(WPLParser::ParamContext *ctx) override;
     // std::any visitParams(WPLParser::ParamsContext *ctx) override;
     std::any visitBlock(WPLParser::BlockContext *ctx) override;
@@ -76,7 +81,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     // std::any visitCall(WPLParser::CallContext *ctx) override;
     //// std::any visitArguments(WPLParser::ArgumentsContext *ctx)override;
     //// std::any visitArg(WPLParser::ArgContext *ctx) override;
-    // std::any visitReturn(WPLParser::ReturnContext *ctx) override;
+    std::any visitReturn(WPLParser::ReturnContext *ctx) override;
     std::any visitConstant(WPLParser::ConstantContext *ctx) override;
     std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
     //// std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx)
@@ -98,8 +103,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitEqExpr(WPLParser::EqExprContext *ctx) override;
     std::any visitNotExpr(WPLParser::NotExprContext *ctx) override;
     std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
-    // std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx)
-    // override;
+    std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override;
 
     std::string getErrors() { return errors.errorList(); }
     PropertyManager *getProperties() { return props; }
@@ -128,6 +132,11 @@ class CodegenVisitor : public WPLBaseVisitor {
     BasicBlock *createBB(std::string twine, Function *Parent = nullptr,
                          BasicBlock *InsertBefore = nullptr);
     Function *createFunc(FunctionType *fn_type, std::string twine);
+    Value *createArith(IRBuilder<> &Builder, Value *L, Value *R);
+    void setFuncArgs(Function *fooFunc, std::vector<std::string> funArgs);
+    BasicBlock *createBB(Function *func, std::string name);
+    GlobalVariable *createGlob(Type *type, std::string name);
+    Value *createIfElse(IRBuilder<> &Builder, BBList List, VarList VL);
 
    private:
     PropertyManager *props;

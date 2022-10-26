@@ -179,10 +179,45 @@ std::any SemanticVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
     return nullptr;
 }
 
-// std::any SemanticVisitor::visitExternFuncHeader(
-//     WPLParser::ExternFuncHeaderContext *ctx)  {
-//     return visitChildren(ctx);
-// }
+std::any SemanticVisitor::visitExternFuncHeader(
+    WPLParser::ExternFuncHeaderContext *ctx) {
+    std::string fn("[SemanticVisitor::visitExternFuncHeader] ");
+    SymBaseType type = std::any_cast<SymBaseType>(ctx->t->accept(this));
+    std::string id = ctx->id->getText();
+
+    // TO DO LIST: params',' ELLIPSIS | ELLIPSIS
+    std::vector<Param *> *params = nullptr;
+    if (ctx->params() != nullptr) {
+        params =
+            std::any_cast<std::vector<Param *> *>(ctx->params()->accept(this));
+    }
+
+    Symbol *sym = new Symbol(id, type, params);
+    // std::cout << fn << "add symbol: id: " << id << ", type: " << type
+    //           << std::endl;
+    Symbol *symbol = stmgr->addSymbol(sym);
+    if (symbol == nullptr) {
+        errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
+    }
+
+    stmgr->enterScope();  // scope for the parameters
+    if (ctx->params() != nullptr) {
+        for (Param *p : *params) {
+            Symbol *sym = new Symbol(p->id, p->baseType);
+
+            // std::cout << fn << "add symbol: id: " << p->id
+            //           << ", type: " << p->baseType << std::endl;
+
+            Symbol *symbol = stmgr->addSymbol(sym);
+            if (nullptr == symbol) {
+                errors.addError(ctx->getStart(),
+                                fn + "Duplicate variable: " + id);
+            }
+        }
+    }
+    bindings->bind(ctx, symbol);
+    return nullptr;
+}
 
 std::any SemanticVisitor::visitParam(WPLParser::ParamContext *ctx) {
     SymBaseType type = std::any_cast<SymBaseType>(ctx->t->accept(this));
@@ -201,18 +236,31 @@ std::any SemanticVisitor::visitParams(WPLParser::ParamsContext *ctx) {
     }
     return params;
 }
-
 // ID      				  : LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
-    std::string fn("SemanticVisitor::visitIDExpr");
-    std::string id = ctx->id->getText();
-    Symbol *symbol = stmgr->findSymbol(id);
-    if (symbol) {
-        bindings->bind(ctx, symbol);  // bindings: property manager
-        return symbol->baseType;
+    SymBaseType type = INT;
+    /*
+    auto eVal = ctx->accept(this);
+    if (typeid(eVal) == typeid(bool)) {
+        type = BOOL;
+    } else if (typeid(eVal) == typeid(std::string)) {
+        type = STR;
     }
-    errors.addError(ctx->getStart(), fn + "Use of undefined variable: " + id);
-    return nullptr;
+    */
+    std::string id = ctx->id->getText();
+
+    Symbol *symbol = stmgr->findSymbol(id);
+    if (nullptr == symbol) {
+        Symbol *sym = new Symbol(id, type);
+        sym->defined = true;
+        stmgr->addSymbol(sym);
+    } else {
+        symbol->baseType = type;
+    }
+    symbol->defined = true;
+
+    bindings->bind(ctx, symbol);  // bindings: property manager
+    return type;
 }
 
 std::any SemanticVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
@@ -309,13 +357,14 @@ std::any SemanticVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
 }
 
 std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
-    SymBaseType type = UNDEFINED;
+    SymBaseType type = INT;
     if (ctx->target) {
         // target=ID '<-' e=expr ';'
-        type = std::any_cast<SymBaseType>(ctx->e->accept(this));
-        if (type == UNDEFINED) {
-            errors.addSemanticError(
-                ctx->getStart(), "Expression evaluates to an UNDEFINED type");
+        auto eVal = ctx->e->accept(this);
+        if (typeid(eVal) == typeid(bool)) {
+            type = BOOL;
+        } else if (typeid(eVal) == typeid(std::string)) {
+            type = STR;
         }
 
         std::string id = ctx->target->getText();
@@ -417,11 +466,11 @@ std::any SemanticVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
 
 // return            : 'return' expr? ';' ;
 std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
-    SymBaseType type = UNDEFINED;
+    int ret = 0;
     if (ctx->expr()) {
-        type = std::any_cast<SymBaseType>(ctx->expr()->accept(this));
+        // ret = std::any_cast<int>(ctx->expr()->accept(this));
     }
-    return type;
+    return ret;
 }
 
 std::any SemanticVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
@@ -477,37 +526,14 @@ std::any SemanticVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
 std::any SemanticVisitor::visitFuncCallExpr(
     WPLParser::FuncCallExprContext *ctx) {
     SymBaseType result = UNDEFINED;
-    std::string fn = ctx->fname->getText();
-    Symbol *symbol = stmgr->findSymbol(fn);
+    std::string id = ctx->fname->getText();
+    Symbol *symbol = stmgr->findSymbol(id);
     if (nullptr == symbol) {
         errors.addSemanticError(ctx->getStart(),
-                                "Function(" + fn + ") not found");
+                                "Function(" + id + ") not defined");
     } else {
-        bindings->bind(ctx, symbol);
         result = symbol->baseType;
-        int argc = ctx->args.size();
-        int required_argc = symbol->params->size();
-        if (argc != required_argc) {
-            errors.addSemanticError(ctx->getStart(),
-                                    "Need " + std::to_string(required_argc) +
-                                        " arguments, but provided " +
-                                        std::to_string(argc) + " arguments");
-            result = UNDEFINED;
-        } else {
-            for (int i = 0; i < argc; ++i) {
-                auto t1 =
-                    std::any_cast<SymBaseType>(ctx->args[i]->accept(this));
-                auto t2 = std::any_cast<SymBaseType>(symbol->params[i]);
-                if (t1 != t2) {
-                    errors.addSemanticError(
-                        ctx->getStart(),
-                        "Param type mismatch: required type: " +
-                            Symbol::getBaseTypeName(t2) + ", but got " +
-                            Symbol::getBaseTypeName(t1));
-                    result = UNDEFINED;
-                }
-            }
-        }
+        bindings->bind(ctx, symbol);
     }
     return result;
 }
