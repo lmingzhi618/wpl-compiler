@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <map>
+#include <llvm/IR/Function.h>
 #include <llvm/IR/Constant.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/IR/LLVMContext.h>
@@ -64,10 +66,10 @@ class CodegenVisitor : public WPLBaseVisitor {
     //    visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
     //    std::any visitExternProcHeader(
     //        WPLParser::ExternProcHeaderContext *ctx) override;
-    //  std::any visitFunction(WPLParser::FunctionContext *ctx) override;
+    std::any visitFunction(WPLParser::FunctionContext *ctx) override;
     std::any visitFuncHeader(WPLParser::FuncHeaderContext *ctx) override;
-    std::any visitExternFuncHeader(
-        WPLParser::ExternFuncHeaderContext *ctx) override;
+    //std::any visitExternFuncHeader(
+    //    WPLParser::ExternFuncHeaderContext *ctx) override;
     // std::any visitParam(WPLParser::ParamContext *ctx) override;
     // std::any visitParams(WPLParser::ParamsContext *ctx) override;
     std::any visitBlock(WPLParser::BlockContext *ctx) override;
@@ -121,13 +123,37 @@ class CodegenVisitor : public WPLBaseVisitor {
         return type;
     }
 
-    bool isGlobal(antlr4::tree::ParseTree *ctx) {
+    bool isGlobal(antlr4::tree::ParseTree *c) {
+        antlr4::tree::ParseTree *ctx = c;
         while (ctx && !dynamic_cast<WPLParser::FunctionContext *>(ctx)) {
             ctx = ctx->parent;
         }
         return ctx == nullptr;
     }
 
+    Function *getParentFunc(antlr4::tree::ParseTree *c) {
+        antlr4::tree::ParseTree *ctx = c;
+        while (ctx) {
+            if(dynamic_cast<WPLParser::FunctionContext *>(ctx)) {
+                break;
+            }
+            ctx = ctx->parent;
+        }
+        if (funcMap.count(ctx)) {
+            return funcMap[ctx];
+        }
+        return nullptr;
+    }
+    
+    Value * getTypeZero(SymBaseType type) {
+        if (type == INT) {
+            return builder->getInt32(0);
+        }
+        if (type == BOOL) {
+            return builder->getInt1(0);
+        }
+        return builder->getInt8(0);
+    }
    private:
     BasicBlock *createBB(std::string twine, Function *Parent = nullptr,
                          BasicBlock *InsertBefore = nullptr);
@@ -155,6 +181,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     Constant *Int32Zero;
     Constant *Int32One;
     StringMap<Value *> nameMap;
+    std::map<antlr4::tree::ParseTree*, Function*> funcMap;
     Value *V;
 };
 

@@ -463,7 +463,7 @@ std::any SemanticVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     }
     return result;
 }
-
+/*
 // return            : 'return' expr? ';' ;
 std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
     int ret = 0;
@@ -472,7 +472,7 @@ std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
     }
     return ret;
 }
-
+*/
 std::any SemanticVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
     auto result = std::any_cast<SymBaseType>(ctx->right->accept(this));
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));

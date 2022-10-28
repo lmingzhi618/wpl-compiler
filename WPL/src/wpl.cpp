@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
     PropertyManager* pm = new PropertyManager();
     SemanticVisitor* semanticVisitor = new SemanticVisitor(stm, pm);
     semanticVisitor->visitCompilationUnit(tree);
-    std::cout << stm->toString() << std::endl;
+    //std::cout << stm->toString() << std::endl;
     if (semanticVisitor->hasErrors()) {
         std::cerr << semanticVisitor->getErrors() << std::endl;
         return -1;
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
         std::cerr << cv->getErrors() << std::endl;
         return -1;
     }
-    std::cout << pm->toString() << std::endl;
+    //std::cout << pm->toString() << std::endl;
 
     // Printout the module contents.
     llvm::Module* module = cv->getModule();
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
 
     // Dump the code to an output file
     if (!noCode) {
-        std::cout << "dump code to file" << std::endl;
+        //std::cout << "dump code to file" << std::endl;
         std::string irFileName;
         if (outputFileName != "-") {
             irFileName = outputFileName;
