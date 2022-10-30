@@ -27,6 +27,7 @@ std::any SemanticVisitor::visitScalarDeclaration(
     // 2. Get the variable name(s)
     std::string id;
     for (auto s : ctx->scalars) {
+        /*
         if (s->varInitializer()) {
             auto st =
                 std::any_cast<SymBaseType>(s->varInitializer()->accept(this));
@@ -38,6 +39,7 @@ std::any SemanticVisitor::visitScalarDeclaration(
                                     Symbol::getBaseTypeName(type) + ")");
             }
         }
+        */
         id = s->ID()->getText();
         Symbol *sym = new Symbol(id, type);
         Symbol *symbol = stmgr->addSymbol(sym);
@@ -117,7 +119,6 @@ std::any SemanticVisitor::visitExternFuncHeader(WPLParser::ExternFuncHeaderConte
     }
     Symbol *sym = new Symbol(id, type, params);
     sym->ellipsis = (ctx->ELLIPSIS() == nullptr);
-    std::cout << fn << "add symbol: id: " << id << ", type: " << std::endl;
     Symbol *symbol = stmgr->addSymbol(sym);
     if (symbol == nullptr) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
@@ -160,29 +161,16 @@ std::any SemanticVisitor::visitParams(WPLParser::ParamsContext *ctx) {
 }
 // ID      				  : LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
-    SymBaseType type = INT;
-    /*
-    auto eVal = ctx->accept(this);
-    if (typeid(eVal) == typeid(bool)) {
-        type = BOOL;
-    } else if (typeid(eVal) == typeid(std::string)) {
-        type = STR;
-    }
-    */
     std::string id = ctx->id->getText();
-
     Symbol *symbol = stmgr->findSymbol(id);
-    if (nullptr == symbol) {
-        Symbol *sym = new Symbol(id, type);
-        sym->defined = true;
-        stmgr->addSymbol(sym);
+    if (symbol) {
+        bindings->bind(ctx, symbol);
     } else {
-        symbol->baseType = type;
+        errors.addError(ctx->getStart(), "Use of undefined variable: " + id);
+        return nullptr;
     }
-    symbol->defined = true;
 
-    bindings->bind(ctx, symbol);  // bindings: property manager
-    return type;
+    return symbol->baseType;
 }
 
 std::any SemanticVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
@@ -278,9 +266,8 @@ std::any SemanticVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
 
 std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
     SymBaseType type = INT;
+    auto eVal = ctx->e->accept(this);
     if (ctx->target) {
-        // target=ID '<-' e=expr ';'
-        auto eVal = ctx->e->accept(this);
         if (typeid(eVal) == typeid(bool)) {
             type = BOOL;
         } else if (typeid(eVal) == typeid(std::string)) {
@@ -290,33 +277,46 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
         std::string id = ctx->target->getText();
         Symbol *symbol = stmgr->findSymbol(id);
         if (symbol == nullptr) {
-            symbol = stmgr->addSymbol(id, type);
+            errors.addSemanticError(
+                ctx->getStart(),
+                "symbol not found: " + id);
         } else {
             symbol->baseType = type;
         }
         bindings->bind(ctx, symbol);
     } else if (ctx->arrayIndex()) {
-        // | arrayIndex '<-' e += expr ';';
-        // arrayIndex        : id=ID '[' expr ']' ;
-        type =
-            std::any_cast<SymBaseType>(ctx->arrayIndex()->expr()->accept(this));
+        type = std::any_cast<SymBaseType>(ctx->arrayIndex()->accept(this));
         if (type != INT) {
             errors.addSemanticError(
-                ctx->getStart(),
-                "INT index expected, but was " + Symbol::getBaseTypeName(type));
-            type = UNDEFINED;
+                ctx->getStart(), "int type expected for arraies.");
         }
-
-        std::string id = ctx->arrayIndex()->id->getText();
-        Symbol *symbol = stmgr->findSymbol(id);
-        if (symbol == nullptr) {
-            symbol = stmgr->addSymbol(id, type);
-        } else {
-            symbol->baseType = type;
-        }
-        bindings->bind(ctx, symbol);
     }
     return type;
+}
+
+std::any SemanticVisitor::visitArrayIndex(WPLParser::ArrayIndexContext *ctx) {
+    std::string fn("[SemanticVisitor::visitArrayIndex] ");
+    std::string id = ctx->id->getText();
+    Symbol *symbol = stmgr->findSymbol(id);
+    if (nullptr == symbol) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Array(" + id + ") not found");
+        return nullptr;
+    } 
+    bindings->bind(ctx, symbol);
+    return symbol->baseType;
+} 
+
+std::any SemanticVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) {
+    std::string id = ctx->arrayname->getText();
+    Symbol *symbol = stmgr->findSymbol(id);
+    if (nullptr == symbol) {
+        errors.addSemanticError(ctx->getStart(),
+                                "Array(" + id + ") not found");
+        return nullptr;
+    } 
+    bindings->bind(ctx, symbol);
+    return symbol->baseType;
 }
 
 std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
@@ -494,3 +494,4 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
     }
     return result;
 }
+

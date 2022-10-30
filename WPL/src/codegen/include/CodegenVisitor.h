@@ -74,7 +74,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitBlock(WPLParser::BlockContext *ctx) override;
 
     //// std::any visitStatement(WPLParser::StatementContext *ctx)override;
-    // std::any visitLoop(WPLParser::LoopContext *ctx) override;
+    std::any visitLoop(WPLParser::LoopContext *ctx) override;
     // std::any visitConditional(WPLParser::ConditionalContext *ctx)
     // override;
     //// std::any visitSelect(WPLParser::SelectContext *ctx) override;
@@ -85,8 +85,8 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitReturn(WPLParser::ReturnContext *ctx) override;
     std::any visitConstant(WPLParser::ConstantContext *ctx) override;
     std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
-    //// std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx)
-    /// override;
+    std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
+    std::any visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) override;
     // std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
     std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
     //// std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
@@ -96,8 +96,6 @@ class CodegenVisitor : public WPLBaseVisitor {
     ////  std::any visitMultExpr(WPLParser::MultExprContext *ctx) override;
     std::any visitBinaryArithExpr(
         WPLParser::BinaryArithExprContext *ctx) override;
-    ////  std::any visitArrayLengthExpr(WPLParser::ArrayLengthExprContext
-    ///*ctx) /  override;
 
     std::any visitUMinusExpr(WPLParser::UMinusExprContext *ctx) override;
     // std::any visitOrExpr(WPLParser::OrExprContext *ctx) override;

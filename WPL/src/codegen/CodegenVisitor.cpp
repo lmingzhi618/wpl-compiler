@@ -208,64 +208,69 @@ std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
 
 std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
     std::string fn("[CodegenVisitor::visitAssignment] ");
-    Symbol *symbol = props->getBinding(ctx);  // child variable symbol
-    if (symbol == nullptr) {
-        trace(fn + "NULLPTR");
-        exit(-1);
-    }
-    if (symbol->val == nullptr) {
-        // check function parameters
-        auto func = getParentFunc(ctx);
-        if (func) {
-            Function::arg_iterator it;
-            for (it = func->arg_begin(); it != func->arg_end(); it++) {
-                if (it->getName() == symbol->id) {
-                    symbol->val = it;
-					break;
+	Value *exVal = std::any_cast<Value *>(ctx->e->accept(this));
+    if (ctx->target) {
+        Symbol *symbol = props->getBinding(ctx);  // child variable symbol
+        if (symbol == nullptr) {
+            trace(fn + "NULLPTR");
+            exit(-1);
+        }
+        if (symbol->val == nullptr) {
+            // check function parameters
+            auto func = getParentFunc(ctx);
+            if (func) {
+                Function::arg_iterator it;
+                for (it = func->arg_begin(); it != func->arg_end(); it++) {
+                    if (it->getName() == symbol->id) {
+                        symbol->val = it;
+	    				break;
+                    }
                 }
-            }
-        } 
-		if (symbol->val == nullptr) {
+            } 
+        }
+	    if (symbol->val == nullptr) {
             std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
             exit(-1);
         }
-    }
-	Value *exVal;
-    if (ctx->target) {
-        exVal = std::any_cast<Value *>(ctx->e->accept(this));
+        builder->CreateStore(exVal, symbol->val);
     } else {
-        exVal = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
+        Symbol *symbol = props->getBinding(ctx->arrayIndex());  // child variable symbol
+        if (symbol == nullptr) {
+            trace(fn + "NULLPTR");
+            exit(-1);
+        }
+
+        Value *Idx = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
+        builder->CreateInsertElement(symbol->val, exVal, Idx);
     }
-    builder->CreateStore(exVal, symbol->val);
     return exVal;
 }
 
-std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContext *ctx) {
-    std::string fn("CodegenVisitor::visitArrayDeclaration ");
+std::any CodegenVisitor::visitArrayIndex(WPLParser::ArrayIndexContext *ctx) {
+    std::string fn("[CodegenVisitor::visitArrayIndex] ");
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
-        trace(fn + "NULLPTR");
+        trace(fn + "symbol not found");
         exit(-1);
     }
 
-    Value *addr = nullptr;
-    Type *type = getLLVMType(symbol->baseType);
-    Type *arrayType = ArrayType::get(type, symbol->length); 
-    Type *ptrTy = arrayType->getPointerTo(0);
-    if (isGlobal(ctx)) {
-        addr = M->getOrInsertGlobal(symbol->id, ptrTy);
-        auto gVar = M->getNamedGlobal(symbol->id);
-        gVar->setLinkage(GlobalValue::CommonLinkage);
-        gVar->setAlignment(MaybeAlign(4));
-    } else {
-        addr = builder->CreateAlloca(ptrTy, getTypeZero(symbol->baseType), symbol->id);
+    Value * vIdx = std::any_cast<Value *>(ctx->expr()->accept(this));
+    if (nullptr == vIdx) {
+        trace(fn + "index of array should not be null...");
+        exit(-1);
     }
+    return vIdx;
+} 
 
-    symbol->defined = true;
-    symbol->val = addr;
-    return addr;
+std::any CodegenVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) {
+    std::string fn("CodegenVisitor::visitArrayLengthExpr");
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace(fn + "symbol not found");
+        exit(-1);
+    }
+    return (Value *)builder->getInt32(symbol->length);
 }
-
 
 /*
 std::any CodegenVisitor::visitExternFuncHeader(
@@ -407,23 +412,61 @@ std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
 
 std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string fn("[CodegenVisitor::visitIDExpr] ");
-    // 1. Get the name of the variable.
-    std::string id = ctx->id->getText();
-    // 2. Get the binding.
     Symbol *symbol = props->getBinding(ctx);
     if (symbol == nullptr) {
         trace(fn + "NULLPTR");
         exit(-1);
     }
-    Value *v = nullptr;
-    // We made sure that the variable is defined in the semantic analysis
-    // phase
-    if (!(symbol->defined)) {
-        errors.addCodegenError(ctx->getStart(),
-                               fn + "Undefined variable in expression: " + id);
-    } else {
-        v = builder->CreateLoad(CodegenVisitor::Int32Ty, symbol->val, id);
+
+    if (symbol->val == nullptr) {
+        // check function parameters
+        auto func = getParentFunc(ctx);
+        if (func) {
+            Function::arg_iterator it;
+            for (it = func->arg_begin(); it != func->arg_end(); it++) {
+                if (it->getName() == symbol->id) {
+                    symbol->val = it;
+					break;
+                }
+            }
+        } 
     }
-    return v;
+	if (symbol->val == nullptr) {
+        std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
+        exit(-1);
+    }
+
+    return symbol->val;
+}
+
+std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContext *ctx) {
+    std::string fn("CodegenVisitor::visitArrayDeclaration ");
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace(fn + "NULLPTR");
+        exit(-1);
+    }
+
+    Value *addr = nullptr;
+    Type *type = getLLVMType(symbol->baseType);
+    Type *arrayType = ArrayType::get(type, symbol->length); 
+    Type *ptrTy = arrayType->getPointerTo(0);
+    if (isGlobal(ctx)) {
+        addr = M->getOrInsertGlobal(symbol->id, ptrTy);
+        auto gVar = M->getNamedGlobal(symbol->id);
+        gVar->setLinkage(GlobalValue::CommonLinkage);
+        gVar->setAlignment(MaybeAlign(4));
+    } else {
+        addr = builder->CreateAlloca(ptrTy, getTypeZero(symbol->baseType), symbol->id);
+    }
+
+    symbol->defined = true;
+    symbol->val = addr;
+    return addr;
+}
+
+
+std::any CodegenVisitor::visitLoop(WPLParser::LoopContext *ctx) {
+    return visitChildren(ctx);
 }
 
