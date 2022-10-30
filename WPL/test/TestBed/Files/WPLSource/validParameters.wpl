@@ -1,0 +1,8 @@
+int func foo(int i) {
+  return i+1;
+}
+
+proc bar(boolean b) {
+  boolean b1;
+  b1 <- b;
+}

@@ -6,6 +6,18 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [33 x i8] c"The sum of the arguments is: %d\0A\00", align 1
 
 ; Function Attrs: noinline nounwind optnone uwtable
+define dso_local i32 @sum(i32 noundef %0, i32 noundef %1) #0 {
+  %3 = alloca i32, align 4
+  %4 = alloca i32, align 4
+  store i32 %0, i32* %3, align 4
+  store i32 %1, i32* %4, align 4
+  %5 = load i32, i32* %3, align 4
+  %6 = load i32, i32* %4, align 4
+  %7 = add nsw i32 %5, %6
+  ret i32 %7
+}
+
+; Function Attrs: noinline nounwind optnone uwtable
 define dso_local i32 @program() #0 {
   %1 = alloca i32, align 4
   %2 = alloca i32, align 4

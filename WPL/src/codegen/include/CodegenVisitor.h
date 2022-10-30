@@ -61,9 +61,8 @@ class CodegenVisitor : public WPLBaseVisitor {
         WPLParser::VarInitializerContext *ctx) override;
     // std::any visitExternDeclaration(
     //     WPLParser::ExternDeclarationContext *ctx) override;
-    //  std::any visitProcedure(WPLParser::ProcedureContext
-    //    *ctx) override; std::any
-    //    visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
+    std::any visitProcedure(WPLParser::ProcedureContext *ctx) override; 
+	std::any visitProcHeader(WPLParser::ProcHeaderContext *ctx) override;
     //    std::any visitExternProcHeader(
     //        WPLParser::ExternProcHeaderContext *ctx) override;
     std::any visitFunction(WPLParser::FunctionContext *ctx) override;
@@ -134,7 +133,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     Function *getParentFunc(antlr4::tree::ParseTree *c) {
         antlr4::tree::ParseTree *ctx = c;
         while (ctx) {
-            if(dynamic_cast<WPLParser::FunctionContext *>(ctx)) {
+            if(dynamic_cast<WPLParser::FunctionContext *>(ctx) || dynamic_cast<WPLParser::ProcedureContext *>(ctx)) {
                 break;
             }
             ctx = ctx->parent;

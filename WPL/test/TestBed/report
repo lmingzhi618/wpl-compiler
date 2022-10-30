@@ -1,0 +1,37 @@
+#!/bin/sh
+# report: prepares a status report on the test suite
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`                                        # the test bed directory
+ 
+echo "  Test status:"
+echo "`ls $td/Results/Passed | wc -l`    pass"
+echo "`ls $td/Results/Failed | wc -l`    fail"
+echo ""
+ 
+change=no                                       # default: no change messages
+for tt in Passed Failed;
+do
+    x="$td/Results/Unclassified/*.$tt"
+    if test `basename $x` != '*.'"$tt"          # are there any files?
+    then
+        change=yes                              # prepare to print message
+        echo "`ls $x | wc -l` previously $tt test(s) must be rechecked"
+        for n in $x;                            # file names
+        do
+            echo "              `basename $n`"
+        done
+    fi
+done
+ 
+if test $change = "yes"                         # some changes
+then
+    echo "See Results/Unclassified for before & after images of changed results"
+fi
+ 
+d=`ls $td/Tests/Unclassified`
+n=`ls $td/Tests/Unclassified | wc -l | sed 's/ *//'`
+if test -n "$d"
+then
+    echo "See Results/Unclassified for results of $n new test(s)"
+fi

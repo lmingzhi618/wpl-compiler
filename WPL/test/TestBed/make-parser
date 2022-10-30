@@ -1,0 +1,8 @@
+#!/bin/sh
+# make-parser: Prepare the parser for the tests.
+
+ 
+td=`pwd`
+cd Files/Parser
+java -jar ~/lib/antlr4.jar WPL.g4
+javac *.java

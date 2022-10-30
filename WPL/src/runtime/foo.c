@@ -2,6 +2,10 @@
 
 #include "wpl_runtime.h"
 
+int sum(int a, int b) {
+    return a + b;
+}
+
 int program() {
     int nArgs = getArgCount();
     int sum = 0;

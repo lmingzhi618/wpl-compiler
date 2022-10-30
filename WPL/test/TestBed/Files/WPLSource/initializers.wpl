@@ -1,0 +1,4 @@
+int a <- 1;
+boolean b <- false;
+str s <- "hello\n";
+var x <- 15;

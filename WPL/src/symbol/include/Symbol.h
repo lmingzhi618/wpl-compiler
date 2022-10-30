@@ -14,6 +14,7 @@ enum SymBaseType { UNDEFINED, INT, BOOL, STR };  // Var can be undefined
 struct Param {
     std::string id;        // parameter ID
     SymBaseType baseType;  // The base type of the parameter
+    llvm::Value *val;
     Param(std::string id, SymBaseType bt) : id(id), baseType(bt) {}
 };
 
@@ -25,6 +26,7 @@ struct Symbol {
                            // (Procedure doesn't have one)
     int length = 0;        // ARRAY only
     std::vector<Param *> *params = nullptr;
+    bool ellipsis = false; 
 
     bool defined;
     llvm::Value *val;

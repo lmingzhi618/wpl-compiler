@@ -1,0 +1,19 @@
+#!/bin/sh
+# discard: removes one or more tests from the suite
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`
+ 
+for t in $@;                                    # all parameters
+do
+    if test -f $td/Tests/*/$t                   # if test is there to discard
+    then
+        mv $td/Results/*/$t $td/Results/Discarded 2> /dev/null
+        mv $td/Tests/*/$t $td/Tests/Discarded 2> /dev/null
+        rm -f $td/Results/Unclassified/$t.*ed > /dev/null
+        echo "discarded $t" >> $td/testlog
+    else
+        echo "$t is not in the test suite"
+    fi
+done
+ 

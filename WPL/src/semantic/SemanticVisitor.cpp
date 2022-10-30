@@ -3,42 +3,6 @@
 #include <any>
 #include <string>
 
-// std::any visitConstant(WPLParser::ConstantContext *ctx) {}
-
-/**
- * @brief IConstExpr.type = INT
- */
-// std::any SemanticVisitor::visitIConstExpr(WPLParser::IConstExprContext *ctx)
-// {
-//     return SymType::INT;
-// }
-
-//
-///**
-// * @brief v.defined == TRUE && VariableExpr.type = v.type
-// *
-// * @return The type of the variable as found in the symbol table or
-// UNDEFINED if
-// * it is not defined in the symbol table.
-// */
-// std::any SemanticVisitor::visitVariableExpr(
-//    WPLParser::VariableExprContext *ctx) {
-//    SymType result = UNDEFINED;
-//    std::string varId = ctx->v->getText();
-//    Symbol *symbol = stmgr->findSymbol(varId);
-//    if (symbol == nullptr) {
-//        // Undefined: error
-//        errors.addSemanticError(ctx->getStart(),
-//                                "Undefined avriable in expression: " +
-//                                varId);
-//    } else {
-//        // bind the symbol to this node
-//        bindings->bind(ctx, symbol);
-//        result = symbol->type;
-//    }
-//    return result;
-//}
-
 std::any SemanticVisitor::visitCompilationUnit(
     WPLParser::CompilationUnitContext *ctx) {
     stmgr->enterScope();  // initial (global) scope
@@ -80,59 +44,25 @@ std::any SemanticVisitor::visitScalarDeclaration(
         if (symbol == nullptr) {
             errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
         }
-        bindings->bind(s, symbol);  // bindings: property manager
+        bindings->bind(s, symbol);
     }
     return nullptr;
 }
 
-// std::any SemanticVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
-//     id = ctx->ID()->getText();
-//     Symbol *sym = new Symbol(id, type);
-//     Symbol *symbol = stmgr->addSymbol(sym);
-//     if (symbol == nullptr) {
-//         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
-//     }
-//
-//     if (ctx->varInitializer()) {
-//         auto st =
-//             std::any_cast<SymBaseType>(ctx->varInitializer()->accept(this));
-//         if (st != type) {
-//             errors.addError(ctx->getStart(),
-//                             fn + "Value type(" + Symbol::getBaseTypeName(st)
-//                             +
-//                                 ") doesn't match scalar type(" +
-//                                 Symbol::getBaseTypeName(type) + ")");
-//         }
-//     }
-// }
 std::any SemanticVisitor::visitType(WPLParser::TypeContext *ctx) {
     return ctx->b != nullptr ? BOOL : ctx->i != nullptr ? INT : STR;
 }
 
-std::any SemanticVisitor::visitArrayDeclaration(
-    WPLParser::ArrayDeclarationContext *ctx) {
+std::any SemanticVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContext *ctx) {
     std::string fn("[SemanticVisitor::visitArrayDeclaration] ");
-
-    // 1. Get the type
-    SymBaseType type = UNDEFINED;
-    if (ctx->t) {
-        type = std::any_cast<SymBaseType>(ctx->t->accept(this));
-    }
-
-    // 2. Get the symbol
+    SymBaseType type = std::any_cast<SymBaseType>(ctx->t->accept(this));
     std::string id = ctx->id->getText();
-
-    // 3. Get the length of the array
     int len = std::stoi(ctx->INTEGER()->getText());
-
-    // std::cout << fn << "add symbol: id: " << id << ", type: " << type
-    //           << ", len: " << len << std::endl;
-
-    if (nullptr == stmgr->addSymbol(new Symbol(id, type, len))) {
-        // std::cerr << fn << ", add errornullptr == " << std::endl;
+    Symbol *symbol = new Symbol(id, type, len);
+    if (nullptr == stmgr->addSymbol(symbol)) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
     }
-    // std::cout << fn << " END..." << std::endl;
+    bindings->bind(ctx, symbol);
     return nullptr;
 }
 
@@ -153,10 +83,7 @@ std::any SemanticVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
         params = std::any_cast<std::vector<Param *> *>(ctx->p->accept(this));
     }
     Symbol *sym = new Symbol(id, type, params);
-    // std::cout << fn << "add symbol: id: " << id << ", type: " << type
-    //           << std::endl;
-    Symbol *symbol = stmgr->addSymbol(sym);
-    if (symbol == nullptr) {
+    if (stmgr->addSymbol(sym) == nullptr) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
     }
 
@@ -167,20 +94,17 @@ std::any SemanticVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
 
             // std::cout << fn << "add symbol: id: " << p->id
             //           << ", type: " << p->baseType << std::endl;
-
-            Symbol *symbol = stmgr->addSymbol(sym);
-            if (nullptr == symbol) {
+            if (nullptr == stmgr->addSymbol(sym)) {
                 errors.addError(ctx->getStart(),
                                 fn + "Duplicate variable: " + id);
             }
         }
     }
-    bindings->bind(ctx, symbol);  // bindings: property manager
+    bindings->bind(ctx, sym);
     return nullptr;
 }
 
-std::any SemanticVisitor::visitExternFuncHeader(
-    WPLParser::ExternFuncHeaderContext *ctx) {
+std::any SemanticVisitor::visitExternFuncHeader(WPLParser::ExternFuncHeaderContext *ctx) {
     std::string fn("[SemanticVisitor::visitExternFuncHeader] ");
     SymBaseType type = std::any_cast<SymBaseType>(ctx->t->accept(this));
     std::string id = ctx->id->getText();
@@ -191,16 +115,14 @@ std::any SemanticVisitor::visitExternFuncHeader(
         params =
             std::any_cast<std::vector<Param *> *>(ctx->params()->accept(this));
     }
-
     Symbol *sym = new Symbol(id, type, params);
-    // std::cout << fn << "add symbol: id: " << id << ", type: " << type
-    //           << std::endl;
+    sym->ellipsis = (ctx->ELLIPSIS() == nullptr);
+    std::cout << fn << "add symbol: id: " << id << ", type: " << std::endl;
     Symbol *symbol = stmgr->addSymbol(sym);
     if (symbol == nullptr) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
     }
 
-    stmgr->enterScope();  // scope for the parameters
     if (ctx->params() != nullptr) {
         for (Param *p : *params) {
             Symbol *sym = new Symbol(p->id, p->baseType);
@@ -276,19 +198,16 @@ std::any SemanticVisitor::visitProcedure(WPLParser::ProcedureContext *ctx) {
 
 // procHeader        : 'proc' id=ID '(' p=params? ')' ;
 std::any SemanticVisitor::visitProcHeader(WPLParser::ProcHeaderContext *ctx) {
-    SymBaseType type = UNDEFINED;
     std::string fn("[SemanticVisitor::visitProcHeader] ");
+    SymBaseType type = UNDEFINED;
     std::string id = ctx->id->getText();
     std::vector<Param *> *params = nullptr;
     if (ctx->p != nullptr) {
         params = std::any_cast<std::vector<Param *> *>(ctx->p->accept(this));
     }
 
-    // std::cout << fn << "add symbol: id: " << id << ", type: " << type
-    //           << std::endl;
     Symbol *sym = new Symbol(id, type, params);
-    Symbol *symbol = stmgr->addSymbol(sym);
-    if (symbol == nullptr) {
+    if (stmgr->addSymbol(sym) == nullptr) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
     }
 
@@ -305,6 +224,7 @@ std::any SemanticVisitor::visitProcHeader(WPLParser::ProcHeaderContext *ctx) {
             }
         }
     }
+    bindings->bind(ctx, sym);
     return nullptr;
 }
 

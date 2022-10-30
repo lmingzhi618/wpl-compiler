@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Program:      pass-all
+# Purpose:      Pass all of the files remaining in the Results/Unclassified
+#               directory.
+# Author:       G. Pollice, Sun Microsystems
+#               gpollice@sun.com
+# Date:         2/4/88
+#
+td=`pwd`
+if test "`basename $td`" != "TestBed"
+then
+    echo "$0 must be run in directory TestBed" 1>&2
+    exit 1
+fi
+#
+cat <<\EOF >>./testlog
+                 >>> all tests in Unclassified changed to Passed    
+EOF
+#
+cd Results/Unclassified
+#
+# Previously Passed tests
+#
+for f in *.Passed
+do
+    cp `basename $f .Passed` ../Passed
+    rm $f `basename $f .Passed`
+done
+#
+# Previously Failed tests.  Make sure to copy the test itself.
+#
+for f in *.Failed
+do
+    cp `basename $f .Failed` ../Passed
+    mv ../../Tests/Failed/`basename $f .Failed` ../../Tests/Passed
+    rm $f `basename $f .Failed`
+done
+#
+# Any new tests.
+#
+for f in *
+do
+    mv $f ../Passed
+    mv ../../Tests/Unclassified/$f ../../Tests/Passed
+done

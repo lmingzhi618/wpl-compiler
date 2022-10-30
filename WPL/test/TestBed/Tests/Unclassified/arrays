@@ -1,0 +1,9 @@
+#!/bin/sh
+cat > $fd/WPLSource/arrays.wpl << EOF
+int [5] intArray;
+boolean [10] boolArray;
+str [42] strArray;
+EOF
+
+rungrun arrays OK
+rm $fd/WPLSource/arrays.wpl

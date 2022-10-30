@@ -1,0 +1,3 @@
+extern proc printf(str fmt, ...);
+extern int func average(int count, ...);
+int a;

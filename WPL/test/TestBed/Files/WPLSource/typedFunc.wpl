@@ -1,0 +1,3 @@
+boolean func foo() {
+ return true;
+}

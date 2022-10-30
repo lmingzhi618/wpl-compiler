@@ -1,0 +1,3 @@
+str s1 <- "hello ";
+str s2 <- "world\n";
+str s3 <- "I said \"hello\" world\n";

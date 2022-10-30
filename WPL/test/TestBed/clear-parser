@@ -1,0 +1,5 @@
+#!/bin/sh
+# Clear out the parser files.
+td=`pwd`
+cd Files/parser
+rm *.java *.class *.tokens *.interp

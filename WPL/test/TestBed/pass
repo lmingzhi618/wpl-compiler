@@ -1,0 +1,23 @@
+#!/bin/sh
+# pass: classifies one or more tests as passed
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`
+if test "`basename $td`" != "TestBed"
+then
+    echo "$0 must be run in directory TestBed" 1>&2
+    exit 1
+fi
+    
+# make sure file needs classification
+if test -f $td/Results/Unclassified/$1;
+then
+    # move test into Passed category
+    mv $td/Tests/*/$1 $td/Tests/Passed 2> /dev/null
+    mv $td/Results/Unclassified/$1 $td/Results/Passed
+    rm -f $td/Results/Unclassified/$1.*ed > /dev/null
+    echo "Passed            $@" >> $td/testlog
+else
+    echo "$1 does not need classification" 1>&2
+fi
+ 

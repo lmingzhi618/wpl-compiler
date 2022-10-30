@@ -1,0 +1,9 @@
+proc foo() {
+  int a;
+  boolean b;
+  str s;
+
+  a <- 1;
+  b <- false;
+  s <- "hi";
+}

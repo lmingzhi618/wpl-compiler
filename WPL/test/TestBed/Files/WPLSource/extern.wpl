@@ -1,0 +1,5 @@
+extern int func sum(int n, int m);
+
+int func addit(int x, int y) {
+  return sum(x, y);
+}
