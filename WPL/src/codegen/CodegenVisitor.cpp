@@ -160,6 +160,8 @@ std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
     std::string fn("CodegenVisitor::visitBlock");
     auto func = getParentFunc(ctx);
     builder->SetInsertPoint(createBB(func, ""));
+    // alloca and save parameters of functions
+
     return visitChildren(ctx);
 }
 
@@ -222,7 +224,8 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 Function::arg_iterator it;
                 for (it = func->arg_begin(); it != func->arg_end(); it++) {
                     if (it->getName() == symbol->id) {
-                        symbol->val = it;
+                        //symbol->val = it;
+                        symbol->val = builder->CreateAlloca(it->getType(), it, it->getName());
 	    				break;
                     }
                 }
@@ -425,11 +428,12 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
             Function::arg_iterator it;
             for (it = func->arg_begin(); it != func->arg_end(); it++) {
                 if (it->getName() == symbol->id) {
-                    symbol->val = it;
+                    symbol->val = builder->CreateAlloca(it->getType(), it, it->getName());
 					break;
                 }
             }
         } 
+        // convert to normal type from pointer type
     }
 	if (symbol->val == nullptr) {
         std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;

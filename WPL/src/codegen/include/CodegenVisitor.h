@@ -179,6 +179,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     Constant *Int32One;
     StringMap<Value *> nameMap;
     std::map<antlr4::tree::ParseTree*, Function*> funcMap;
+    std::map<Argument *, Value*> paramMap;  // k: pointer to parameter, v: pointer to alloca of parameter
     Value *V;
 };
 
