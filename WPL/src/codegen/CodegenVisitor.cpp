@@ -361,12 +361,46 @@ std::any CodegenVisitor::visitUMinusExpr(WPLParser::UMinusExprContext *ctx) {
 
 std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     Value *v = std::any_cast<Value *>(ctx->expr()->accept(this));
-    return builder->CreateNot(v);
-    //v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
-    //v = builder->CreateXor(v, Int32One);
-    //v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int32Ty);
-    //return v;
+    // if v == 0: return 1 
+    // else : return 0
+    v =  builder->CreateLoad(Int32Ty, v);
+    Value *cond = builder->CreateICmpEQ(v, Int32Zero, "cond");
+    Value * ret = builder->CreateSelect(cond, Int32One, Int32Zero); 
+    return ret;
 }
+
+std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
+    std::string fn("[CodegenVisitor::visitIDExpr] ");
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace(fn + "NULLPTR");
+        exit(-1);
+    }
+
+    if (symbol->val == nullptr) {
+        // check function parameters
+        auto func = getParentFunc(ctx);
+        if (func) {
+            Function::arg_iterator it;
+            for (it = func->arg_begin(); it != func->arg_end(); it++) {
+                if (it->getName() == symbol->id) {
+                    symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
+					break;
+                }
+            }
+        } 
+        // convert to normal type from pointer type
+    }
+	if (symbol->val == nullptr) {
+        std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
+        exit(-1);
+    }
+
+    // auto v =  builder->CreateLoad(Int32Ty, symbol->val, "load_" + symbol->id);
+    // return  builder->CreateLoad(getLLVMType(symbol->baseType), symbol->val, "load_" + symbol->id);
+    return symbol->val;
+}
+
 
 std::any CodegenVisitor::visitBinaryArithExpr(
     WPLParser::BinaryArithExprContext *ctx) {
@@ -425,37 +459,6 @@ std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     return v;
 }
 
-
-std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
-    std::string fn("[CodegenVisitor::visitIDExpr] ");
-    Symbol *symbol = props->getBinding(ctx);
-    if (symbol == nullptr) {
-        trace(fn + "NULLPTR");
-        exit(-1);
-    }
-
-    if (symbol->val == nullptr) {
-        // check function parameters
-        auto func = getParentFunc(ctx);
-        if (func) {
-            Function::arg_iterator it;
-            for (it = func->arg_begin(); it != func->arg_end(); it++) {
-                if (it->getName() == symbol->id) {
-                    symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
-					break;
-                }
-            }
-        } 
-        // convert to normal type from pointer type
-    }
-	if (symbol->val == nullptr) {
-        std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
-        exit(-1);
-    }
-
-    // auto v =  builder->CreateLoad(Int32Ty, symbol->val, "load_" + symbol->id);
-    return symbol->val;
-}
 
 std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContext *ctx) {
     std::string fn("CodegenVisitor::visitArrayDeclaration ");
