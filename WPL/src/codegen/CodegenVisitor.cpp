@@ -332,13 +332,14 @@ std::any CodegenVisitor::visitFuncCallExpr(
 }
 
 
+// std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
 std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
     Value *v;
     if (ctx->b) {
         if (ctx->b->getText() == "true") {
-            v = builder->getInt32(1);
+            v = builder->getInt1(1);
         } else {
-            v = builder->getInt32(0);
+            v = builder->getInt1(0);
         }
     } else if (ctx->i) {
         v = builder->getInt32(std::stoi(ctx->i->getText()));
@@ -368,6 +369,14 @@ std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     Value * ret = builder->CreateSelect(cond, Int32One, Int32Zero); 
     return ret;
 }
+
+std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
+    Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
+    Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
+    lVal = builder->CreateLoad(Int32Ty, lVal);
+    rVal = builder->CreateLoad(Int32Ty, rVal);
+    return builder->CreateAnd(lVal, rVal);
+} 
 
 std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string fn("[CodegenVisitor::visitIDExpr] ");
@@ -436,14 +445,6 @@ std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     v = builder->CreateZExtOrTrunc(v1, CodegenVisitor::Int32Ty);
     return v;
 }
-
-std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
-    Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
-    Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
-    lVal = builder->CreateZExtOrTrunc(lVal, CodegenVisitor::Int1Ty);
-    rVal = builder->CreateZExtOrTrunc(rVal, CodegenVisitor::Int1Ty);
-    return builder->CreateAnd(lVal, rVal);
-} 
 
 std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     Value *v = nullptr;
