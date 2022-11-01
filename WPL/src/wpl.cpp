@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
     PropertyManager* pm = new PropertyManager();
     SemanticVisitor* semanticVisitor = new SemanticVisitor(stm, pm);
     semanticVisitor->visitCompilationUnit(tree);
-    //std::cout << stm->toString() << std::endl;
+    // std::cout << stm->toString() << std::endl;
     if (semanticVisitor->hasErrors()) {
         std::cerr << semanticVisitor->getErrors() << std::endl;
         return -1;

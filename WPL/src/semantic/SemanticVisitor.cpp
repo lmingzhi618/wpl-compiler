@@ -18,6 +18,7 @@ std::any SemanticVisitor::visitVarInitializer(
 std::any SemanticVisitor::visitScalarDeclaration(
     WPLParser::ScalarDeclarationContext *ctx) {
     std::string fn("[SemanticVisitor::visitScalarDeclaration] ");
+    // std::cout << fn << "xxxxxxxxxxxxxxxxx" << std::endl;
     // 1. Get the type
     SymBaseType type = UNDEFINED;
     if (ctx->t != nullptr) {
@@ -161,9 +162,11 @@ std::any SemanticVisitor::visitParams(WPLParser::ParamsContext *ctx) {
 }
 // ID      				  : LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
+    std::string fn("SemanticVisitor::visitIDExpr");
     std::string id = ctx->id->getText();
     Symbol *symbol = stmgr->findSymbol(id);
     if (symbol) {
+        // std::cout << fn << "bind context: " << ctx << std::endl;
         bindings->bind(ctx, symbol);
     } else {
         errors.addError(ctx->getStart(), "Use of undefined variable: " + id);
@@ -265,8 +268,11 @@ std::any SemanticVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
 }
 
 std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
+    std::string fn("SemanticVisitor::visitAssignment");
     SymBaseType type = INT;
     auto eVal = ctx->e->accept(this);
+
+    // std::cout << fn << "xxxxxxxxxxxxxxxxx" << std::endl;
     if (ctx->target) {
         if (typeid(eVal) == typeid(bool)) {
             type = BOOL;
@@ -283,6 +289,7 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
         } else {
             symbol->baseType = type;
         }
+        // std::cout << fn << "bind context: " << ctx << std::endl;
         bindings->bind(ctx, symbol);
     } else if (ctx->arrayIndex()) {
         type = std::any_cast<SymBaseType>(ctx->arrayIndex()->accept(this));
@@ -290,6 +297,7 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
             errors.addSemanticError(
                 ctx->getStart(), "int type expected for arraies.");
         }
+        //bindings->bind(ctx, symbol);
     }
     return type;
 }
@@ -356,13 +364,13 @@ std::any SemanticVisitor::visitConditional(WPLParser::ConditionalContext *ctx) {
 
 std::any SemanticVisitor::visitLoop(WPLParser::LoopContext *ctx) {
     auto type = std::any_cast<SymBaseType>(ctx->e->accept(this));
-    if (type != BOOL) {
+    if (type != BOOL && type != INT) {
         errors.addSemanticError(ctx->getStart(),
-                                "BOOL expression expected, but was " +
+                                "BOOL or INT expression expected, but was " +
                                     Symbol::getBaseTypeName(type));
         type = UNDEFINED;
     }
-    return type;
+    return ctx->block()->accept(this);
 }
 
 std::any SemanticVisitor::visitBlock(WPLParser::BlockContext *ctx) {

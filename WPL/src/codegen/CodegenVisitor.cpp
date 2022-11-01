@@ -1,4 +1,6 @@
 #include "CodegenVisitor.h"
+#include <llvm-12/llvm/ADT/StringExtras.h>
+#include <llvm-12/llvm/Support/MathExtras.h>
 #include <llvm/IR/Verifier.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/GlobalValue.h>
@@ -213,7 +215,7 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
     if (ctx->target) {
         Symbol *symbol = props->getBinding(ctx);  // child variable symbol
         if (symbol == nullptr) {
-            trace(fn + "NULLPTR");
+            trace(fn + "symbol not found: " + ctx->ID()->getText());
             exit(-1);
         }
         if (symbol->val == nullptr) {
@@ -364,7 +366,9 @@ std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     Value *v = std::any_cast<Value *>(ctx->expr()->accept(this));
     // if v == 0: return 1 
     // else : return 0
-    v =  builder->CreateLoad(Int32Ty, v);
+    if (v->getType()->isPointerTy()) {
+        v =  builder->CreateLoad(Int32Ty, v);
+    }
     Value *cond = builder->CreateICmpEQ(v, Int32Zero, "cond");
     Value * ret = builder->CreateSelect(cond, Int32One, Int32Zero); 
     return ret;
@@ -381,11 +385,14 @@ std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
 std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string fn("[CodegenVisitor::visitIDExpr] ");
     Symbol *symbol = props->getBinding(ctx);
+
     if (symbol == nullptr) {
-        trace(fn + "NULLPTR");
+        // check if symbol is defined
+    }
+    if (symbol == nullptr) {
+        trace(fn + "symbol not found: " +  ctx->id->getText());
         exit(-1);
     }
-
     if (symbol->val == nullptr) {
         // check function parameters
         auto func = getParentFunc(ctx);
@@ -416,6 +423,12 @@ std::any CodegenVisitor::visitBinaryArithExpr(
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
+    if (lVal->getType()->isPointerTy()) {
+        lVal =  builder->CreateLoad(Int32Ty, lVal);
+    }
+    if (rVal->getType()->isPointerTy()) {
+        rVal =  builder->CreateLoad(Int32Ty, rVal);
+    }
     if (ctx->PLUS()) {
         v = builder->CreateNSWAdd(lVal, rVal);
     } else if (ctx->MINUS()) {
@@ -432,6 +445,12 @@ std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
+    if (lVal->getType()->isPointerTy()) {
+        lVal =  builder->CreateLoad(Int32Ty, lVal);
+    }
+    if (rVal->getType()->isPointerTy()) {
+        rVal =  builder->CreateLoad(Int32Ty, rVal);
+    }
     Value *v1;
     if (ctx->LESS()) {
         v1 = builder->CreateICmpSLT(lVal, rVal);
@@ -442,7 +461,7 @@ std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     } else {
         v1 = builder->CreateICmpSGE(lVal, rVal);
     }
-    v = builder->CreateZExtOrTrunc(v1, CodegenVisitor::Int32Ty);
+    v = builder->CreateZExtOrTrunc(v1, Int1Ty);
     return v;
 }
 
@@ -487,8 +506,44 @@ std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContex
     return addr;
 }
 
+/*
+cond:
+    br expr == 0, after_loop, loop
+loop:
+    ...
+    br loop 
+after_loop:
+
+*/
 
 std::any CodegenVisitor::visitLoop(WPLParser::LoopContext *ctx) {
-    return visitChildren(ctx);
+    std::string fn("CodegenVisitor::visitLoop");
+    auto func = getParentFunc(ctx);
+    BasicBlock *headerBB = createBB(func, "loop.header");
+    BasicBlock *loopBB = createBB(func, "loop.body");
+    BasicBlock *afterBB = createBB(func, "afterloop");
+
+    // pre header
+    builder->CreateBr(headerBB);
+
+    // loop header 
+    builder->SetInsertPoint(headerBB);
+    Value *exVal = std::any_cast<Value*>(ctx->e->accept(this));
+    if (exVal->getType()->isPointerTy()) {
+        std::cout << fn << "is pointer type" << std::endl;
+        exVal =  builder->CreateLoad(Int1Ty, exVal);
+    }
+    Value *cond = builder->CreateICmpEQ(exVal, builder->getInt1(1), "endcond");
+    builder->CreateCondBr(cond, loopBB, afterBB);
+
+    // loop body
+    builder->SetInsertPoint(loopBB);
+    visitChildren(ctx->block()); 
+    builder->CreateBr(headerBB);
+
+    // after loop
+    builder->SetInsertPoint(afterBB);
+
+    return nullptr;
 }
 
