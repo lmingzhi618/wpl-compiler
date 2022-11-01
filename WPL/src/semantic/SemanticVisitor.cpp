@@ -230,10 +230,10 @@ std::any SemanticVisitor::visitUMinusExpr(WPLParser::UMinusExprContext *ctx) {
 
 std::any SemanticVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     auto t = std::any_cast<SymBaseType>(ctx->expr()->accept(this));
-    if (t != BOOL) {  // Type mismatch
+    if (t != BOOL && t != INT) {  // Type mismatch
         errors.addSemanticError(
             ctx->getStart(),
-            "BOOL expression expected, but was " + Symbol::getBaseTypeName(t));
+            "BOOL or INT expression expected, but was " + Symbol::getBaseTypeName(t));
         t = UNDEFINED;
     }
     return t;
@@ -396,9 +396,10 @@ std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
 std::any SemanticVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
     auto result = std::any_cast<SymBaseType>(ctx->right->accept(this));
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
-    if (result != left || left != BOOL) {
+    // if (result != left || left != BOOL) {
+    if (result != left) {
         errors.addSemanticError(ctx->getStart(),
-                                "Both sides of '=' must be BOOL type.");
+                                "Both sides of '=' must be the same type.");
         result = UNDEFINED;
     }
     return result;

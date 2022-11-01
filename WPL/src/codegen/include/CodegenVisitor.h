@@ -87,7 +87,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitAssignment(WPLParser::AssignmentContext *ctx) override;
     std::any visitArrayIndex(WPLParser::ArrayIndexContext *ctx) override;
     std::any visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) override;
-    // std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
+    std::any visitAndExpr(WPLParser::AndExprContext *ctx) override;
     std::any visitIDExpr(WPLParser::IDExprContext *ctx) override;
     //// std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
     ////   std::any

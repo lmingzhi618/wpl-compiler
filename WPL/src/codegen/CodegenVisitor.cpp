@@ -197,10 +197,9 @@ std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
                 static_cast<Constant *>(val));
         }
     } else {
+        alloca = builder->CreateAlloca(type, nullptr, symbol->id);
         if (val) {
-            alloca = builder->CreateAlloca(type, val, symbol->id);
-        } else {
-            alloca = builder->CreateAlloca(type, nullptr, symbol->id);
+            builder->CreateStore(val, alloca);
         }
     }
     symbol->defined = true;
@@ -225,7 +224,7 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 for (it = func->arg_begin(); it != func->arg_end(); it++) {
                     if (it->getName() == symbol->id) {
                         //symbol->val = it;
-                        symbol->val = builder->CreateAlloca(it->getType(), it, it->getName());
+                        symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
 	    				break;
                     }
                 }
@@ -256,13 +255,18 @@ std::any CodegenVisitor::visitArrayIndex(WPLParser::ArrayIndexContext *ctx) {
         trace(fn + "symbol not found");
         exit(-1);
     }
+    if (symbol->val == nullptr ){
+        trace(fn + "symbol not defined");
+        exit(-1);
+    }
 
-    Value * vIdx = std::any_cast<Value *>(ctx->expr()->accept(this));
-    if (nullptr == vIdx) {
+    Value * Idx = std::any_cast<Value *>(ctx->expr()->accept(this));
+    if (nullptr == Idx) {
         trace(fn + "index of array should not be null...");
         exit(-1);
     }
-    return vIdx;
+
+    return builder->CreateExtractElement(symbol->val, Idx);
 } 
 
 std::any CodegenVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) {
@@ -357,10 +361,11 @@ std::any CodegenVisitor::visitUMinusExpr(WPLParser::UMinusExprContext *ctx) {
 
 std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     Value *v = std::any_cast<Value *>(ctx->expr()->accept(this));
-    v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
-    v = builder->CreateXor(v, Int32One);
-    v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int32Ty);
-    return v;
+    return builder->CreateNot(v);
+    //v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int1Ty);
+    //v = builder->CreateXor(v, Int32One);
+    //v = builder->CreateZExtOrTrunc(v, CodegenVisitor::Int32Ty);
+    //return v;
 }
 
 std::any CodegenVisitor::visitBinaryArithExpr(
@@ -398,6 +403,14 @@ std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     return v;
 }
 
+std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
+    Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
+    Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
+    lVal = builder->CreateZExtOrTrunc(lVal, CodegenVisitor::Int1Ty);
+    rVal = builder->CreateZExtOrTrunc(rVal, CodegenVisitor::Int1Ty);
+    return builder->CreateAnd(lVal, rVal);
+} 
+
 std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
@@ -428,7 +441,7 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
             Function::arg_iterator it;
             for (it = func->arg_begin(); it != func->arg_end(); it++) {
                 if (it->getName() == symbol->id) {
-                    symbol->val = builder->CreateAlloca(it->getType(), it, it->getName());
+                    symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
 					break;
                 }
             }
@@ -440,6 +453,7 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
         exit(-1);
     }
 
+    // auto v =  builder->CreateLoad(Int32Ty, symbol->val, "load_" + symbol->id);
     return symbol->val;
 }
 
@@ -461,7 +475,7 @@ std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContex
         gVar->setLinkage(GlobalValue::CommonLinkage);
         gVar->setAlignment(MaybeAlign(4));
     } else {
-        addr = builder->CreateAlloca(ptrTy, getTypeZero(symbol->baseType), symbol->id);
+        addr = builder->CreateAlloca(ptrTy, nullptr, symbol->id);
     }
 
     symbol->defined = true;
