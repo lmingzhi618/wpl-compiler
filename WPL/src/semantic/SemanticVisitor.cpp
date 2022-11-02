@@ -442,13 +442,14 @@ std::any SemanticVisitor::visitOrExpr(WPLParser::OrExprContext *ctx) {
 
 std::any SemanticVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
     SymBaseType result = BOOL;
-    auto st = std::any_cast<SymBaseType>(ctx->accept(this));
-    if (st != BOOL) {
+    auto st = std::any_cast<SymBaseType>(ctx->e->accept(this));
+    if (st != BOOL && st != INT) {
         errors.addSemanticError(ctx->getStart(),
                                 "BOOL expected for select expr, but get " +
                                     Symbol::getBaseTypeName(st));
         result = UNDEFINED;
     }
+    ctx->s->accept(this); 
     return result;
 }
 
