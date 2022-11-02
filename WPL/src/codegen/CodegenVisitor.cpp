@@ -555,29 +555,30 @@ std::any CodegenVisitor::visitLoop(WPLParser::LoopContext *ctx) {
 std::any CodegenVisitor::visitSelect(WPLParser::SelectContext *ctx)  {
     auto func = getParentFunc(ctx);
     int cn = ctx->selectAlt().size();
-    BasicBlock * headerBB = createBB(func, "header");
-    BasicBlock * afterBB = createBB(func, "after");
-
-    builder->CreateBr(headerBB);
-    std::vector<BasicBlock*> bbs;
-    // cond body 
+    std::vector<BasicBlock*> bbs;   // body blocks
+    std::vector<BasicBlock*> cbs;   // condition header blocks
     for (int i = 0; i < cn; ++i) {
-        BasicBlock *bb = createBB(func, "case-" + std::to_string(i));
-        bbs.push_back(bb);
-        builder->SetInsertPoint(bb);
-        ctx->selectAlt(i)->s->accept(this);
-        builder->CreateBr(afterBB);
+        cbs.push_back(createBB(func, "cond-" + std::to_string(i)));
+        bbs.push_back(createBB(func, "case-" + std::to_string(i)));
     }
-    
-    // cond headers 
-    builder->SetInsertPoint(headerBB);
+    BasicBlock * afterBB = createBB(func, "after");
+    cbs.push_back(afterBB);
+    bbs.push_back(afterBB);
+
+    builder->CreateBr(cbs[0]);
     for (int i = 0; i < cn; ++i) {
+        builder->SetInsertPoint(cbs[i]);
         Value *exVal = std::any_cast<Value*>(ctx->selectAlt(i)->e->accept(this));
         if (exVal->getType()->isPointerTy()) {
-            exVal =  builder->CreateLoad(Int1Ty, exVal);
+            exVal =  builder->CreateLoad(Int32Ty, exVal);
         }
-        Value *cond = builder->CreateICmpEQ(exVal, builder->getInt1(1), "cond");
-        builder->CreateCondBr(cond, bbs[i], nullptr);
+        exVal = builder->CreateZExtOrTrunc(exVal, Int32Ty);
+        Value *cond = builder->CreateICmpEQ(exVal, builder->getInt32(1), "cond");
+        builder->CreateCondBr(cond, bbs[i], cbs[i+1]);
+
+        builder->SetInsertPoint(bbs[i]);
+        ctx->selectAlt(i)->accept(this);
+        builder->CreateBr(afterBB);
     }
     builder->SetInsertPoint(afterBB);
 
