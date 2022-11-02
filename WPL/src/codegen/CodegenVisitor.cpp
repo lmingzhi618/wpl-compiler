@@ -557,7 +557,6 @@ std::any CodegenVisitor::visitSelect(WPLParser::SelectContext *ctx)  {
     int cn = ctx->selectAlt().size();
     BasicBlock * headerBB = createBB(func, "header");
     BasicBlock * afterBB = createBB(func, "after");
-    Value *ret; 
 
     builder->CreateBr(headerBB);
     std::vector<BasicBlock*> bbs;
@@ -566,7 +565,7 @@ std::any CodegenVisitor::visitSelect(WPLParser::SelectContext *ctx)  {
         BasicBlock *bb = createBB(func, "case-" + std::to_string(i));
         bbs.push_back(bb);
         builder->SetInsertPoint(bb);
-        ret = std::any_cast<Value*>(ctx->selectAlt(i)->s->accept(this));
+        ctx->selectAlt(i)->s->accept(this);
         builder->CreateBr(afterBB);
     }
     
@@ -582,7 +581,7 @@ std::any CodegenVisitor::visitSelect(WPLParser::SelectContext *ctx)  {
     }
     builder->SetInsertPoint(afterBB);
 
-    return ret;
+    return nullptr;
 } 
     
 //std::any CodegenVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
