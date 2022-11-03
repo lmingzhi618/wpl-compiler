@@ -166,7 +166,7 @@ std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string id = ctx->id->getText();
     Symbol *symbol = stmgr->findSymbol(id);
     if (symbol) {
-        // std::cout << fn << "bind context: " << ctx << std::endl;
+        //std::cout << fn << "bind context: " << ctx << std::endl;
         bindings->bind(ctx, symbol);
     } else {
         errors.addError(ctx->getStart(), "Use of undefined variable: " + id);
@@ -359,6 +359,9 @@ std::any SemanticVisitor::visitConditional(WPLParser::ConditionalContext *ctx) {
                                     Symbol::getBaseTypeName(type));
         type = UNDEFINED;
     }
+    for (auto b : ctx->block()) {
+        b->accept(this);
+    }
     return type;
 }
 
@@ -453,8 +456,7 @@ std::any SemanticVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
     return result;
 }
 
-std::any SemanticVisitor::visitFuncCallExpr(
-    WPLParser::FuncCallExprContext *ctx) {
+std::any SemanticVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) {
     SymBaseType result = UNDEFINED;
     std::string id = ctx->fname->getText();
     Symbol *symbol = stmgr->findSymbol(id);
@@ -465,6 +467,9 @@ std::any SemanticVisitor::visitFuncCallExpr(
         result = symbol->baseType;
         bindings->bind(ctx, symbol);
     }
+	for (auto arg : ctx->args) {
+		arg->accept(this);
+	}
     return result;
 }
 
@@ -476,7 +481,6 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
         errors.addSemanticError(ctx->getStart(),
                                 "Function(" + id + ") not found");
     } else {
-        bindings->bind(ctx, symbol);
         result = symbol->baseType;
         int argc = ctx->arguments()->arg().size();
         int required_argc = symbol->params->size();
@@ -488,20 +492,43 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
             result = UNDEFINED;
         } else {
             for (int i = 0; i < argc; ++i) {
-                auto t1 = std::any_cast<SymBaseType>(
-                    ctx->arguments()->arg(i)->accept(this));
-                auto t2 = std::any_cast<SymBaseType>(symbol->params[i]);
-                if (t1 != t2) {
-                    errors.addSemanticError(
-                        ctx->getStart(),
-                        "Param type mismatch: required type: " +
-                            Symbol::getBaseTypeName(t2) + ", but got " +
-                            Symbol::getBaseTypeName(t1));
+				auto t1 = INT;
+				auto c = ctx->arguments()->arg(i)->c;
+				if (c->b) {
+					t1 = BOOL;
+				} else if (c->s) {
+					t1 = STR;
+				}
+                auto t2 = (*symbol->params)[i]->baseType;
+				if (t1 != t2) {
+                    errors.addSemanticError(ctx->getStart(),
+                        "Param type mismatch: required type: " + Symbol::getBaseTypeName(t2) + 
+						", but got " + Symbol::getBaseTypeName(t1));
                     result = UNDEFINED;
                 }
             }
+            bindings->bind(ctx, symbol);
         }
     }
     return result;
 }
 
+std::any SemanticVisitor::visitArg(WPLParser::ArgContext *ctx) {
+    std::string id = ctx->c->getText();
+	auto type = INT;
+	if (ctx->c->b) {
+		type = BOOL;
+	} else if (ctx->c->s) {
+		type = STR;
+	}
+	return new Param(id, type);
+}
+
+std::any SemanticVisitor::visitArguments(WPLParser::ArgumentsContext *ctx) {
+    std::vector<Param *> *params = new std::vector<Param *>;
+    for (WPLParser::ArgContext *arg : ctx->arg()) {
+        Param * p  = std::any_cast<Param*>(arg->accept(this));
+        params->push_back(p);
+    }
+    return params;
+}

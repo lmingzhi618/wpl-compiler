@@ -163,7 +163,13 @@ std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
     auto func = getParentFunc(ctx);
     builder->SetInsertPoint(createBB(func, ""));
     // alloca and save parameters of functions
-
+   	//if(dynamic_cast<WPLParser::FunctionContext *>(ctx->parent) || 
+	//   dynamic_cast<WPLParser::ProcedureContext *>(ctx->parent)) {
+    //	for (Value* it = func->arg_begin(); it != func->arg_end(); it++) {
+    //		Value* alloca = builder->CreateAlloca(it->getType(), nullptr, it->getName());
+	//		it = builder->CreateStore(it, alloca);
+    //	}
+	//}
     return visitChildren(ctx);
 }
 
@@ -226,7 +232,7 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 for (it = func->arg_begin(); it != func->arg_end(); it++) {
                     if (it->getName() == symbol->id) {
                         //symbol->val = it;
-                        symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
+						symbol->val = builder->CreateLoad(it->getType(), it);
 	    				break;
                     }
                 }
@@ -308,30 +314,6 @@ std::any CodegenVisitor::visitExternFuncHeader(
 }
 */
 
-std::any CodegenVisitor::visitFuncCallExpr(
-    WPLParser::FuncCallExprContext *ctx) {
-    Symbol *symbol = props->getBinding(ctx);
-    if (symbol == nullptr) {
-        trace("Function symbol is null!");
-        exit(-1);
-    }
-    std::vector<Type *> args_type;
-    std::vector<std::string> args_name;
-    // TO DO LIST: ELLIPSIS
-    if (symbol->params) {
-        for (auto param : *(symbol->params)) {
-            args_type.push_back(getLLVMType(param->baseType));
-            args_name.push_back(param->id);
-        }
-    }
-    auto retType = getLLVMType(symbol->baseType);
-    auto *ft = FunctionType::get(retType, args_type, false);
-    auto fn = createFunc(ft, symbol->id);
-    setFuncArgs(fn, args_name);
-    symbol->defined = true;
-    symbol->val = fn;
-    return fn;
-}
 
 
 // std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
@@ -387,9 +369,6 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     Symbol *symbol = props->getBinding(ctx);
 
     if (symbol == nullptr) {
-        // check if symbol is defined
-    }
-    if (symbol == nullptr) {
         trace(fn + "symbol not found: " +  ctx->id->getText());
         exit(-1);
     }
@@ -400,12 +379,11 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
             Function::arg_iterator it;
             for (it = func->arg_begin(); it != func->arg_end(); it++) {
                 if (it->getName() == symbol->id) {
-                    symbol->val = builder->CreateAlloca(it->getType(), nullptr, it->getName());
+					symbol->val = builder->CreateLoad(it->getType(), it);
 					break;
                 }
             }
         } 
-        // convert to normal type from pointer type
     }
 	if (symbol->val == nullptr) {
         std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
@@ -585,7 +563,70 @@ std::any CodegenVisitor::visitSelect(WPLParser::SelectContext *ctx)  {
     return nullptr;
 } 
     
-//std::any CodegenVisitor::visitSelectAlt(WPLParser::SelectAltContext *ctx) {
-//    return ctx;
-//}
 
+std::any CodegenVisitor::visitConditional(WPLParser::ConditionalContext *ctx)  {
+    auto func = getParentFunc(ctx);
+    BasicBlock * thenBB = createBB(func, "then");
+    BasicBlock * elseBB = nullptr;
+    if (ctx->block().size() > 1) {
+        elseBB = createBB(func, "else");
+    }
+    BasicBlock * mergeBB = createBB(func, "merge");
+   
+    Value *exVal = std::any_cast<Value*>(ctx->e->accept(this));
+    if (exVal->getType()->isPointerTy()) {
+        exVal =  builder->CreateLoad(Int32Ty, exVal);
+    }
+    exVal = builder->CreateZExtOrTrunc(exVal, Int32Ty);
+    Value *cond = builder->CreateICmpEQ(exVal, builder->getInt32(1), "cond");
+   
+    builder->CreateCondBr(cond, thenBB, (elseBB ? elseBB : mergeBB));
+
+    // then block
+    builder->SetInsertPoint(thenBB);
+    visitChildren(ctx->block(0));
+    builder->CreateBr(mergeBB);
+   
+    // else block
+    if (elseBB) {
+        builder->SetInsertPoint(elseBB);
+        visitChildren(ctx->block(1));
+        builder->CreateBr(mergeBB);
+    }
+
+    // merge if-else block
+    builder->SetInsertPoint(mergeBB);
+    return nullptr;
+}
+
+std::any CodegenVisitor::visitCall(WPLParser::CallContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Function symbol is not found!");
+        exit(-1);
+    }
+    std::vector<Value *> Args;
+    for (auto arg : ctx->arguments()->arg()) {
+		Value *v = std::any_cast<Value*>(arg->c->accept(this));
+        Args.push_back(v);
+    }
+    auto func = M->getFunction(symbol->id);
+    return builder->CreateCall(func, Args);
+}
+
+
+std::any CodegenVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Function symbol is null!");
+        exit(-1);
+    }
+    std::vector<Value *> Args;
+    for (auto arg : ctx->args) {
+		Value *v = std::any_cast<Value*>(arg->accept(this));
+        Args.push_back(v);
+    }
+    auto func = M->getFunction(symbol->id);
+    Value *funcCall =  builder->CreateCall(func, Args);
+	return funcCall;
+}

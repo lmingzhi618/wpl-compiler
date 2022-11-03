@@ -50,7 +50,7 @@ assignment        : target=ID '<-' e=expr ';'
 arrayIndex        : id=ID '[' expr ']' ;
 
 expr              : 
-                  fname=ID '(' (args+=expr (',' args+=expr)*)? ')'       # FuncCallExpr
+                  fname=ID '(' (args+=expr (',' args+=expr)*)? ')'        # FuncCallExpr
                   | arrayIndex                                            # SubscriptExpr
                   | <assoc=right> '-' expr                                # UMinusExpr
                   | <assoc=right> '~' expr                                # NotExpr
