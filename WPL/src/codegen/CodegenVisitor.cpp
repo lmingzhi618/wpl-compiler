@@ -163,13 +163,15 @@ std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
     auto func = getParentFunc(ctx);
     builder->SetInsertPoint(createBB(func, ""));
     // alloca and save parameters of functions
-   	//if(dynamic_cast<WPLParser::FunctionContext *>(ctx->parent) || 
-	//   dynamic_cast<WPLParser::ProcedureContext *>(ctx->parent)) {
-    //	for (Value* it = func->arg_begin(); it != func->arg_end(); it++) {
-    //		Value* alloca = builder->CreateAlloca(it->getType(), nullptr, it->getName());
-	//		it = builder->CreateStore(it, alloca);
-    //	}
-	//}
+   	if(dynamic_cast<WPLParser::FunctionContext *>(ctx->parent) || 
+	   dynamic_cast<WPLParser::ProcedureContext *>(ctx->parent)) {
+        Function::arg_iterator AI, AE;
+        for (AI = func->arg_begin(), AE = func->arg_end(); AI != AE; ++AI) {
+            Value* alloca = builder->CreateAlloca(AI->getType(), nullptr,AI->getName());
+    		builder->CreateStore(AI, alloca);
+            paramMap[AI] = alloca;
+    	}
+	}
     return visitChildren(ctx);
 }
 
@@ -232,7 +234,10 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 for (it = func->arg_begin(); it != func->arg_end(); it++) {
                     if (it->getName() == symbol->id) {
                         //symbol->val = it;
-						symbol->val = builder->CreateLoad(it->getType(), it);
+						// symbol->val = builder->CreateLoad(it->getType(), it);
+                        if (paramMap.count(it)) {
+                            symbol->val = builder->CreateLoad(it->getType(), paramMap[it]);
+                        }
 	    				break;
                     }
                 }
@@ -379,7 +384,10 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
             Function::arg_iterator it;
             for (it = func->arg_begin(); it != func->arg_end(); it++) {
                 if (it->getName() == symbol->id) {
-					symbol->val = builder->CreateLoad(it->getType(), it);
+					// symbol->val = builder->CreateLoad(it->getType(), it);
+                    if (paramMap.count(it)) {
+                        symbol->val = builder->CreateLoad(it->getType(), paramMap[it]);
+                    }
 					break;
                 }
             }
