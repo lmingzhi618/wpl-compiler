@@ -112,19 +112,19 @@ std::any SemanticVisitor::visitExternFuncHeader(WPLParser::ExternFuncHeaderConte
     SymBaseType type = std::any_cast<SymBaseType>(ctx->t->accept(this));
     std::string id = ctx->id->getText();
 
-    // TO DO LIST: params',' ELLIPSIS | ELLIPSIS
     std::vector<Param *> *params = nullptr;
     if (ctx->params() != nullptr) {
         params =
             std::any_cast<std::vector<Param *> *>(ctx->params()->accept(this));
     }
     Symbol *sym = new Symbol(id, type, params);
-    sym->ellipsis = (ctx->ELLIPSIS() == nullptr);
+    sym->ellipsis = (ctx->ELLIPSIS() != nullptr);
     Symbol *symbol = stmgr->addSymbol(sym);
     if (symbol == nullptr) {
         errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
     }
 
+    // stmgr->enterScope();  // scope for the parameters
     if (ctx->params() != nullptr) {
         for (Param *p : *params) {
             Symbol *sym = new Symbol(p->id, p->baseType);
@@ -465,7 +465,27 @@ std::any SemanticVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx)
                                 "Function(" + id + ") not defined");
     } else {
         result = symbol->baseType;
-        bindings->bind(ctx, symbol);
+        int argc = ctx->args.size();
+        int required_argc = symbol->params->size();
+        if (argc != required_argc && symbol->ellipsis == false) {
+            errors.addSemanticError(ctx->getStart(),
+                                    "Need " + std::to_string(required_argc) +
+                                        " arguments, but provided " +
+                                        std::to_string(argc) + " arguments");
+            result = UNDEFINED;
+        } else {
+            for (int i = 0; i < required_argc; ++i) {
+				auto t1 = std::any_cast<SymBaseType>(ctx->args[i]->accept(this));
+                auto t2 = (*symbol->params)[i]->baseType;
+				if (t1 != t2) {
+                    errors.addSemanticError(ctx->getStart(),
+                        "Param type mismatch: required type: " + Symbol::getBaseTypeName(t2) + 
+						", but got " + Symbol::getBaseTypeName(t1));
+                    result = UNDEFINED;
+                }
+            }
+            bindings->bind(ctx, symbol);
+        }
     }
 	for (auto arg : ctx->args) {
 		arg->accept(this);
@@ -484,14 +504,14 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
         result = symbol->baseType;
         int argc = ctx->arguments()->arg().size();
         int required_argc = symbol->params->size();
-        if (argc != required_argc) {
+        if (argc != required_argc && symbol->ellipsis == false) {
             errors.addSemanticError(ctx->getStart(),
                                     "Need " + std::to_string(required_argc) +
                                         " arguments, but provided " +
                                         std::to_string(argc) + " arguments");
             result = UNDEFINED;
         } else {
-            for (int i = 0; i < argc; ++i) {
+            for (int i = 0; i < required_argc; ++i) {
 				auto t1 = INT;
 				auto c = ctx->arguments()->arg(i)->c;
 				if (c->b) {
@@ -532,3 +552,38 @@ std::any SemanticVisitor::visitArguments(WPLParser::ArgumentsContext *ctx) {
     }
     return params;
 }
+
+std::any SemanticVisitor::visitExternProcHeader(WPLParser::ExternProcHeaderContext *ctx) {
+    std::string fn("[SemanticVisitor::visitExternProcHeader] ");
+    SymBaseType type = UNDEFINED;
+    std::string id = ctx->id->getText();
+    std::vector<Param *> *params = nullptr;
+    if (ctx->params() != nullptr) {
+        params = std::any_cast<std::vector<Param *> *>(ctx->params()->accept(this));
+    }
+    Symbol *sym = new Symbol(id, type, params);
+    sym->ellipsis = (ctx->ELLIPSIS() != nullptr);
+    Symbol *symbol = stmgr->addSymbol(sym);
+    if (symbol == nullptr) {
+        errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
+    }
+
+   // stmgr->enterScope();  // scope for the parameters
+    if (ctx->params() != nullptr) {
+        for (Param *p : *params) {
+            Symbol *sym = new Symbol(p->id, p->baseType);
+
+            // std::cout << fn << "add symbol: id: " << p->id
+            //           << ", type: " << p->baseType << std::endl;
+
+            Symbol *symbol = stmgr->addSymbol(sym);
+            if (nullptr == symbol) {
+                errors.addError(ctx->getStart(),
+                                fn + "Duplicate variable: " + id);
+            }
+        }
+    }
+    bindings->bind(ctx, symbol);
+    return nullptr;
+}
+

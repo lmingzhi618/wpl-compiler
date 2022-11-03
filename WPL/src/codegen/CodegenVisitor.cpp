@@ -292,34 +292,6 @@ std::any CodegenVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext 
     return (Value *)builder->getInt32(symbol->length);
 }
 
-/*
-std::any CodegenVisitor::visitExternFuncHeader(
-    WPLParser::ExternFuncHeaderContext *ctx) {
-    Symbol *symbol = props->getBinding(ctx);
-    if (symbol == nullptr) {
-        trace("Function symbol is null!");
-        exit(-1);
-    }
-    std::vector<Type *> args_type;
-    std::vector<std::string> args_name;
-    // TO DO LIST: ELLIPSIS
-    if (symbol->params) {
-        for (auto param : *(symbol->params)) {
-            args_type.push_back(getLLVMType(param->baseType));
-            args_name.push_back(param->id);
-        }
-    }
-    auto retType = getLLVMType(symbol->baseType);
-    auto *ft = FunctionType::get(retType, args_type, false);
-    auto fn = createFunc(ft, symbol->id);
-    setFuncArgs(fn, args_name);
-    symbol->defined = true;
-    symbol->val = fn;
-    return fn;
-}
-*/
-
-
 
 // std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
 std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
@@ -637,4 +609,51 @@ std::any CodegenVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) 
     auto func = M->getFunction(symbol->id);
     Value *funcCall =  builder->CreateCall(func, Args);
 	return funcCall;
+}
+
+std::any CodegenVisitor::visitExternFuncHeader(WPLParser::ExternFuncHeaderContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Function symbol is null!");
+        exit(-1);
+    }
+    std::vector<Type *> args_type;
+    std::vector<std::string> args_name;
+    if (symbol->params) {
+        for (auto param : *(symbol->params)) {
+            args_type.push_back(getLLVMType(param->baseType));
+            args_name.push_back(param->id);
+        }
+    }
+    auto retType = getLLVMType(symbol->baseType);
+    auto *ft = FunctionType::get(retType, args_type, symbol->ellipsis);
+    auto fn = createFunc(ft, symbol->id);
+    setFuncArgs(fn, args_name);
+    symbol->defined = true;
+    symbol->val = fn;
+    return fn;
+}
+
+
+std::any CodegenVisitor::visitExternProcHeader(WPLParser::ExternProcHeaderContext *ctx) {
+    Symbol *symbol = props->getBinding(ctx);
+    if (symbol == nullptr) {
+        trace("Procedure symbol not found!");
+        exit(-1);
+    }
+    std::vector<Type *> args_type;
+    std::vector<std::string> args_name;
+    if (symbol->params) {
+        for (auto param : *(symbol->params)) {
+            args_type.push_back(getLLVMType(param->baseType));
+            args_name.push_back(param->id);
+        }
+    }
+    auto *funcType = FunctionType::get(builder->getVoidTy(), args_type, symbol->ellipsis);
+    auto func = createFunc(funcType, symbol->id);
+    setFuncArgs(func, args_name);
+
+    symbol->defined = true;
+    symbol->val = func;
+    return func;
 }
