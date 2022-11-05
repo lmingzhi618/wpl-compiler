@@ -30,17 +30,18 @@ std::any SemanticVisitor::visitScalarDeclaration(
     for (auto s : ctx->scalars) {
         /*
         if (s->varInitializer()) {
-            auto st =
+            auto eType =
                 std::any_cast<SymBaseType>(s->varInitializer()->accept(this));
-            if (type != UNDEFINED && st != type) {
+            if (symbol->baseType == UNDEFINED) {
+                symbol->baseType = eType;
+            } else if (eType != type) {
                 errors.addError(ctx->getStart(),
                                 fn + "Value type(" +
-                                    Symbol::getBaseTypeName(st) +
+                                    Symbol::getBaseTypeName(eType) +
                                     ") doesn't match scalar type(" +
                                     Symbol::getBaseTypeName(type) + ")");
             }
-        }
-        */
+        }*/
         id = s->ID()->getText();
         Symbol *sym = new Symbol(id, type);
         Symbol *symbol = stmgr->addSymbol(sym);
@@ -280,8 +281,12 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 "symbol not found: " + id);
         } else {
             type = symbol->baseType;
-            if (symbol->baseType != eType) {
-                errors.addSemanticError(ctx->getStart(), "type mismatch");
+            if (symbol->baseType == UNDEFINED) {
+                symbol->baseType = eType;
+            } else if (symbol->baseType != eType) {
+                errors.addSemanticError(ctx->getStart(), 
+                "type mismatch, left: " + Symbol::getBaseTypeName(symbol->baseType) + 
+                ", right: " + Symbol::getBaseTypeName(eType));
             }
         }
         bindings->bind(ctx, symbol);

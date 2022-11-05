@@ -252,6 +252,7 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
             std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
             exit(-1);
         }
+        exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
         builder->CreateStore(exVal, symbol->val);
     } else {
         Symbol *symbol = props->getBinding(ctx->arrayIndex());  // child variable symbol
