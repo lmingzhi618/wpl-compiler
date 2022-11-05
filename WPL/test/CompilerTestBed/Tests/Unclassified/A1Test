@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A1.wpl << EOF
+# A1: Global string variable
+str s;
+int func program() {
+  return 0;
+}
+EOF
+$fd/docompile A1 pass "A1: Global string variable"

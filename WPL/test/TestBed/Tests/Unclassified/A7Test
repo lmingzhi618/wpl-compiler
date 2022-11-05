@@ -1,0 +1,13 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A7.wpl << EOF
+# A7: Define and use a two-argument function
+int func sum(int a, int b) {
+  return a + b;
+}
+int func program() {
+  int i;
+  i <- sum(40, 2);
+  return i;
+}
+EOF
+$fd/dorun A7 42 "A7: Define and use a function"

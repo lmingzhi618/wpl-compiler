@@ -1,0 +1,27 @@
+#!/bin/sh
+# addtest: adds a test to the suite into the unclassified directory
+# usage:   addtest <test name(s)>
+# Copyright G. F. Pollice, 1987
+ 
+td=`pwd`
+if test `basename $td` != TestBed
+then
+	echo "$0 Must be run in directory TestBed" 1>&2
+	exit 2
+fi
+if test ! -n "$1"
+then
+	echo "Usage: addtest test names"
+	exit 1
+fi
+for t in $@
+do
+	if test -f $td/Tests/Unclassified/`basename $t`
+	then
+		echo "$0: will not overwrite $t" 1>&2
+	else
+		# change later to determine if move or copy
+		cp $t $td/Tests/Unclassified
+	fi
+done
+cd $td

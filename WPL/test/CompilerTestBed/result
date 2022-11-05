@@ -1,0 +1,6 @@
+#!/bin/sh
+# Shows the first few lines of a test result
+# result <type> <test>
+echo "\n>>>$2"
+cat Results/Unclassified/$1
+echo ""

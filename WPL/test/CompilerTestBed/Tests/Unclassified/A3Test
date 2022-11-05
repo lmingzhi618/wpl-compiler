@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A3.wpl << EOF
+# A3: Global string variable initializer
+str s <- "hello";
+int func program() {
+  return 0;
+}
+EOF
+$fd/docompile A3 pass "A3: Global string variable initializer"

@@ -177,6 +177,13 @@ std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
 
 std::any CodegenVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
     auto retVal = std::any_cast<Value *>(ctx->expr()->accept(this));
+    if (retVal->getType()->isPointerTy()) {
+        if (retVal->getType()->getPointerElementType() == Int1Ty) {
+            retVal =  builder->CreateLoad(Int1Ty, retVal);
+        } else if (retVal->getType()->getPointerElementType() == Int32Ty) {
+            retVal =  builder->CreateLoad(Int32Ty, retVal);
+        }
+    }
     builder->CreateRet(retVal);
     return retVal;
 }
@@ -233,8 +240,6 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 Function::arg_iterator it;
                 for (it = func->arg_begin(); it != func->arg_end(); it++) {
                     if (it->getName() == symbol->id) {
-                        //symbol->val = it;
-						// symbol->val = builder->CreateLoad(it->getType(), it);
                         if (paramMap.count(it)) {
                             symbol->val = builder->CreateLoad(it->getType(), paramMap[it]);
                         }
@@ -323,21 +328,33 @@ std::any CodegenVisitor::visitUMinusExpr(WPLParser::UMinusExprContext *ctx) {
 
 std::any CodegenVisitor::visitNotExpr(WPLParser::NotExprContext *ctx) {
     Value *v = std::any_cast<Value *>(ctx->expr()->accept(this));
-    // if v == 0: return 1 
-    // else : return 0
+    auto *opt = Int32Zero;
     if (v->getType()->isPointerTy()) {
-        v =  builder->CreateLoad(Int32Ty, v);
+        if (v->getType()->getPointerElementType() == Int1Ty) {
+            v =  builder->CreateLoad(Int1Ty, v);
+            opt  = builder->getInt1(0); 
+        } else if (v->getType()->getPointerElementType() == Int32Ty) {
+            v =  builder->CreateLoad(Int32Ty, v);
+        }
     }
-    Value *cond = builder->CreateICmpEQ(v, Int32Zero, "cond");
-    Value * ret = builder->CreateSelect(cond, Int32One, Int32Zero); 
+    Value *cond = builder->CreateICmpEQ(v, opt, "cond");
+    Value * ret = builder->CreateSelect(cond, builder->getInt1(1), builder->getInt1(0)); 
     return ret;
 }
 
 std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
-    lVal = builder->CreateLoad(Int32Ty, lVal);
-    rVal = builder->CreateLoad(Int32Ty, rVal);
+
+    if (lVal->getType()->isPointerTy()) {
+        if (lVal->getType()->getPointerElementType() == Int1Ty) {
+            lVal =  builder->CreateLoad(Int1Ty, lVal);
+            rVal =  builder->CreateLoad(Int1Ty, rVal);
+        } else if (lVal->getType()->getPointerElementType() == Int32Ty) {
+            lVal =  builder->CreateLoad(Int32Ty, lVal);
+            rVal =  builder->CreateLoad(Int32Ty, rVal);
+        }
+    }
     return builder->CreateAnd(lVal, rVal);
 } 
 
@@ -356,7 +373,6 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
             Function::arg_iterator it;
             for (it = func->arg_begin(); it != func->arg_end(); it++) {
                 if (it->getName() == symbol->id) {
-					// symbol->val = builder->CreateLoad(it->getType(), it);
                     if (paramMap.count(it)) {
                         symbol->val = builder->CreateLoad(it->getType(), paramMap[it]);
                     }
@@ -370,8 +386,6 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
         exit(-1);
     }
 
-    // auto v =  builder->CreateLoad(Int32Ty, symbol->val, "load_" + symbol->id);
-    // return  builder->CreateLoad(getLLVMType(symbol->baseType), symbol->val, "load_" + symbol->id);
     return symbol->val;
 }
 
@@ -400,14 +414,22 @@ std::any CodegenVisitor::visitBinaryArithExpr(
 }
 
 std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
-    Value *v = nullptr;
+    //Value *v = nullptr;
     Value *lVal = std::any_cast<Value *>(ctx->left->accept(this));
     Value *rVal = std::any_cast<Value *>(ctx->right->accept(this));
     if (lVal->getType()->isPointerTy()) {
-        lVal =  builder->CreateLoad(Int32Ty, lVal);
+        if (lVal->getType()->getPointerElementType() == Int1Ty) {
+            lVal =  builder->CreateLoad(Int1Ty, lVal);
+        } else if (lVal->getType()->getPointerElementType() == Int32Ty) {
+            lVal =  builder->CreateLoad(Int32Ty, lVal);
+        }
     }
     if (rVal->getType()->isPointerTy()) {
-        rVal =  builder->CreateLoad(Int32Ty, rVal);
+        if (rVal->getType()->getPointerElementType() == Int1Ty) {
+            rVal =  builder->CreateLoad(Int1Ty, rVal);
+        } else if (rVal->getType()->getPointerElementType() == Int32Ty) {
+            rVal =  builder->CreateLoad(Int32Ty, rVal);
+        }
     }
     Value *v1;
     if (ctx->LESS()) {
@@ -419,8 +441,9 @@ std::any CodegenVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
     } else {
         v1 = builder->CreateICmpSGE(lVal, rVal);
     }
-    v = builder->CreateZExtOrTrunc(v1, Int1Ty);
-    return v;
+    return v1;
+    // v = builder->CreateZExtOrTrunc(v1, Int1Ty);
+    //return v;
 }
 
 std::any CodegenVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
@@ -555,7 +578,11 @@ std::any CodegenVisitor::visitConditional(WPLParser::ConditionalContext *ctx)  {
    
     Value *exVal = std::any_cast<Value*>(ctx->e->accept(this));
     if (exVal->getType()->isPointerTy()) {
-        exVal =  builder->CreateLoad(Int32Ty, exVal);
+        if (exVal->getType()->getPointerElementType() == Int1Ty) {
+            exVal =  builder->CreateLoad(Int1Ty, exVal);
+        } else if (exVal->getType()->getPointerElementType() == Int32Ty) {
+            exVal =  builder->CreateLoad(Int32Ty, exVal);
+        }
     }
     exVal = builder->CreateZExtOrTrunc(exVal, Int32Ty);
     Value *cond = builder->CreateICmpEQ(exVal, builder->getInt32(1), "cond");

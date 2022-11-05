@@ -1,0 +1,64 @@
+#!/usr/bin/env sh
+# harness: a regression testing harness.
+# Copyright W. M. McKeeman, 1986
+# It is based on the test categories:
+#     Unclassified, Passed, Failed, and Discarded
+# Before the harness can be run Results/Unclassified must be empty
+# The tests are Tests/*/* (all must be executable)
+# The program to be tested is the argument to harness ($1)
+# The program to be tested is passed on to the individual tests ($1)
+# Trouble reports are left in Results/Unclassified.
+# After each run of the harness the user must reclassify all trouble reports
+
+#if test ! -n "$1"
+#then
+#    echo "usage: harness progname"
+#    exit 1
+#fi
+
+td=`pwd`                                # testbed directory
+export td
+fd="$td/Files"
+export fd
+
+if test -n "`ls $td/Results/Unclassified`"
+then
+    echo "Not ready -- Results/Unclassified is not empty" 1>&2
+    exit 1
+fi
+
+echo "test run          `date`" >> $td/testlog
+echo "          $1" >> $td/testlog
+
+chmod u+x $td/Tests/*/*                 # all tests must be executable
+
+for t in `ls $td/Tests/Unclassified`;
+do
+    #echo $t
+    rm $fd/cool/*.class >&/dev/null
+    $td/Tests/Unclassified/$t $1 > $td/Results/Unclassified/$t 2>&1
+    chmod 666 $td/Results/Unclassified/$t
+done
+
+for u in Passed Failed;                 # rerun tests
+do
+    for t in `ls $td/Tests/$u`;
+    do                                  # diff tests
+        rm $fd/cool/*.class >& /dev/null
+        $td/Tests/$u/$t $1 > $td/result.tmp 2>&1
+        d=`diff $td/result.tmp $td/Results/$u/$t`
+        if test -n "$d"
+        then                            # test disagrees with previous run
+            echo "changed               $t"  >> $td/testlog
+            echo "changed               $t"
+            chmod 666 $td/result.tmp
+            mv $td/result.tmp $td/Results/Unclassified/$t
+            mv $td/Results/$u/$t $td/Results/Unclassified/$t.$u
+        else                            # test agrees with previous run
+            touch $td/Results/$u/$t
+        fi
+    done
+done
+
+rm $fd/cool/*.class >& /dev/null
+rm -f $td/result.tmp >& /dev/null

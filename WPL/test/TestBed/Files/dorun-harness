@@ -1,0 +1,10 @@
+#! /usr/bin/env sh
+echo "$1,$2," >> ./scores.csv
+java -jar $fd/Woolc.jar -o $fd $fd/Source/$1.wl
+javac -cp .:$fd:$fd/Wool.jar -d $fd $fd/RunTest.java
+if java -cp .:$fd:$fd/Wool.jar wool.RunTest
+then
+  echo ",,pass" >> ./scores.csv
+else
+  echo ",,fail" >> ./scores.csv
+fi

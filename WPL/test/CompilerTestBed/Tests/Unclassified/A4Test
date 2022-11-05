@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A4.wpl << EOF
+# A4: Local string variable initializer
+int func program() {
+  str s <- "world";
+  return 0;
+}
+EOF
+$fd/docompile A4 pass "A4: Local string variable initializer"

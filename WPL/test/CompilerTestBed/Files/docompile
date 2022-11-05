@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+#
+# Usage: docompile $1.wpl, $2=expexcted $3=Test description
+echo "\n----- $3 (Expect $2) -----"
+cd $fd
+cd Output
+wplc $1.wpl --nocode
+rm *.wpl
+cd $td

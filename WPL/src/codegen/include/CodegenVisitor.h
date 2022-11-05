@@ -4,6 +4,8 @@
 #pragma once
 
 #include <map>
+#include <vector>
+#include <string>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/Constant.h>
 #include <llvm/IR/IRBuilder.h>

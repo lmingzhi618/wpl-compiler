@@ -1,6 +1,7 @@
 # symbol listfile
 #
 include (Symbol)
+include (LLVM)
 include (Semantic)
 include (ANTLR)
 include (Utility) 

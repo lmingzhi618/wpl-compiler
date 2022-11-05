@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A5.wpl << EOF
+# A5: Move a string to a variable
+int func program() {
+  str s <- "world";
+  str s1;
+  s1 <- s;
+  return 0;
+}
+EOF
+$fd/docompile A5 pass "A5: Move a string to a variable"

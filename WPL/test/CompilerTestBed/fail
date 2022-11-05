@@ -1,0 +1,18 @@
+#!/bin/sh
+# fail: classifies one or more tests as failed
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`
+ 
+# make sure file needs reclassifaction
+if test -f $td/Results/Unclassified/$1;
+then
+    # move test into Failed category
+    mv $td/Tests/*/$1 $td/Tests/Failed 2> /dev/null
+    mv $td/Results/Unclassified/$1 $td/Results/Failed
+    rm -f $td/Results/Unclassified/$1.*ed > /dev/null
+    echo "Failed            $@" >> $td/testlog
+else
+    echo "$1 does not need classification" 1>&2
+fi
+ 

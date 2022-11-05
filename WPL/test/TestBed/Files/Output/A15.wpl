@@ -1,0 +1,5 @@
+int func program() {
+  int i <- 0;
+  if (true & false) then {i <- 1;}
+  return i;
+}

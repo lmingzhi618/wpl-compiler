@@ -1,0 +1,12 @@
+#!/bin/sh
+# makenew: tests with unclassified results appear new
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`
+ 
+for t in `ls $td/Tests/Unclassified`;
+do
+    rm -f $td/Results/Unclassified/$t > /dev/null
+    rm -f $td/Results/Unclassified/$t.*ed > /dev/null
+done
+ 

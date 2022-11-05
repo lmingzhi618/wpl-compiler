@@ -1,0 +1,4 @@
+alias woolc='java -jar Woolc.jar'
+alias runwool='java -cp .:./Wool.jar'
+alias usewool='javac -d . -cp .:./Wool.jar'
+alias sr="result Unclassified"

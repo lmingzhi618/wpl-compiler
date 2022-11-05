@@ -4,5 +4,5 @@
  
 td=`pwd`
 cd Files/Parser
-java -jar ~/lib/antlr4.jar WPL.g4
+java -jar /usr/local/lib/antlr-4.10.1-complete.jar WPL.g4
 javac *.java

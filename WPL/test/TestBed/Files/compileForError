@@ -1,0 +1,7 @@
+#! /usr/bin/env sh
+echo "\n------------- $1 (Expect Error) -------------"
+cd $fd
+cd Output
+~/WPL/build/bin/wplc $1.wpl --nocode
+rm *.wpl
+cd $td

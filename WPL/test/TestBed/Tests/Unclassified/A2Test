@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+cat > $fd/Output/A2.wpl << EOF
+# A2: Local string variable
+int func program() {
+  str s;
+  return 0;
+}
+EOF
+$fd/docompile A2 pass "A2: Local string variable"

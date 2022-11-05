@@ -5,7 +5,7 @@
 
 #include <sstream>
 #include <string>
-
+#include <vector>
 #include "llvm/IR/Value.h"
 
 enum SymType { SCALAR, ARRAY, METHOD };

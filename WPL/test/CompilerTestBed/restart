@@ -1,0 +1,19 @@
+#!/bin/sh
+# restart: resets the entire test suite
+# Copyright W. M. McKeeman, 1986
+ 
+td=`pwd`
+ 
+# collect all undiscarded tests into unclassified category
+mv $td/Tests/Passed/* $td/Tests/Unclassified 2> /dev/null
+mv $td/Tests/Failed/* $td/Tests/Unclassified 2> /dev/null
+ 
+# delete all results files
+rm -f $td/Results/Passed/* > /dev/null
+rm -f $td/Results/Failed/* > /dev/null
+rm -f $td/Results/Unclassified/* > /dev/null
+rm -f $td/Results/Unclassified/*.*ed > /dev/null
+# echo "restarted         `date`" >> $td/testlog
+# For WPL tests
+rm testlog
+rm results.out

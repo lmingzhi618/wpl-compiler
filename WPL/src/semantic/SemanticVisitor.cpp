@@ -270,16 +270,8 @@ std::any SemanticVisitor::visitParenExpr(WPLParser::ParenExprContext *ctx) {
 std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
     std::string fn("SemanticVisitor::visitAssignment");
     SymBaseType type = INT;
-    auto eVal = ctx->e->accept(this);
-
-    // std::cout << fn << "xxxxxxxxxxxxxxxxx" << std::endl;
+    auto eType  = std::any_cast<SymBaseType>(ctx->e->accept(this));
     if (ctx->target) {
-        if (typeid(eVal) == typeid(bool)) {
-            type = BOOL;
-        } else if (typeid(eVal) == typeid(std::string)) {
-            type = STR;
-        }
-
         std::string id = ctx->target->getText();
         Symbol *symbol = stmgr->findSymbol(id);
         if (symbol == nullptr) {
@@ -287,17 +279,18 @@ std::any SemanticVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 ctx->getStart(),
                 "symbol not found: " + id);
         } else {
-            symbol->baseType = type;
+            type = symbol->baseType;
+            if (symbol->baseType != eType) {
+                errors.addSemanticError(ctx->getStart(), "type mismatch");
+            }
         }
-        // std::cout << fn << "bind context: " << ctx << std::endl;
         bindings->bind(ctx, symbol);
     } else if (ctx->arrayIndex()) {
         type = std::any_cast<SymBaseType>(ctx->arrayIndex()->accept(this));
-        if (type != INT) {
+        if (type != eType) {
             errors.addSemanticError(
                 ctx->getStart(), "int type expected for arraies.");
         }
-        //bindings->bind(ctx, symbol);
     }
     return type;
 }

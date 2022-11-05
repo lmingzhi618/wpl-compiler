@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include "CodegenVisitor.h"
 #include "ErrorHandler.h"

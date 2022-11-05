@@ -9,6 +9,7 @@
 #include "WPLParser.h"
 #include "WPLVisitor.h"
 #include "antlr4-runtime.h"
+#include <string>
 
 class SymbolVisitor : public WPLBaseVisitor {
    public:

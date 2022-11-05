@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+#
+# Usage: dorun $1.wpl, $2=expexcted $3=Test description
+echo "\n----- $3 (Expect $2) -----"
+cd $fd
+cd Output
+wplc -o $1.ll $1.wpl
+clang -o $1 $1.ll wpl_runtime.c
+$1
+rm *.wpl *.ll $1
+cd $td

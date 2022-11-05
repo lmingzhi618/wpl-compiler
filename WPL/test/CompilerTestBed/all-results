@@ -1,0 +1,15 @@
+#!/bin/sh
+
+td=`pwd`                                # testbed directory
+if test -e ./results.out
+then
+    rm ./results.out
+    touch ./results.out
+fi
+
+for t in `ls $td/Results/Unclassified`;
+do
+    # echo $t >> ./results.out
+    cat $td/Results/Unclassified/$t >> ./results.out
+    # echo "\n------------" >> ./results.out
+done

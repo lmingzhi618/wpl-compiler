@@ -1,5 +1,6 @@
 # semantic listfile
 
+include (LLVM)
 include (Semantic)
 include (Symbol)
 include (ANTLR)
