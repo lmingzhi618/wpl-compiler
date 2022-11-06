@@ -467,26 +467,29 @@ std::any SemanticVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx)
     } else {
         result = symbol->baseType;
         int argc = ctx->args.size();
-        int required_argc = symbol->params->size();
-        if (argc != required_argc && symbol->ellipsis == false) {
-            errors.addSemanticError(ctx->getStart(),
-                                    "Need " + std::to_string(required_argc) +
-                                        " arguments, but provided " +
-                                        std::to_string(argc) + " arguments");
-            result = UNDEFINED;
-        } else {
-            for (int i = 0; i < required_argc; ++i) {
-				auto t1 = std::any_cast<SymBaseType>(ctx->args[i]->accept(this));
-                auto t2 = (*symbol->params)[i]->baseType;
-				if (t1 != t2) {
-                    errors.addSemanticError(ctx->getStart(),
-                        "Param type mismatch: required type: " + Symbol::getBaseTypeName(t2) + 
-						", but got " + Symbol::getBaseTypeName(t1));
-                    result = UNDEFINED;
+        int required_argc = 0;
+        if (symbol->params) {
+            required_argc = symbol->params->size();
+            if (argc != required_argc && symbol->ellipsis == false) {
+                errors.addSemanticError(ctx->getStart(),
+                                        "Need " + std::to_string(required_argc) +
+                                            " arguments, but provided " +
+                                            std::to_string(argc) + " arguments");
+                result = UNDEFINED;
+            } else {
+                for (int i = 0; i < required_argc; ++i) {
+		    		auto t1 = std::any_cast<SymBaseType>(ctx->args[i]->accept(this));
+                    auto t2 = (*symbol->params)[i]->baseType;
+		    		if (t1 != t2) {
+                        errors.addSemanticError(ctx->getStart(),
+                            "Param type mismatch: required type: " + Symbol::getBaseTypeName(t2) + 
+		    				", but got " + Symbol::getBaseTypeName(t1));
+                        result = UNDEFINED;
+                    }
                 }
             }
-            bindings->bind(ctx, symbol);
         }
+        bindings->bind(ctx, symbol);
     }
 	for (auto arg : ctx->args) {
 		arg->accept(this);
@@ -501,8 +504,10 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
     if (nullptr == symbol) {
         errors.addSemanticError(ctx->getStart(),
                                 "Function(" + id + ") not found");
-    } else {
-        result = symbol->baseType;
+        return result;
+    } 
+    result = symbol->baseType;
+    if (ctx->arguments()) {
         int argc = ctx->arguments()->arg().size();
         int required_argc = symbol->params->size();
         if (argc != required_argc && symbol->ellipsis == false) {
@@ -512,28 +517,28 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
                                         std::to_string(argc) + " arguments");
             result = UNDEFINED;
         } else {
-			ctx->arguments()->accept(this);
+	    	ctx->arguments()->accept(this);
             for (int i = 0; i < required_argc; ++i) {
-				auto t1 = INT;
-				if (ctx->arguments()->arg(i)->c) {
-					auto c = ctx->arguments()->arg(i)->c;
-					if (c->b) {
-						t1 = BOOL;
-					} else if (c->s) {
-						t1 = STR;
-					}
-				}
+	    		auto t1 = INT;
+	    		if (ctx->arguments()->arg(i)->c) {
+	    			auto c = ctx->arguments()->arg(i)->c;
+	    			if (c->b) {
+	    				t1 = BOOL;
+	    			} else if (c->s) {
+	    				t1 = STR;
+	    			}
+	    		}
                 auto t2 = (*symbol->params)[i]->baseType;
-				if (t1 != t2) {
+	    		if (t1 != t2) {
                     errors.addSemanticError(ctx->getStart(),
                         "Param type mismatch: required type: " + Symbol::getBaseTypeName(t2) + 
-						", but got " + Symbol::getBaseTypeName(t1));
+	    				", but got " + Symbol::getBaseTypeName(t1));
                     result = UNDEFINED;
                 }
             }
-            bindings->bind(ctx, symbol);
         }
     }
+    bindings->bind(ctx, symbol);
     return result;
 }
 

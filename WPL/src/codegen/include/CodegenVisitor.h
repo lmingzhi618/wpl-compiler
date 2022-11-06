@@ -120,7 +120,7 @@ class CodegenVisitor : public WPLBaseVisitor {
 
     bool isGlobal(antlr4::tree::ParseTree *c) {
         antlr4::tree::ParseTree *ctx = c;
-        while (ctx && !dynamic_cast<WPLParser::FunctionContext *>(ctx)) {
+        while (ctx && !dynamic_cast<WPLParser::FunctionContext *>(ctx) && !dynamic_cast<WPLParser::ProcedureContext *>(ctx) ) {
             ctx = ctx->parent;
         }
         return ctx == nullptr;

@@ -133,7 +133,8 @@ std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
 std::any CodegenVisitor::visitProcedure(WPLParser::ProcedureContext *ctx) {
     auto fn = std::any_cast<Function*>(ctx->procHeader()->accept(this));
     funcMap[ctx] = fn;
-    return ctx->block()->accept(this);
+    ctx->block()->accept(this);
+    return builder->CreateRet(nullptr);
 }
  
 std::any CodegenVisitor::visitProcHeader(WPLParser::ProcHeaderContext *ctx) {
@@ -647,26 +648,28 @@ std::any CodegenVisitor::visitCall(WPLParser::CallContext *ctx) {
         exit(-1);
     }
     std::vector<Value *> Args;
-    for (auto arg : ctx->arguments()->arg()) {
-        if (arg->id) {
-			// load variable from memory to register
-			Symbol *sym = props->getBinding(arg);
-			Value *v = nullptr;
-			if (sym) {	
-    			if (sym->val->getType()->isPointerTy()) {
-    			    if (sym->val->getType()->getPointerElementType() == Int1Ty) {
-    			        v =  builder->CreateLoad(Int1Ty, sym->val);
-    			    } else if (sym->val->getType()->getPointerElementType() == Int32Ty) {
-    			        v =  builder->CreateLoad(Int32Ty, sym->val);
-            		} else if (sym->val->getType()->getPointerElementType() == i8p) {
-            		    v =  builder->CreateLoad(i8p, sym->val);
-            		} 
-    			}
-            	Args.push_back(v);
-			}
-        } else if (arg->c) {
-		    Value *v = std::any_cast<Value*>(arg->c->accept(this));
-            Args.push_back(v);
+    if (ctx->arguments()) {
+        for (auto arg : ctx->arguments()->arg()) {
+            if (arg->id) {
+	    		// load variable from memory to register
+	    		Symbol *sym = props->getBinding(arg);
+	    		Value *v = nullptr;
+	    		if (sym) {	
+        			if (sym->val->getType()->isPointerTy()) {
+        			    if (sym->val->getType()->getPointerElementType() == Int1Ty) {
+        			        v =  builder->CreateLoad(Int1Ty, sym->val);
+        			    } else if (sym->val->getType()->getPointerElementType() == Int32Ty) {
+        			        v =  builder->CreateLoad(Int32Ty, sym->val);
+                		} else if (sym->val->getType()->getPointerElementType() == i8p) {
+                		    v =  builder->CreateLoad(i8p, sym->val);
+                		} 
+        			}
+                	Args.push_back(v);
+	    		}
+            } else if (arg->c) {
+	    	    Value *v = std::any_cast<Value*>(arg->c->accept(this));
+                Args.push_back(v);
+            }
         }
     }
     auto func = M->getFunction(symbol->id);
@@ -686,8 +689,9 @@ std::any CodegenVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) 
         Args.push_back(v);
     }
     auto func = M->getFunction(symbol->id);
-    Value *funcCall =  builder->CreateCall(func, Args);
-	return funcCall;
+    Value *retVal =  builder->CreateCall(func, Args);
+    //retVal = builder->CreateLoad(getLLVMType(symbol->baseType), retVal);
+	return retVal;
 }
 
 std::any CodegenVisitor::visitExternFuncHeader(WPLParser::ExternFuncHeaderContext *ctx) {
