@@ -1,0 +1,10 @@
+int func program() {
+  var i;
+  var b;
+  b <- 2 + i;
+  var c;
+  i <- b - 1;
+  c <- i = 2;
+  i <- c;
+  return b;
+}

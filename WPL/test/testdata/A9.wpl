@@ -1,0 +1,10 @@
+# A9: Procedure
+extern int func getArgCount();
+proc p() {
+  int i;
+  i <- getArgCount();
+}
+int func program() {
+  p();
+  return 0;
+}

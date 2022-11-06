@@ -1,5 +1,3 @@
-#! /usr/bin/env sh
-cat > $fd/Output/A6.wpl << EOF
 # A6: Print a string variable
 extern int func printf(str s, ...);
 int func program() {
@@ -7,5 +5,3 @@ int func program() {
   printf("%s\n", s);
   return 0;
 }
-EOF
-$fd/dorun A6 "hello world" "A6: Print a string variable"

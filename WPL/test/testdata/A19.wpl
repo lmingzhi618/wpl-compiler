@@ -1,0 +1,6 @@
+# A19: Type inference 4
+
+int func program() {
+  var i;
+  return i;
+}

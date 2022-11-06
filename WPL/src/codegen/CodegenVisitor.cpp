@@ -276,8 +276,9 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 }
             } else if (exVal->getType()->getPointerElementType() == i8p) {
                 exVal =  builder->CreateLoad(i8p, exVal);
-           } 
+            } 
         }
+        exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
         builder->CreateStore(exVal, symbol->val);
     } else {
         Symbol *symbol = props->getBinding(ctx->arrayIndex());  // child variable symbol
