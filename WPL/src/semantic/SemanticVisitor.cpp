@@ -154,7 +154,10 @@ std::any SemanticVisitor::visitParam(WPLParser::ParamContext *ctx) {
 std::any SemanticVisitor::visitParams(WPLParser::ParamsContext *ctx) {
     std::vector<Param *> *params = new std::vector<Param *>;
     for (WPLParser::ParamContext *param : ctx->ps) {
-        std::string id = param->id->getText();
+        std::string id;
+        if (param->id) {
+            id = param->id->getText();
+        }
         SymBaseType type = std::any_cast<SymBaseType>(param->t->accept(this));
         Param *prm = new Param(id, type);
         params->push_back(prm);
@@ -171,7 +174,7 @@ std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
         bindings->bind(ctx, symbol);
     } else {
         errors.addError(ctx->getStart(), "Use of undefined variable: " + id);
-        return nullptr;
+        return UNDEFINED;
     }
 
     return symbol->baseType;
@@ -509,13 +512,16 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
                                         std::to_string(argc) + " arguments");
             result = UNDEFINED;
         } else {
+			ctx->arguments()->accept(this);
             for (int i = 0; i < required_argc; ++i) {
 				auto t1 = INT;
-				auto c = ctx->arguments()->arg(i)->c;
-				if (c->b) {
-					t1 = BOOL;
-				} else if (c->s) {
-					t1 = STR;
+				if (ctx->arguments()->arg(i)->c) {
+					auto c = ctx->arguments()->arg(i)->c;
+					if (c->b) {
+						t1 = BOOL;
+					} else if (c->s) {
+						t1 = STR;
+					}
 				}
                 auto t2 = (*symbol->params)[i]->baseType;
 				if (t1 != t2) {
@@ -532,21 +538,31 @@ std::any SemanticVisitor::visitCall(WPLParser::CallContext *ctx) {
 }
 
 std::any SemanticVisitor::visitArg(WPLParser::ArgContext *ctx) {
-    std::string id = ctx->c->getText();
-	auto type = INT;
-	if (ctx->c->b) {
-		type = BOOL;
-	} else if (ctx->c->s) {
-		type = STR;
+	//auto type = INT;
+	//if (ctx->c) {
+	//	if (ctx->c->b) {
+	//		type = BOOL;
+	//	} else if (ctx->c->s) {
+	//		type = STR;
+	//	}
+	//}
+	if (ctx->id) {
+	    std::string id = ctx->id->getText();
+		Symbol *symbol = stmgr->findSymbol(id);
+	    if (symbol == nullptr) {
+	        errors.addSemanticError(ctx->getStart(), "symbol not found: " + id);
+		}
+		bindings->bind(ctx, symbol);
 	}
-	return new Param(id, type);
+	return nullptr;
 }
 
 std::any SemanticVisitor::visitArguments(WPLParser::ArgumentsContext *ctx) {
     std::vector<Param *> *params = new std::vector<Param *>;
     for (WPLParser::ArgContext *arg : ctx->arg()) {
-        Param * p  = std::any_cast<Param*>(arg->accept(this));
-        params->push_back(p);
+        arg->accept(this);
+        //Param * p  = std::any_cast<Param*>(arg->accept(this));
+        //params->push_back(p);
     }
     return params;
 }

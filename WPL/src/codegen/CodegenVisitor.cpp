@@ -1,5 +1,6 @@
 #include "CodegenVisitor.h"
 #include <llvm-12/llvm/ADT/StringExtras.h>
+#include <llvm-12/llvm/Config/llvm-config.h>
 #include <llvm-12/llvm/Support/MathExtras.h>
 #include <llvm/IR/Verifier.h>
 #include <llvm/IR/BasicBlock.h>
@@ -205,17 +206,23 @@ std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
     }
 
     if (isGlobal(ctx)) {
-        alloca = M->getOrInsertGlobal(symbol->id, type);
-        auto gVar = M->getNamedGlobal(symbol->id);
-        gVar->setLinkage(GlobalValue::CommonLinkage);
-        gVar->setAlignment(MaybeAlign(4));
-        if (val) {
-            static_cast<GlobalVariable *>(alloca)->setInitializer(
-                static_cast<Constant *>(val));
+        if (symbol->baseType == STR) {
+            alloca = M->getOrInsertGlobal(symbol->id, type);
+            static_cast<GlobalVariable *>(alloca)->setInitializer(static_cast<Constant *>(val));
+        } else {
+            alloca = M->getOrInsertGlobal(symbol->id, type);
+            auto gVar = M->getNamedGlobal(symbol->id);
+            gVar->setLinkage(GlobalValue::CommonLinkage);
+            gVar->setAlignment(MaybeAlign(4));
+            if (val == nullptr) {
+                val = Int32Zero;
+            }
+            static_cast<GlobalVariable *>(alloca)->setInitializer(static_cast<Constant *>(val));
         }
     } else {
         alloca = builder->CreateAlloca(type, nullptr, symbol->id);
         if (val) {
+			// check for string pointers
             builder->CreateStore(val, alloca);
         }
     }
@@ -249,10 +256,27 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
             } 
         }
 	    if (symbol->val == nullptr) {
-            std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
+            std::cerr << fn << "Variable " << symbol->id << " not declared..." << std::endl;
             exit(-1);
         }
-        exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
+        // get value of global variables
+        if (exVal->getType()->isPointerTy()) {
+            if (exVal->getType()->getPointerElementType() == Int1Ty) {
+                if (M->getNamedGlobal(ctx->e->getText())) {
+                    exVal = dyn_cast<GlobalVariable>(exVal)->getInitializer();
+                } else { 
+                    exVal =  builder->CreateLoad(Int1Ty, exVal);
+                }
+            } else if (exVal->getType()->getPointerElementType() == Int32Ty) {
+                if (M->getNamedGlobal(ctx->e->getText())) {
+                    exVal = dyn_cast<GlobalVariable>(exVal)->getInitializer();
+                } else { 
+                    exVal =  builder->CreateLoad(Int32Ty, exVal);
+                }
+            } else if (exVal->getType()->getPointerElementType() == i8p) {
+                exVal =  builder->CreateLoad(i8p, exVal);
+           } 
+        }
         builder->CreateStore(exVal, symbol->val);
     } else {
         Symbol *symbol = props->getBinding(ctx->arrayIndex());  // child variable symbol
@@ -261,8 +285,8 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
             exit(-1);
         }
 
-        Value *Idx = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
-        builder->CreateInsertElement(symbol->val, exVal, Idx);
+        Value *arrayIdx = std::any_cast<Value *>(ctx->arrayIndex()->accept(this));
+        builder->CreateStore(exVal, arrayIdx);
     }
     return exVal;
 }
@@ -284,8 +308,9 @@ std::any CodegenVisitor::visitArrayIndex(WPLParser::ArrayIndexContext *ctx) {
         trace(fn + "index of array should not be null...");
         exit(-1);
     }
-
-    return builder->CreateExtractElement(symbol->val, Idx);
+    // return builder->CreateExtractElement(symbol->val, Idx);
+    // ArrayRef<Value *> idxList = {Int32Zero, Idx};
+    return builder->CreateGEP(symbol->arrayType, symbol->val, {Int32Zero, Idx});
 } 
 
 std::any CodegenVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext *ctx) {
@@ -298,10 +323,16 @@ std::any CodegenVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext 
     return (Value *)builder->getInt32(symbol->length);
 }
 
+void replace_sub_str(std::string &s, std::string s_from, std::string s_to) {
+	size_t start_pos = 0;
+    while ((start_pos = s.find(s_from, start_pos)) != std::string::npos) {
+        s.replace(start_pos, s_from.size(), s_to);
+        start_pos += s_to.length();
+    }
+}
 
-// std::any visitConstExpr(WPLParser::ConstExprContext *ctx) override;
 std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
-    Value *v;
+    Value *v = nullptr;
     if (ctx->b) {
         if (ctx->b->getText() == "true") {
             v = builder->getInt1(1);
@@ -310,9 +341,11 @@ std::any CodegenVisitor::visitConstant(WPLParser::ConstantContext *ctx) {
         }
     } else if (ctx->i) {
         v = builder->getInt32(std::stoi(ctx->i->getText()));
-    } else {
-        StringRef sr = ctx->s->getText();
-        v = builder->CreateGlobalStringPtr(sr);
+    } else if (ctx->s) {
+        std::string str = ctx->s->getText();
+		replace_sub_str(str, "\\n", "\n");
+        StringRef sr = str.substr(1, str.length()-2);
+        v = builder->CreateGlobalStringPtr(sr, "str", 0, M);
     }
     return v;
 }
@@ -380,13 +413,12 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
 					break;
                 }
             }
-        } 
+        }
     }
 	if (symbol->val == nullptr) {
-        std::cerr << "Variable " << symbol->id << " not declared..." << std::endl;
+        std::cerr << fn << "Variable " << symbol->id << " not declared..." << std::endl;
         exit(-1);
     }
-
     return symbol->val;
 }
 
@@ -480,13 +512,14 @@ std::any CodegenVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationContex
     Type *type = getLLVMType(symbol->baseType);
     Type *arrayType = ArrayType::get(type, symbol->length); 
     Type *ptrTy = arrayType->getPointerTo(0);
+    symbol->arrayType = arrayType;
     if (isGlobal(ctx)) {
         addr = M->getOrInsertGlobal(symbol->id, ptrTy);
         auto gVar = M->getNamedGlobal(symbol->id);
         gVar->setLinkage(GlobalValue::CommonLinkage);
         gVar->setAlignment(MaybeAlign(4));
     } else {
-        addr = builder->CreateAlloca(ptrTy, nullptr, symbol->id);
+        addr = builder->CreateAlloca(arrayType, nullptr, symbol->id);
     }
 
     symbol->defined = true;
@@ -615,8 +648,26 @@ std::any CodegenVisitor::visitCall(WPLParser::CallContext *ctx) {
     }
     std::vector<Value *> Args;
     for (auto arg : ctx->arguments()->arg()) {
-		Value *v = std::any_cast<Value*>(arg->c->accept(this));
-        Args.push_back(v);
+        if (arg->id) {
+			// load variable from memory to register
+			Symbol *sym = props->getBinding(arg);
+			Value *v = nullptr;
+			if (sym) {	
+    			if (sym->val->getType()->isPointerTy()) {
+    			    if (sym->val->getType()->getPointerElementType() == Int1Ty) {
+    			        v =  builder->CreateLoad(Int1Ty, sym->val);
+    			    } else if (sym->val->getType()->getPointerElementType() == Int32Ty) {
+    			        v =  builder->CreateLoad(Int32Ty, sym->val);
+            		} else if (sym->val->getType()->getPointerElementType() == i8p) {
+            		    v =  builder->CreateLoad(i8p, sym->val);
+            		} 
+    			}
+            	Args.push_back(v);
+			}
+        } else if (arg->c) {
+		    Value *v = std::any_cast<Value*>(arg->c->accept(this));
+            Args.push_back(v);
+        }
     }
     auto func = M->getFunction(symbol->id);
     return builder->CreateCall(func, Args);

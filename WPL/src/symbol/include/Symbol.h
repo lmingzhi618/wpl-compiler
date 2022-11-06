@@ -6,7 +6,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "llvm/IR/Value.h"
+#include <llvm/IR/Value.h>
+#include <llvm/IR/Type.h>
 
 enum SymType { SCALAR, ARRAY, METHOD };
 enum SymBaseType { UNDEFINED, INT, BOOL, STR };  // Var can be undefined
@@ -27,7 +28,7 @@ struct Symbol {
     std::vector<Param *> *params = nullptr; // declare parameters
     std::vector<Param *> *args = nullptr;	// call arguments
     bool ellipsis = false; 
-
+    llvm::Type *arrayType = nullptr;
     bool defined;
     llvm::Value *val;
     Symbol(std::string id, SymBaseType t)

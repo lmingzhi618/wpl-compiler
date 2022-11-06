@@ -111,7 +111,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     Type *getLLVMType(SymBaseType bt) {
         auto type = CodegenVisitor::Int32Ty;
         if (bt == STR) {
-            type = CodegenVisitor::Int8PtrPtrTy;
+            type = CodegenVisitor::i8p;
         } else if (bt == BOOL) {
             type = CodegenVisitor::Int1Ty;
         }
