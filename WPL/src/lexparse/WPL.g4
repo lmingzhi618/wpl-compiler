@@ -12,7 +12,7 @@ scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)* ';' ;
 scalar            : id=ID varInitializer? ;
 arrayDeclaration  : t=type '[' INTEGER ']' id=ID ';' ;       // No dynamic arrays, type not inferred
 type              : b=BOOL | i=INT | s=STR ;  
-varInitializer    : '<-' c=constant ;
+varInitializer    : '<-' e=expr ;
 externDeclaration : 'extern' (externProcHeader | externFuncHeader) ';';
 
 procedure         : procHeader block ;

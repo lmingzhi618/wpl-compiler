@@ -9,9 +9,8 @@ std::any SemanticVisitor::visitCompilationUnit(
     return visitChildren(ctx);
 }
 
-std::any SemanticVisitor::visitVarInitializer(
-    WPLParser::VarInitializerContext *ctx) {
-    return ctx->c->accept(this);
+std::any SemanticVisitor::visitVarInitializer(WPLParser::VarInitializerContext *ctx) {
+    return ctx->e->accept(this);
 }
 
 // scalarDeclaration : (t=type| VAR) scalars+=scalar (',' scalars+=scalar)*
@@ -28,7 +27,12 @@ std::any SemanticVisitor::visitScalarDeclaration(
     // 2. Get the variable name(s)
     std::string id;
     for (auto s : ctx->scalars) {
-        /*
+        id = s->ID()->getText();
+        Symbol *sym = new Symbol(id, type);
+        Symbol *symbol = stmgr->addSymbol(sym);
+        if (symbol == nullptr) {
+            errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
+        }
         if (s->varInitializer()) {
             auto eType =
                 std::any_cast<SymBaseType>(s->varInitializer()->accept(this));
@@ -41,13 +45,8 @@ std::any SemanticVisitor::visitScalarDeclaration(
                                     ") doesn't match scalar type(" +
                                     Symbol::getBaseTypeName(type) + ")");
             }
-        }*/
-        id = s->ID()->getText();
-        Symbol *sym = new Symbol(id, type);
-        Symbol *symbol = stmgr->addSymbol(sym);
-        if (symbol == nullptr) {
-            errors.addError(ctx->getStart(), fn + "Duplicate variable: " + id);
         }
+
         bindings->bind(s, symbol);
     }
     return nullptr;
@@ -72,7 +71,8 @@ std::any SemanticVisitor::visitArrayDeclaration(WPLParser::ArrayDeclarationConte
 
 // function          : funcHeader block  ;
 std::any SemanticVisitor::visitFunction(WPLParser::FunctionContext *ctx) {
-    visitChildren(ctx);
+    ctx->funcHeader()->accept(this);
+    ctx->block()->accept(this);
     stmgr->exitScope();  // Entered in the header
     return nullptr;
 }
@@ -170,7 +170,7 @@ std::any SemanticVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string id = ctx->id->getText();
     Symbol *symbol = stmgr->findSymbol(id);
     if (symbol) {
-        //std::cout << fn << "bind context: " << ctx << std::endl;
+        // std::cout << fn << "id: " << id << ", bind context: " << ctx << std::endl;
         bindings->bind(ctx, symbol);
     } else {
         errors.addError(ctx->getStart(), "Use of undefined variable: " + id);
@@ -329,6 +329,7 @@ std::any SemanticVisitor::visitArrayLengthExpr(WPLParser::ArrayLengthExprContext
 }
 
 std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
+    std::string fn("SemanticVisitor::visitRelExpr");
     SymBaseType type = BOOL;
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
     if (left != INT) {
@@ -337,6 +338,7 @@ std::any SemanticVisitor::visitRelExpr(WPLParser::RelExprContext *ctx) {
                                     Symbol::getBaseTypeName(left));
         type = UNDEFINED;
     }
+    
     auto right = std::any_cast<SymBaseType>(ctx->right->accept(this));
     if (right != INT) {
         errors.addSemanticError(ctx->getStart(),
@@ -386,25 +388,27 @@ std::any SemanticVisitor::visitBlock(WPLParser::BlockContext *ctx) {
 
 std::any SemanticVisitor::visitEqExpr(WPLParser::EqExprContext *ctx) {
     SymBaseType result = BOOL;
-    result = std::any_cast<SymBaseType>(ctx->right->accept(this));
+    auto right = std::any_cast<SymBaseType>(ctx->right->accept(this));
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
-    if (result != left) {
+    if (right != left) {
         errors.addSemanticError(ctx->getStart(),
                                 "Both sides of '=' must have the same type.");
         result = UNDEFINED;
     }
     return result;
 }
+
 /*
 // return            : 'return' expr? ';' ;
 std::any SemanticVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
-    int ret = 0;
+    int ret = UNDEFINED;
     if (ctx->expr()) {
-        // ret = std::any_cast<int>(ctx->expr()->accept(this));
+        ret = std::any_cast<int>(ctx->expr()->accept(this));
     }
     return ret;
 }
 */
+
 std::any SemanticVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
     auto result = std::any_cast<SymBaseType>(ctx->right->accept(this));
     auto left = std::any_cast<SymBaseType>(ctx->left->accept(this));
@@ -488,6 +492,10 @@ std::any SemanticVisitor::visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx)
                     }
                 }
             }
+        } else if (argc != 0){
+            errors.addSemanticError(ctx->getStart(), "Need " + std::to_string(required_argc) +
+                                    " arguments, but provided " + std::to_string(argc) + " arguments");
+            result = UNDEFINED;
         }
         bindings->bind(ctx, symbol);
     }

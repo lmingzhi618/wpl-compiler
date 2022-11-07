@@ -571,10 +571,10 @@ public class WPLParser extends Parser {
 	}
 
 	public static class VarInitializerContext extends ParserRuleContext {
-		public ConstantContext c;
+		public ExprContext e;
 		public TerminalNode ASSIGN() { return getToken(WPLParser.ASSIGN, 0); }
-		public ConstantContext constant() {
-			return getRuleContext(ConstantContext.class,0);
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
 		}
 		public VarInitializerContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -599,7 +599,7 @@ public class WPLParser extends Parser {
 			setState(109);
 			match(ASSIGN);
 			setState(110);
-			((VarInitializerContext)_localctx).c = constant();
+			((VarInitializerContext)_localctx).e = expr(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2716,7 +2716,7 @@ public class WPLParser extends Parser {
 		"\u0000g\u000b\u0001\u0000\u0000\u0000hl\u0005\u0002\u0000\u0000il\u0005"+
 		"\u0003\u0000\u0000jl\u0005\u0004\u0000\u0000kh\u0001\u0000\u0000\u0000"+
 		"ki\u0001\u0000\u0000\u0000kj\u0001\u0000\u0000\u0000l\r\u0001\u0000\u0000"+
-		"\u0000mn\u0005\u0013\u0000\u0000no\u00036\u001b\u0000o\u000f\u0001\u0000"+
+		"\u0000mn\u0005\u0013\u0000\u0000no\u0003<\u001e\u0000o\u000f\u0001\u0000"+
 		"\u0000\u0000ps\u0005\b\u0000\u0000qt\u0003\u0016\u000b\u0000rt\u0003\u001c"+
 		"\u000e\u0000sq\u0001\u0000\u0000\u0000sr\u0001\u0000\u0000\u0000tu\u0001"+
 		"\u0000\u0000\u0000uv\u0005!\u0000\u0000v\u0011\u0001\u0000\u0000\u0000"+

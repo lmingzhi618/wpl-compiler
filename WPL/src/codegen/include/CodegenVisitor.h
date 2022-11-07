@@ -4,6 +4,7 @@
 #pragma once
 
 #include <map>
+#include <set>
 #include <vector>
 #include <string>
 #include <llvm/IR/Function.h>
@@ -178,6 +179,7 @@ class CodegenVisitor : public WPLBaseVisitor {
     StringMap<Value *> nameMap;
     std::map<antlr4::tree::ParseTree*, Function*> funcMap;
     std::map<Argument *, Value*> paramMap;  // k: pointer to parameter, v: pointer to alloca of parameter
+    std::set<Function *> hasRetFuncs;  // if function has return statement
     Value *V;
 };
 

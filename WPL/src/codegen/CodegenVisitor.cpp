@@ -2,11 +2,15 @@
 #include <llvm-12/llvm/ADT/StringExtras.h>
 #include <llvm-12/llvm/Config/llvm-config.h>
 #include <llvm-12/llvm/Support/MathExtras.h>
+#include <llvm-12/llvm/Support/TypeName.h>
 #include <llvm/IR/Verifier.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/GlobalValue.h>
 #include <llvm/IR/GlobalVariable.h>
 #include <llvm/IR/DerivedTypes.h>
+#include <llvm/IR/Instruction.h>
+#include <llvm/IR/InstIterator.h>
+#include <llvm-c/Core.h>
 #include <stdio.h>
 
 #include <any>
@@ -92,7 +96,7 @@ std::any CodegenVisitor::visitVarDeclaration(
 
 std::any CodegenVisitor::visitVarInitializer(
     WPLParser::VarInitializerContext *ctx) {
-    return ctx->c->accept(this);
+    return ctx->e->accept(this);
 }
 
 Function *CodegenVisitor::createFunc(FunctionType *ft, std::string name) {
@@ -100,9 +104,14 @@ Function *CodegenVisitor::createFunc(FunctionType *ft, std::string name) {
 }
 
 std::any CodegenVisitor::visitFunction(WPLParser::FunctionContext *ctx) {
-    auto fn = std::any_cast<Function*>(ctx->funcHeader()->accept(this));
-    funcMap[ctx] = fn;
-    return ctx->block()->accept(this);
+    auto func = std::any_cast<Function*>(ctx->funcHeader()->accept(this));
+    funcMap[ctx] = func;
+    ctx->block()->accept(this);
+
+    if (hasRetFuncs.count(func) == 0) {
+        errors.addCodegenError(ctx->getStart(), "Return instruction needed.");
+    }
+    return nullptr;
 }
 
 std::any CodegenVisitor::visitFuncHeader(WPLParser::FuncHeaderContext *ctx) {
@@ -163,7 +172,14 @@ std::any CodegenVisitor::visitProcHeader(WPLParser::ProcHeaderContext *ctx) {
 std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
     std::string fn("CodegenVisitor::visitBlock");
     auto func = getParentFunc(ctx);
-    builder->SetInsertPoint(createBB(func, ""));
+    
+    // don't create basic block for anonymous blocks
+    Instruction * last_inst = &(*inst_end(func));
+    if (0 == LLVMCountBasicBlocks((LLVMValueRef)func) || 
+        nullptr != static_cast<BranchInst*>(last_inst)) {
+        builder->SetInsertPoint(createBB(func, ""));
+    }
+
     // alloca and save parameters of functions
    	if(dynamic_cast<WPLParser::FunctionContext *>(ctx->parent) || 
 	   dynamic_cast<WPLParser::ProcedureContext *>(ctx->parent)) {
@@ -179,15 +195,24 @@ std::any CodegenVisitor::visitBlock(WPLParser::BlockContext *ctx) {
 
 std::any CodegenVisitor::visitReturn(WPLParser::ReturnContext *ctx) {
     auto retVal = std::any_cast<Value *>(ctx->expr()->accept(this));
+    // check if the return type consistent with function type
+    auto func = getParentFunc(ctx);
+    hasRetFuncs.insert(func);
+    auto funcTy = func->getReturnType();
+    Type *retTy = retVal->getType();
     if (retVal->getType()->isPointerTy()) {
         if (retVal->getType()->getPointerElementType() == Int1Ty) {
             retVal =  builder->CreateLoad(Int1Ty, retVal);
+            retTy = Int1Ty;
         } else if (retVal->getType()->getPointerElementType() == Int32Ty) {
             retVal =  builder->CreateLoad(Int32Ty, retVal);
+            retTy = Int32Ty;
         }
     }
-    builder->CreateRet(retVal);
-    return retVal;
+    if (funcTy != retTy) {
+        errors.addCodegenError(ctx->getStart(), "Return type does match function type.");
+    }
+    return builder->CreateRet(retVal);
 }
 
 std::any CodegenVisitor::visitScalar(WPLParser::ScalarContext *ctx) {
@@ -268,18 +293,29 @@ std::any CodegenVisitor::visitAssignment(WPLParser::AssignmentContext *ctx) {
                 } else { 
                     exVal =  builder->CreateLoad(Int1Ty, exVal);
                 }
+                exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
             } else if (exVal->getType()->getPointerElementType() == Int32Ty) {
                 if (M->getNamedGlobal(ctx->e->getText())) {
                     exVal = dyn_cast<GlobalVariable>(exVal)->getInitializer();
                 } else { 
                     exVal =  builder->CreateLoad(Int32Ty, exVal);
                 }
+                exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
             } else if (exVal->getType()->getPointerElementType() == i8p) {
                 exVal =  builder->CreateLoad(i8p, exVal);
             } 
+        } else {
+            if (exVal->getType() == Int1Ty || exVal->getType() == Int32Ty)  {
+                exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
+            }
         }
-        exVal = builder->CreateZExtOrTrunc(exVal, getLLVMType(symbol->baseType));
-        builder->CreateStore(exVal, symbol->val);
+        // check if variable is global
+        GlobalVariable *gVal = M->getNamedGlobal(symbol->id);
+        if (gVal && gVal == symbol->val) {
+            gVal->setInitializer((Constant *)(exVal));
+        } else {
+            builder->CreateStore(exVal, symbol->val);
+        }
     } else {
         Symbol *symbol = props->getBinding(ctx->arrayIndex());  // child variable symbol
         if (symbol == nullptr) {
@@ -397,7 +433,6 @@ std::any CodegenVisitor::visitAndExpr(WPLParser::AndExprContext *ctx) {
 std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
     std::string fn("[CodegenVisitor::visitIDExpr] ");
     Symbol *symbol = props->getBinding(ctx);
-
     if (symbol == nullptr) {
         trace(fn + "symbol not found: " +  ctx->id->getText());
         exit(-1);
@@ -420,6 +455,10 @@ std::any CodegenVisitor::visitIDExpr(WPLParser::IDExprContext *ctx) {
 	if (symbol->val == nullptr) {
         std::cerr << fn << "Variable " << symbol->id << " not declared..." << std::endl;
         exit(-1);
+    }
+    Value *gVal = M->getNamedGlobal(symbol->id);
+    if (gVal && gVal == symbol->val) {
+        return (Value *)(M->getNamedGlobal(symbol->id)->getInitializer());
     }
     return symbol->val;
 }
