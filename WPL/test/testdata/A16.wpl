@@ -1,3 +1,5 @@
+# A16: Type inference 1
+
 int func program() {
   var i <- 0;
   i <- 1;

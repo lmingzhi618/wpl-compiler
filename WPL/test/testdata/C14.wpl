@@ -1,0 +1,10 @@
+# C14: Block
+int func program() {
+  int a;
+  a <- 2;
+  {
+    int a;
+    a <- 3;
+  }
+  return a;
+}

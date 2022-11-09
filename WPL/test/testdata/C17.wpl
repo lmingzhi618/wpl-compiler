@@ -1,0 +1,6 @@
+# C17: Unary -
+int func program() {
+  int a;
+  a <- -42;
+  return a;
+}

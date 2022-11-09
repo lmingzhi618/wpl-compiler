@@ -1,0 +1,8 @@
+# C7: Addition
+int func program() {
+  int a;
+  a <- 1;
+  int b;
+  b <- a + 43;
+  return b;
+}

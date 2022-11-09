@@ -1,0 +1,5 @@
+# C16: Missing return
+int func program() {
+  int a;
+  a <- 1;
+}
