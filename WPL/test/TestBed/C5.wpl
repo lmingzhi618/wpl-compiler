@@ -1,0 +1,6 @@
+# C5: Global assignment run
+int a;
+int func program() {
+  a <- 1;
+  return a;
+}

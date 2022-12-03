@@ -7,13 +7,6 @@ include (Codegen)
 include (LLVM)
 include (Runtime)
 
-find_package(LLVM REQUIRED CONFIG)
-list(APPEND CMAKE_MODULE_PATH ${LLVM_DIR})
-
-include(AddLLVM)
-include(HandleLLVMOptions)
-
-
 add_subdirectory(lexparse)
 add_subdirectory(symbol)
 add_subdirectory(semantic)
@@ -22,6 +15,7 @@ add_subdirectory(codegen)
 add_subdirectory(runtime)
 
 
+#add_llvm_executable(wplc wpl.cpp SUPPORT_PLUGINS)
 add_executable(wplc wpl.cpp)
 
 add_dependencies(wplc
@@ -44,12 +38,12 @@ target_include_directories(wplc PUBLIC
 )
 
 target_link_libraries(wplc 
-    PRIVATE
+    PRIVATE 
     ${ANTLR_RUNTIME_LIB}
     parser_lib
     sym_lib
     semantic_lib
     utility_lib
     codegen_lib
-    ${LLVM_LIBS}
+    ${llvm_libs}
 )
