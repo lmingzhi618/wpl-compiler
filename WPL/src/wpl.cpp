@@ -113,7 +113,7 @@ void printVersion(llvm::raw_ostream &OS) {
     exit(EXIT_SUCCESS);
 }
 
-llvm::TargetMachine * createTargetMachine(const char *Argv0) {
+llvm::TargetMachine * createTargetMachine() {
     llvm::Triple Triple = llvm::Triple(
         !MTriple.empty() ? llvm::Triple::normalize(MTriple)
                          : llvm::sys::getDefaultTargetTriple());
@@ -128,7 +128,7 @@ llvm::TargetMachine * createTargetMachine(const char *Argv0) {
         codegen::getMArch(), Triple, Error);
 
     if (!Target) {
-        llvm::WithColor::error(llvm::errs(), Argv0) << Error;
+        llvm::WithColor::error(llvm::errs()) << Error;
         return nullptr;
     }
 
@@ -169,15 +169,13 @@ std::string outputFilename(StringRef InputFilename) {
 #define HANDLE_EXTENSION(Ext) llvm::PassPluginLibraryInfo get##Ext##PluginInfo();
 #include "llvm/Support/Extension.def"
 
-bool emit(StringRef Argv0, llvm::Module *M,
-          llvm::TargetMachine *TM,
-          StringRef InputFilename) {
+bool emit(llvm::Module *M, llvm::TargetMachine *TM, StringRef InputFilename) {
     PassBuilder PB(TM);
 
     for (auto &PluginFN : PassPlugins) {
         auto PassPlugin = PassPlugin::Load(PluginFN);
         if (!PassPlugin) {
-            WithColor::error(errs(), Argv0) << "Failed to load passes from '"
+            WithColor::error(errs()) << "Failed to load passes from '"
                 << PluginFN << "'. Request ignored.\n";
             continue;
         }
@@ -202,11 +200,10 @@ bool emit(StringRef Argv0, llvm::Module *M,
     PB.registerLoopAnalyses(LAM);
     PB.crossRegisterProxies(LAM, FAM, CGAM, MAM);
 
-    // const std::function<void(ModulePassManager &, OptimizationLevel)>
     PB.registerPipelineStartEPCallback(
-        [&PB, Argv0] (ModulePassManager &PM, PassBuilder::OptimizationLevel Level) {
+        [&PB] (ModulePassManager &PM, PassBuilder::OptimizationLevel Level) {
           if (auto Err = PB.parsePassPipeline(PM, PipelineStartEPPipeline)) {
-            WithColor::error(errs(), Argv0)
+            WithColor::error(errs())
                 << "Could not parse pipeline "
                 << PipelineStartEPPipeline.ArgStr << ": "
                 << toString(std::move(Err)) << "\n";
@@ -217,7 +214,7 @@ bool emit(StringRef Argv0, llvm::Module *M,
 
     if (!PassPipeline.empty()) {
         if (auto Err = PB.parsePassPipeline(MPM, PassPipeline)) {
-            WithColor::error(errs(), Argv0) << toString(std::move(Err)) << "\n";
+            WithColor::error(errs()) << toString(std::move(Err)) << "\n";
             return false;
         }
     } else {
@@ -231,19 +228,24 @@ bool emit(StringRef Argv0, llvm::Module *M,
         case -2: DefaultPass = "default<Oz>"; break;
         }
         if (auto Err = PB.parsePassPipeline(MPM, DefaultPass)) {
-            WithColor::error(errs(), Argv0) << toString(std::move(Err)) << "\n";
+            WithColor::error(errs()) << toString(std::move(Err)) << "\n";
             return false;
         }
     }
+
     std::error_code EC;
     sys::fs::OpenFlags OpenFlags = sys::fs::OF_None;
     CodeGenFileType FileType = codegen::getFileType();
     if (FileType == CGFT_AssemblyFile) {
         OpenFlags |= sys::fs::OF_Text;
     }
+
+
+
+
     auto Out = std::make_unique<llvm::ToolOutputFile>(outputFilename(InputFilename), EC, OpenFlags);
     if (EC) {
-        WithColor::error(errs(), Argv0) << EC.message() << "\n";
+        WithColor::error(errs()) << EC.message() << "\n";
         return false;
     }
 
@@ -277,7 +279,7 @@ int main(int argc, char** argv) {
     // Commandline handling from the llvm::cl classes.
     llvm::cl::HideUnrelatedOptions(WPLOptions);
     llvm::cl::ParseCommandLineOptions(argc, argv, Head);
-
+    /*
     if (codegen::getMCPU() == "help" ||
         std::any_of(codegen::getMAttrs().begin(),
                     codegen::getMAttrs().end(),
@@ -299,14 +301,11 @@ int main(int argc, char** argv) {
         }
         exit(EXIT_SUCCESS);
     }
-
-    /*
-    llvm::TargetMachine *TM = createTargetMachine(argv[0]);
+    llvm::TargetMachine *TM = createTargetMachine();
     if (!TM) {
         exit(EXIT_FAILURE);
     }
     */
-
 
     if (((inputFileName == "-") && (inputString == "-")) ||
         ((inputFileName != "-") && (inputString != "-"))) {
@@ -346,18 +345,15 @@ int main(int argc, char** argv) {
         std::cerr << cv->getErrors() << std::endl;
         return -1;
     }
-    //std::cout << pm->toString() << std::endl;
 
-    // Printout the module contents.
-    llvm::Module* module = cv->getModule();
-    std::cout << std::endl << std::endl;
+    // todo: optimization passes
+    llvm::Module *M = cv->getModule();
+    //emit(M, TM, outputFileName);
     if (printOutput) {
         cv->modPrint();
     }
 
-    // Dump the code to an output file
     if (!noCode) {
-        //std::cout << "dump code to file" << std::endl;
         std::string irFileName;
         if (outputFileName != "-") {
             irFileName = outputFileName;
@@ -368,6 +364,7 @@ int main(int argc, char** argv) {
         }
         std::error_code ec;
         llvm::raw_fd_ostream irFileStream(irFileName, ec);
+        llvm::Module* module = cv->getModule();
         module->print(irFileStream, nullptr);
         irFileStream.flush();
     }

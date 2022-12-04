@@ -15,6 +15,7 @@
 #include "llvm/IR/NoFolder.h"
 #include "llvm/IR/Type.h"
 #include "llvm/IR/PassManager.h"
+#include "llvm/Target/TargetMachine.h"
 
 #include "ErrorHandler.h"
 #include "PropertyManager.h"
@@ -33,8 +34,9 @@ typedef SmallVector<Value *, 16> VarList;
 
 class CodegenVisitor : public WPLBaseVisitor {
    public:
-    CodegenVisitor(PropertyManager *pm, std::string MName) {
+    CodegenVisitor(PropertyManager *pm, /*TargetMachine *TM, */std::string MName) {
         props = pm;
+
         context = new LLVMContext();
         M = new Module(MName, *context);
         // Use the NoFolder to turn off constant folding
@@ -49,6 +51,12 @@ class CodegenVisitor : public WPLBaseVisitor {
         Int32One = ConstantInt::get(Int32Ty, 1, true);
         i8p = Type::getInt8PtrTy(M->getContext());
         Int8PtrPtrTy = i8p->getPointerTo();
+       
+        /*
+        TM = TM;
+        M->setTargetTriple(TM->getTargetTriple().getTriple());
+        M->setDataLayout(TM->createDataLayout());
+        */
     }
 
     // std::any visitCompilationUnit(
@@ -183,5 +191,6 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::set<Function *> hasRetFuncs;  // if function has return statement
     Value *V;
 
+    TargetMachine *TM;
 };
 
