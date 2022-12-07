@@ -1,0 +1,10 @@
+# A17: Type inference 2
+extern int func strlen(str s);
+
+int func program() {
+    str s;
+    int n;
+    s <- "abcd";
+    n <- strlen(s);
+    return 0;
+}

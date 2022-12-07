@@ -1,8 +1,17 @@
 #include "CodegenVisitor.h"
-#include "llvm/ADT/StringExtras.h"
-#include "llvm/Config/llvm-config.h"
 #include "llvm/Support/MathExtras.h"
 #include "llvm/Support/TypeName.h"
+#include "llvm/Config/llvm-config.h"
+
+#include "llvm/ADT/StringExtras.h"
+#include "llvm/ADT/SmallSet.h"
+#include "llvm/ADT/SmallPtrSet.h"
+#include "llvm/ADT/DenseSet.h"
+
+#include "llvm/IR/OptBisect.h"
+#include "llvm/IR/InstIterator.h"
+#include "llvm/IR/Instructions.h"
+#include "llvm/IR/IntrinsicInst.h"
 #include "llvm/IR/Verifier.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/GlobalValue.h"
@@ -10,9 +19,12 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/InstIterator.h"
-#include "llvm-c/Core.h"
-#include <stdio.h>
 
+#include "llvm/Pass.h"
+
+#include "llvm-c/Core.h"
+
+#include <stdio.h>
 #include <any>
 #include <string>
 
@@ -780,4 +792,61 @@ std::any CodegenVisitor::visitExternProcHeader(WPLParser::ExternProcHeaderContex
     symbol->defined = true;
     symbol->val = func;
     return func;
+}
+
+static std::string getDescription(const Function &F) {
+  return "function (" + F.getName().str() + ")";
+}
+
+bool CodegenVisitor::skipFunction(const Function &F) const {
+    OptPassGate &Gate = F.getContext().getOptPassGate();
+    if (Gate.isEnabled() && !Gate.shouldRunPass(nullptr, getDescription(F))) {
+        return true;
+    }
+    if (F.hasOptNone()) {
+        return true;
+    }
+    return false;
+}
+
+
+void CodegenVisitor::PerformADCE() {
+    for (auto &F : M->getFunctionList()) {
+        DenseSet<Instruction*> Alive;
+        SmallVector<Instruction*, 128> Worklist;
+
+        for (Instruction &I : instructions(F)) {
+            if (I.isDebugOrPseudoInst() || !I.isSafeToRemove()) {
+                Alive.insert(&I);
+                Worklist.push_back(&I);
+            }
+        }
+
+        while (!Worklist.empty()) {
+            Instruction *Cur = Worklist.pop_back_val();
+            for (Use &OI : Cur->operands()) {
+                if (Instruction *Inst = dyn_cast<Instruction>(OI)) {
+                    if (Alive.insert(Inst).second) {
+                        Worklist.push_back(Inst);
+                    }
+                }
+            }
+        }
+
+        for (Instruction &I : instructions(F)) {
+            if (!Alive.count(&I)) {
+                Worklist.push_back(&I);
+                I.dropAllReferences();
+            }
+        } 
+
+        for (Instruction *&I : Worklist) {
+            I->eraseFromParent();
+        }
+        //return !Worklist.empty();
+    }
+}
+
+void CodegenVisitor::PerformLoopUnrolling() {
+
 }

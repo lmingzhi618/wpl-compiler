@@ -32,7 +32,7 @@ using namespace llvm;
 typedef SmallVector<BasicBlock *, 16> BBList;
 typedef SmallVector<Value *, 16> VarList;
 
-class CodegenVisitor : public WPLBaseVisitor {
+class CodegenVisitor : public WPLBaseVisitor{
    public:
     CodegenVisitor(PropertyManager *pm, /*TargetMachine *TM, */std::string MName) {
         props = pm;
@@ -111,6 +111,12 @@ class CodegenVisitor : public WPLBaseVisitor {
     std::any visitNotExpr(WPLParser::NotExprContext *ctx) override;
     std::any visitParenExpr(WPLParser::ParenExprContext *ctx) override;
     std::any visitFuncCallExpr(WPLParser::FuncCallExprContext *ctx) override;
+
+    // optimizations
+    void PerformADCE();
+    void PerformLoopUnrolling();
+
+    bool skipFunction(const Function &F) const;
 
     std::string getErrors() { return errors.errorList(); }
     PropertyManager *getProperties() { return props; }
@@ -192,5 +198,6 @@ class CodegenVisitor : public WPLBaseVisitor {
     Value *V;
 
     TargetMachine *TM;
+
 };
 
