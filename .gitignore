@@ -43,7 +43,7 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-*.swp
+
 ## expression-compiler specific
 
 build/
@@ -59,3 +59,4 @@ main
 testoutput/
 testdata/*.ll
 testdata/*.bc
+core.*
