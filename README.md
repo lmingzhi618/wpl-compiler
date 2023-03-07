@@ -61,8 +61,7 @@ The base type of array is the element type(length is used on array)
 The base type of scalar is type;
 
 
-
-## Grade C: Minimal functionalityｈ
+## Functionalities
 - Implement standard and inline comments.   
 - Compile a single int program() function that can be compiled by llc and then assembled with the runtime library by clang. 
   A single int program() means that you do not have to implement functions and procedures in this level except for this one. 
@@ -80,29 +79,21 @@ The base type of scalar is type;
   condition   
   block       
   return.     
-
-
-Grade B: Utility
-- Implement all of the C grade requirements. OK
+- Implement all of the C grade requirements. 
 - Be able to call functions and procedures
   from the standard library (e.g. printf) and from the WPL runtime library (e.g. getArgc).
-
-- Allow multiple variables to be declared in a declaration (int a, b, c;).  OK
-
-- Implement variable initialization (int a <- 42;).   OK
-- Implement string and boolean types.                 OK
+- Allow multiple variables to be declared in a declaration (int a, b, c;).  
+- Implement variable initialization (int a <- 42;).   
+- Implement string and boolean types.                 
 - Nested inline comments.                     ???
-- Boolean (relational expressions). No logical expressions (& and |). OK
-- Implement loop statements.                          OK
-
-
-Grade A: Useful
+- Boolean (relational expressions). No logical expressions (& and |). 
+- Implement loop statements.                          
 - Implement all of B grade requirements.
-- Implement logical expressions.                     OK
+- Implement logical expressions.                     
 - Implement functions and procedures completely (define your own and call any).
 - Type inference (var x;).
-- Implement select statements                        OK
-- Implement arrays                                   OK
+- Implement select statements                        
+- Implement arrays                                   
 
 
 grun WPL tokens -tokens
@@ -110,7 +101,6 @@ grun WPL tokens -tokens test.txt
 
 grun WPL compilationUnit -gui
 > int a; int func program() {a <- 1; return 0;}
-
 
 
 ### phi 指令用于实现 PHI 节点。
